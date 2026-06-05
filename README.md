@@ -5,7 +5,7 @@
 [![Next.js 15](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![React 19](https://img.shields.io/badge/React-19-blue?style=flat-square&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
-[![Gemini API](https://img.shields.io/badge/Gemini_API-2.5_Flash-orange?style=flat-square&logo=googlegemini)](https://ai.google.dev/)
+[![Gemini API](https://img.shields.io/badge/Gemini_API-3.5_Flash-orange?style=flat-square&logo=googlegemini)](https://ai.google.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 ---
@@ -61,7 +61,7 @@ A 6-slide product strategy deck is built directly into the Next.js app route `/d
 ### Stack
 * **Frontend:** Next.js 15 (App Router), React 19, Lucide Icons
 * **Styling:** CSS variables, Vanilla CSS (ensuring theme tokens, fluid responsiveness, and transitions)
-* **AI Engine:** Google Gemini SDK (`gemini-2.5-flash` for high-speed structured JSON output)
+* **AI Engine:** Google Gemini SDK (`gemini-3.5-flash` for high-speed structured JSON output)
 * **Images API:** Pexels API Integration (for fallback dynamic listing image fetching)
 * **Environment Configuration:** Dotenv variables with server-side next.js api protection
 
@@ -77,7 +77,7 @@ graph TD
     User -->|5. Conversational Prompt| ChatDrawer[Anywhere Door Drawer]
     ChatDrawer -->|6. POST Request /api/plan| PlanAPI[Next.js Plan API Route]
     
-    PlanAPI -->|7. Generate Structured travel plan| Gemini[Gemini 2.5 Flash API]
+    PlanAPI -->|7. Generate Structured travel plan| Gemini[Gemini 3.5 Flash API]
     Gemini -->|8. Returns JSON Plan| PlanAPI
     
     PlanAPI -->|9. Fetch Property Photos| ImageAPI[Next.js Image API Route]

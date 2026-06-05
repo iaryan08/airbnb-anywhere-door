@@ -1176,7 +1176,7 @@ export default function AnywhereDoor({
             </button>
           </div>
           <p style={{ fontSize: 10, color: "var(--text-muted)", textAlign: "center", padding: "8px 0 16px", fontFamily: "var(--font-body)" }}>
-            Powered by Gemini 2.5 Flash · Press Enter to generate
+            Powered by Gemini 3.5 Flash · Press Enter to generate
           </p>
         </div>
       </div>
