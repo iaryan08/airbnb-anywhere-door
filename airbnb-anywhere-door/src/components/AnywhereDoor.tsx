@@ -13,6 +13,7 @@ import {
   CheckCircle2,
   Loader2,
   Circle,
+  AlertCircle,
 } from "lucide-react";
 
 interface Listing {
@@ -51,7 +52,7 @@ interface PlanResult {
 
 interface ThinkingStep {
   label: string;
-  status: "pending" | "loading" | "done";
+  status: "pending" | "loading" | "done" | "error";
 }
 
 interface AnywhereDoorProps {
@@ -866,6 +867,7 @@ export default function AnywhereDoor({
   const [isLoading, setIsLoading] = useState(false);
   const [steps, setSteps] = useState<ThinkingStep[]>([]);
   const [result, setResult] = useState<PlanResult | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
 
@@ -916,6 +918,7 @@ export default function AnywhereDoor({
     if (!finalPrompt.trim() || isLoading) return;
     setIsLoading(true);
     setResult(null);
+    setError(null);
     runStepsAnimation();
 
     // 6-second timeout controller to trigger fallback immediately in case of network timeout
@@ -930,22 +933,31 @@ export default function AnywhereDoor({
         signal: controller.signal,
       });
       clearTimeout(timeoutId);
-      const data: PlanResult = await res.json();
+      
+      const data = await res.json();
+      if (!res.ok || data.error) {
+        throw new Error(data.error || `HTTP error! Status: ${res.status}`);
+      }
+
       setSteps(THINKING_STEPS.map((label) => ({ label, status: "done" })));
       await new Promise((r) => setTimeout(r, 400));
       setResult(data);
       if (onPlanGenerated) {
         onPlanGenerated(data);
       }
-    } catch (err) {
+    } catch (err: any) {
       clearTimeout(timeoutId);
-      console.warn("API call failed or timed out. Falling back to local search database:", err);
-      const mock = getMockResponse(finalPrompt, currency);
-      setResult(mock);
-      setSteps(THINKING_STEPS.map((label) => ({ label, status: "done" })));
-      if (onPlanGenerated) {
-        onPlanGenerated(mock);
+      console.error("API call failed or timed out:", err);
+      let errorMsg = "Failed to compile your travel plan. Please check your network connection.";
+      if (err instanceof Error) {
+        if (err.name === "AbortError") {
+          errorMsg = "Request timed out after 6 seconds. Please check your Gemini API key configuration on Vercel.";
+        } else {
+          errorMsg = err.message;
+        }
       }
+      setError(errorMsg);
+      setSteps(THINKING_STEPS.map((label) => ({ label, status: "error" })));
     } finally {
       setIsLoading(false);
     }
@@ -961,7 +973,7 @@ export default function AnywhereDoor({
     setTimeout(() => handleSubmit(clean), 50);
   };
 
-  const handleReset = () => { setResult(null); setSteps([]); setPrompt(""); };
+  const handleReset = () => { setResult(null); setError(null); setSteps([]); setPrompt(""); };
 
   return (
     <>
@@ -1004,15 +1016,72 @@ export default function AnywhereDoor({
                       <CheckCircle2 size={16} style={{ color: "#34d399" }} />
                     ) : step.status === "loading" ? (
                       <Loader2 size={14} className="animate-spin" style={{ color: "var(--airbnb-coral)" }} />
+                    ) : step.status === "error" ? (
+                      <AlertCircle size={16} style={{ color: "#ef4444" }} />
                     ) : (
                       <Circle size={8} style={{ color: "var(--text-muted)", opacity: 0.5 }} />
                     )}
                   </div>
-                  <span className={`step-text${step.status === "loading" ? " active" : step.status === "done" ? " done" : ""}`}>
+                  <span 
+                    className={`step-text${step.status === "loading" ? " active" : step.status === "done" ? " done" : ""}`}
+                    style={step.status === "error" ? { color: "#ef4444" } : {}}
+                  >
                     {step.label}
                   </span>
                 </div>
               ))}
+            </div>
+          )}
+
+          {error && (
+            <div className="error-container" style={{
+              margin: "16px 16px 24px",
+              padding: 16,
+              background: "rgba(239, 68, 68, 0.08)",
+              border: "1px solid #ef4444",
+              borderRadius: "var(--radius-md)",
+              color: "#ef4444",
+              fontSize: 13,
+              lineHeight: "1.5"
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, fontWeight: 700, marginBottom: 8 }}>
+                <AlertCircle size={16} />
+                <span>API Connection Failed</span>
+              </div>
+              <p style={{ color: "var(--text-primary)" }}>{error}</p>
+              <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+                <button 
+                  onClick={() => { setError(null); handleSubmit(); }}
+                  style={{
+                    padding: "6px 14px",
+                    background: "var(--airbnb-coral)",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "var(--radius-sm)",
+                    fontSize: 12,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    fontFamily: "var(--font-display)"
+                  }}
+                >
+                  Retry Request
+                </button>
+                <button 
+                  onClick={handleReset}
+                  style={{
+                    padding: "6px 14px",
+                    background: "transparent",
+                    border: "1px solid var(--border-subtle)",
+                    borderRadius: "var(--radius-sm)",
+                    fontSize: 12,
+                    color: "var(--text-muted)",
+                    cursor: "pointer",
+                    fontFamily: "var(--font-display)"
+                  }}
+                >
+                  Clear Search
+                </button>
+              </div>
             </div>
           )}
 

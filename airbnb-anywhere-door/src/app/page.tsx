@@ -397,6 +397,7 @@ export default function Home() {
 
   const [wishlistedIds, setWishlistedIds] = useState<string[]>([]);
   const [latestPlan, setLatestPlan] = useState<any>(null);
+  const [userName, setUserName] = useState("John Doe");
   const [geoInfo, setGeoInfo] = useState<GeoInfo>({
     city: "New Delhi",
     regionName: "Delhi",
@@ -1108,12 +1109,29 @@ export default function Home() {
           {activeNav === 4 && (
             <div className="tab-container">
               <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 28 }}>
-                <div style={{ width: 60, height: 60, borderRadius: "50%", background: "var(--airbnb-coral)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, fontWeight: 700 }}>
-                  JH
+                <div style={{ width: 60, height: 60, borderRadius: "50%", background: "var(--airbnb-coral)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, fontWeight: 700 }}>
+                  {userName.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2) || "U"}
                 </div>
-                <div>
-                  <h2 style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 800 }}>Jayhari</h2>
-                  <p style={{ fontSize: 12, color: "var(--text-secondary)", marginTop: 2 }}>
+                <div style={{ flex: 1 }}>
+                  <input
+                    type="text"
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: 18,
+                      fontWeight: 800,
+                      background: "transparent",
+                      border: "none",
+                      borderBottom: "1px dashed var(--border-subtle)",
+                      outline: "none",
+                      color: "var(--text-primary)",
+                      width: "100%",
+                      padding: "2px 0"
+                    }}
+                    placeholder="Enter name"
+                  />
+                  <p style={{ fontSize: 12, color: "var(--text-secondary)", marginTop: 4 }}>
                     📍 {geoInfo.city}, {geoInfo.country}
                   </p>
                 </div>

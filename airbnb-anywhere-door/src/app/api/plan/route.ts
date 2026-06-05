@@ -766,8 +766,10 @@ export async function POST(req: NextRequest) {
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
-      await new Promise((r) => setTimeout(r, 2000));
-      return NextResponse.json(getMockResponse(prompt, currency, country));
+      return NextResponse.json(
+        { error: "GEMINI_API_KEY environment variable is not configured. Please add it to your Vercel project settings." },
+        { status: 500 }
+      );
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
@@ -836,7 +838,10 @@ Rules:
     return NextResponse.json(data);
   } catch (err) {
     console.error("Plan API error:", err);
-    const { currency = "₹", country = "India" } = await req.json().catch(() => ({}));
-    return NextResponse.json(getMockResponse(promptText || "", currency, country));
+    const message = err instanceof Error ? err.message : "An unknown error occurred while communicating with Gemini.";
+    return NextResponse.json(
+      { error: `Gemini API execution failed: ${message}` },
+      { status: 500 }
+    );
   }
 }
