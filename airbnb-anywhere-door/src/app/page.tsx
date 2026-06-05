@@ -573,7 +573,11 @@ export default function Home() {
             <span>{geoInfo.city}</span>
           </div>
 
-          <div className="logo">
+          <div 
+            className="logo" 
+            onClick={() => { setActiveNav(0); setActiveSubTab("stays"); }}
+            style={{ cursor: "pointer" }}
+          >
             <img src="/airbnb.png" alt="Airbnb Logo" className="logo-img" />
             <span className="logo-text">airbnb</span>
           </div>
@@ -603,7 +607,6 @@ export default function Home() {
           {/* Right: Desktop Menu + Theme Toggle */}
           <div className="desktop-nav-right">
             <div className="desktop-menu">
-              <button className={activeNav === 0 ? "active" : ""} onClick={() => setActiveNav(0)}>Explore</button>
               <button className={activeNav === 1 ? "active" : ""} onClick={() => setActiveNav(1)}>Wishlists</button>
               <button className={activeNav === 2 ? "active" : ""} onClick={() => setActiveNav(2)}>Trips</button>
               <button className={activeNav === 3 ? "active" : ""} onClick={() => setActiveNav(3)}>Inbox</button>
