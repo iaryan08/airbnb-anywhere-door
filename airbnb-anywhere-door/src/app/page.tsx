@@ -30,6 +30,7 @@ import {
   HelpCircle,
   Globe,
   X,
+  Star,
 } from "lucide-react";
 
 /* ── Custom illustrative SVGs matching Airbnb icons ── */
@@ -379,14 +380,91 @@ interface GeoInfo {
 
 export default function Home() {
   const { theme, toggleTheme, isSystemTheme, resetToSystem, themeMode, setThemeMode } = useTheme();
-  
+  const [timeStr, setTimeStr] = useState("12:30");
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setTimeStr(
+        now.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        })
+      );
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 60000);
+    return () => clearInterval(interval);
+  }, []);
+  // Dynamic header height measurement for CSS stickiness
+  useEffect(() => {
+    const header = document.querySelector(".top-nav");
+    if (!header) return;
+    
+    const updateHeaderHeight = () => {
+      document.documentElement.style.setProperty(
+        "--header-height",
+        `${header.getBoundingClientRect().height}px`
+      );
+    };
+    
+    updateHeaderHeight();
+    
+    const resizeObserver = new ResizeObserver(updateHeaderHeight);
+    resizeObserver.observe(header);
+    
+    window.addEventListener("resize", updateHeaderHeight);
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", updateHeaderHeight);
+    };
+  }, []);
+
+  // Keyboard awareness: track visual viewport height on mobile
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const vv = window.visualViewport;
+    if (!vv) return;
+    
+    const handleVisualViewportResize = () => {
+      document.documentElement.style.setProperty(
+        "--visual-viewport-height",
+        `${vv.height}px`
+      );
+    };
+    
+    vv.addEventListener("resize", handleVisualViewportResize);
+    vv.addEventListener("scroll", handleVisualViewportResize);
+    handleVisualViewportResize();
+    
+    return () => {
+      vv.removeEventListener("resize", handleVisualViewportResize);
+      vv.removeEventListener("scroll", handleVisualViewportResize);
+    };
+  }, []);
   // Explore sub-tabs: stays, experiences, services
   const [activeSubTab, setActiveSubTab] = useState<"stays" | "experiences" | "services">("stays");
   
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    setSearchQuery("");
+  }, [activeSubTab]);
+
   const [activeCategory, setActiveCategory] = useState("Beach");
   const [activeServiceCategory, setActiveServiceCategory] = useState("Photography");
   const [activeNav, setActiveNav] = useState(0);
+  const [headerScrolled, setHeaderScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    const scrollEl = document.querySelector(".app-scroll");
+    if (scrollEl) {
+      scrollEl.scrollTop = 0;
+    }
+    setHeaderScrolled(false);
+  }, [activeNav]);
   
   // Interactive Search Filter states (prevents triggering AI)
   const [filterModalOpen, setFilterModalOpen] = useState(false);
@@ -396,7 +474,9 @@ export default function Home() {
   const [minRatingFilter, setMinRatingFilter] = useState<number>(0);
 
   const [wishlistedIds, setWishlistedIds] = useState<string[]>([]);
-  const [latestPlan, setLatestPlan] = useState<any>(null);
+  const [trips, setTrips] = useState<any[]>([]);
+  const [activeTrip, setActiveTrip] = useState<any | null>(null);
+  const [expandedTripId, setExpandedTripId] = useState<string | null>(null);
   const [userName, setUserName] = useState("John Doe");
   const [geoInfo, setGeoInfo] = useState<GeoInfo>({
     city: "New Delhi",
@@ -405,6 +485,21 @@ export default function Home() {
     currency: "INR",
     currencySymbol: "₹",
   });
+
+  // Helper to save trip to IndexedDB
+  const saveTripToIndexedDB = (trip: any) => {
+    try {
+      const request = window.indexedDB.open("AnywhereDoorDB", 1);
+      request.onsuccess = (event: any) => {
+        const db = event.target.result;
+        const transaction = db.transaction("plans", "readwrite");
+        const store = transaction.objectStore("plans");
+        store.put(trip);
+      };
+    } catch (e) {
+      console.error("IndexedDB save failed:", e);
+    }
+  };
 
   // Load wishlist from localStorage on mount
   useEffect(() => {
@@ -418,7 +513,7 @@ export default function Home() {
     }
   }, []);
 
-  // Load latest plan from IndexedDB on mount
+  // Load all trips from IndexedDB on mount
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
@@ -433,15 +528,33 @@ export default function Home() {
         const db = event.target.result;
         const transaction = db.transaction("plans", "readonly");
         const store = transaction.objectStore("plans");
-        const getReq = store.get("latest");
+        const getReq = store.getAll();
         getReq.onsuccess = (e: any) => {
-          if (e.target.result && e.target.result.data) {
-            setLatestPlan(e.target.result.data);
+          const results = e.target.result || [];
+          let loadedTrips = results.filter((r: any) => r.id !== "latest" && r.plan);
+          const legacyLatest = results.find((r: any) => r.id === "latest");
+          
+          if (legacyLatest && loadedTrips.length === 0) {
+            const convertedTrip = {
+              id: "trip-legacy",
+              title: legacyLatest.data.title || "My Trip",
+              plan: legacyLatest.data,
+              history: [],
+              timestamp: Date.now()
+            };
+            loadedTrips = [convertedTrip];
+            saveTripToIndexedDB(convertedTrip);
+          }
+          
+          loadedTrips.sort((a: any, b: any) => (b.timestamp || 0) - (a.timestamp || 0));
+          setTrips(loadedTrips);
+          if (loadedTrips.length > 0) {
+            setExpandedTripId(loadedTrips[0].id);
           }
         };
       };
     } catch (e) {
-      console.error("Failed to load plan from IndexedDB:", e);
+      console.error("Failed to load plans from IndexedDB:", e);
     }
   }, []);
 
@@ -456,24 +569,6 @@ export default function Home() {
       return next;
     });
   };
-
-  // Current time
-  const [timeStr, setTimeStr] = useState("16:52");
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setTimeStr(
-        now.toLocaleTimeString("en-IN", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
-        })
-      );
-    };
-    updateTime();
-    const interval = setInterval(updateTime, 60000);
-    return () => clearInterval(interval);
-  }, []);
 
   // Detect location via server-side API proxy to avoid CORS
   useEffect(() => {
@@ -533,6 +628,13 @@ export default function Home() {
       if (!hasAllAmenities) return false;
     }
     if (minRatingFilter > 0 && l.rating < minRatingFilter) return false;
+    if (searchQuery.trim() !== "") {
+      const q = searchQuery.toLowerCase();
+      const matchesSearch = l.name.toLowerCase().includes(q) ||
+                            l.location.toLowerCase().includes(q) ||
+                            (l.tags && l.tags.some(t => t.toLowerCase().includes(q)));
+      if (!matchesSearch) return false;
+    }
     return true;
   });
 
@@ -540,6 +642,13 @@ export default function Home() {
   const filteredExperiences = EXPERIENCES_LISTINGS.filter((l) => {
     if (l.price > maxPriceFilter) return false;
     if (minRatingFilter > 0 && l.rating < minRatingFilter) return false;
+    if (searchQuery.trim() !== "") {
+      const q = searchQuery.toLowerCase();
+      const matchesSearch = l.name.toLowerCase().includes(q) ||
+                            l.location.toLowerCase().includes(q) ||
+                            (l.tags && l.tags.some(t => t.toLowerCase().includes(q)));
+      if (!matchesSearch) return false;
+    }
     return true;
   });
 
@@ -548,6 +657,13 @@ export default function Home() {
     if (l.category !== activeServiceCategory) return false;
     if (l.price > maxPriceFilter) return false;
     if (minRatingFilter > 0 && l.rating < minRatingFilter) return false;
+    if (searchQuery.trim() !== "") {
+      const q = searchQuery.toLowerCase();
+      const matchesSearch = l.name.toLowerCase().includes(q) ||
+                            l.location.toLowerCase().includes(q) ||
+                            (l.tags && l.tags.some(t => t.toLowerCase().includes(q)));
+      if (!matchesSearch) return false;
+    }
     return true;
   });
   
@@ -572,7 +688,7 @@ export default function Home() {
 
   return (
     <div className="phone-shell">
-      <div className="phone-frame">
+      <div className={`phone-frame${isOverlayOpen ? " overlay-open" : ""}`}>
         {/* ── Status Bar ── */}
         <div className="status-bar">
           <span className="status-time">{timeStr}</span>
@@ -594,91 +710,100 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ── Top Header (Responsive: Mobile & Desktop) ── */}
-        <div className={`top-nav${activeNav !== 0 ? " mobile-hide" : ""}`} style={{ borderBottom: "1px solid var(--border-subtle)" }}>
-          <div className="location-badge">
-            <span className="location-badge-dot" />
-            <span>{geoInfo.city}</span>
-          </div>
-
-          <div 
-            className="logo" 
-            onClick={() => { setActiveNav(0); setActiveSubTab("stays"); }}
-            style={{ cursor: "pointer" }}
-          >
-            <img src="/airbnb.png" alt="Airbnb Logo" className="logo-img" />
-            <span className="logo-text">airbnb</span>
-          </div>
-
-          {/* Center: Desktop-only Subtabs */}
-          <div className="desktop-subtabs">
-            <button 
-              className={`desktop-subtab-btn${activeSubTab === "stays" && activeNav === 0 ? " active" : ""}`}
-              onClick={() => { setActiveSubTab("stays"); setActiveNav(0); }}
-            >
-              Homes
-            </button>
-            <button 
-              className={`desktop-subtab-btn${activeSubTab === "experiences" && activeNav === 0 ? " active" : ""}`}
-              onClick={() => { setActiveSubTab("experiences"); setActiveNav(0); }}
-            >
-              Experiences
-            </button>
-            <button 
-              className={`desktop-subtab-btn${activeSubTab === "services" && activeNav === 0 ? " active" : ""}`}
-              onClick={() => { setActiveSubTab("services"); setActiveNav(0); }}
-            >
-              Services
-            </button>
-          </div>
-
-          {/* Right: Desktop Menu + Theme Toggle */}
-          <div className="desktop-nav-right">
-            <div className="desktop-menu">
-              <button className={activeNav === 1 ? "active" : ""} onClick={() => setActiveNav(1)}>Wishlists</button>
-              <button className={activeNav === 2 ? "active" : ""} onClick={() => setActiveNav(2)}>Trips</button>
-              <button className={activeNav === 3 ? "active" : ""} onClick={() => setActiveNav(3)}>Inbox</button>
-              <button className={activeNav === 4 ? "active" : ""} onClick={() => setActiveNav(4)}>Profile</button>
-            </div>
-            
-            <button
-              id="theme-toggle-btn"
-              className="theme-toggle"
-              onClick={toggleTheme}
-              aria-label="Switch Theme"
-            >
-              {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
-            </button>
-          </div>
-        </div>
-
         {/* ── Scrollable Content ── */}
-        <div className="app-scroll">
+        <div 
+          className="app-scroll"
+          onScroll={(e) => {
+            const isScrolled = e.currentTarget.scrollTop > 15;
+            if (isScrolled !== headerScrolled) {
+              setHeaderScrolled(isScrolled);
+            }
+          }}
+        >
+          {/* ── Top Header (Responsive: Mobile & Desktop) ── */}
+          <div className={`top-nav${activeNav !== 0 ? " mobile-hide" : ""}`} style={{ borderBottom: "1px solid var(--border-subtle)" }}>
+            <div 
+              className="logo" 
+              onClick={() => { setActiveNav(0); setActiveSubTab("stays"); }}
+              style={{ cursor: "pointer" }}
+            >
+              <span className="deck-logo">airbnb ✕ GenAI</span>
+            </div>
+
+
+
+            {/* Center: Desktop-only Subtabs */}
+            <div className="desktop-subtabs">
+              <button 
+                className={`desktop-subtab-btn${activeSubTab === "stays" && activeNav === 0 ? " active" : ""}`}
+                onClick={() => { setActiveSubTab("stays"); setActiveNav(0); }}
+              >
+                Homes
+              </button>
+              <button 
+                className={`desktop-subtab-btn${activeSubTab === "experiences" && activeNav === 0 ? " active" : ""}`}
+                onClick={() => { setActiveSubTab("experiences"); setActiveNav(0); }}
+              >
+                Experiences
+              </button>
+              <button 
+                className={`desktop-subtab-btn${activeSubTab === "services" && activeNav === 0 ? " active" : ""}`}
+                onClick={() => { setActiveSubTab("services"); setActiveNav(0); }}
+              >
+                Services
+              </button>
+            </div>
+
+            {/* Right: Desktop Menu + Theme Toggle */}
+            <div className="desktop-nav-right">
+              <div className="desktop-menu">
+                <button className={activeNav === 1 ? "active" : ""} onClick={() => setActiveNav(1)}>Wishlists</button>
+                <button className={activeNav === 2 ? "active" : ""} onClick={() => setActiveNav(2)}>Trips</button>
+                <button className={activeNav === 3 ? "active" : ""} onClick={() => setActiveNav(3)}>Inbox</button>
+                <button className={activeNav === 4 ? "active" : ""} onClick={() => setActiveNav(4)}>Profile</button>
+              </div>
+              
+              <button
+                id="theme-toggle-btn"
+                className="theme-toggle"
+                onClick={toggleTheme}
+                aria-label="Switch Theme"
+              >
+                {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
+              </button>
+            </div>
+          </div>
           {/* TAB 0: EXPLORE */}
           {activeNav === 0 && (
             <>
 
               {/* Header Sub-Tabs (Stays, Experiences, Services) */}
-              <div className="explore-subtabs">
+              <div className={`explore-subtabs${headerScrolled ? " collapsed" : ""}`}>
                 <button
                   className={`subtab-btn${activeSubTab === "stays" ? " active" : ""}`}
                   onClick={() => setActiveSubTab("stays")}
                 >
-                  <StaysIconSVG />
+                  <div className="subtab-icon-wrapper">
+                    <StaysIconSVG />
+                  </div>
                   <span className="subtab-label">Stays</span>
                 </button>
                 <button
                   className={`subtab-btn${activeSubTab === "experiences" ? " active" : ""}`}
                   onClick={() => setActiveSubTab("experiences")}
                 >
-                  <ExperiencesIconSVG />
+                  <div className="subtab-icon-wrapper">
+                    <ExperiencesIconSVG />
+                  </div>
                   <span className="subtab-label">Experiences</span>
                 </button>
                 <button
                   className={`subtab-btn${activeSubTab === "services" ? " active" : ""}`}
                   onClick={() => setActiveSubTab("services")}
                 >
-                  <ServicesIconSVG />
+                  <div className="subtab-icon-wrapper">
+                    <ServicesIconSVG />
+                  </div>
                   <span className="subtab-label">Services</span>
                 </button>
               </div>
@@ -686,53 +811,56 @@ export default function Home() {
               {/* ── SUBTAB 1: STAYS/HOMES ── */}
               {activeSubTab === "stays" && (
                 <>
-                  {/* Search Bar */}
-                  <div className="search-container" style={{ paddingTop: 14 }}>
-                    <div
-                      className="search-bar"
-                      id="main-search-bar"
-                      onClick={() => setDrawerOpen(true)}
-                      role="button"
-                    >
-                      <Search className="search-icon" size={18} />
-                      <div className="search-text">
-                        <span className="search-text-primary">Where to?</span>
-                        <span className="search-text-secondary">Anywhere · Any week · Add guests</span>
-                      </div>
-                      <button 
-                        className="search-filter-btn" 
-                        aria-label="Filters" 
-                        id="filter-btn"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setFilterModalOpen(true);
-                        }}
+                  <div className="sticky-header-wrapper">
+                    {/* Search Bar */}
+                    <div className="search-container">
+                      <div
+                        className="search-bar"
+                        id="main-search-bar"
                       >
-                        <SlidersHorizontal size={14} />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Category Pills */}
-                  <div className="categories-scroll" role="tablist" aria-label="Listing categories">
-                    {STAYS_CATEGORIES.map((cat) => {
-                      const IconComponent = cat.icon;
-                      return (
-                        <button
-                          key={cat.label}
-                          id={`cat-${cat.label.toLowerCase()}`}
-                          className={`category-pill${activeCategory === cat.label ? " active" : ""}`}
-                          onClick={() => setActiveCategory(cat.label)}
-                          role="tab"
-                          aria-selected={activeCategory === cat.label}
+                        <Search className="search-icon" size={18} />
+                        <input
+                          type="text"
+                          className="search-input"
+                          placeholder="Search homes (e.g. Goa, Manali, Chalet...)"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <button 
+                          className="search-filter-btn" 
+                          aria-label="Filters" 
+                          id="filter-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setFilterModalOpen(true);
+                          }}
                         >
-                          <div className="category-pill-icon">
-                            <IconComponent size={20} />
-                          </div>
-                          <span className="category-pill-label">{cat.label}</span>
+                          <SlidersHorizontal size={14} />
                         </button>
-                      );
-                    })}
+                      </div>
+                    </div>
+
+                    {/* Category Pills */}
+                    <div className="categories-scroll" role="tablist" aria-label="Listing categories">
+                      {STAYS_CATEGORIES.map((cat) => {
+                        const IconComponent = cat.icon;
+                        return (
+                          <button
+                            key={cat.label}
+                            id={`cat-${cat.label.toLowerCase()}`}
+                            className={`category-pill${activeCategory === cat.label ? " active" : ""}`}
+                            onClick={() => setActiveCategory(cat.label)}
+                            role="tab"
+                            aria-selected={activeCategory === cat.label}
+                          >
+                            <div className="category-pill-icon">
+                              <IconComponent size={20} />
+                            </div>
+                            <span className="category-pill-label">{cat.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
 
                   {/* Stays Grid */}
@@ -766,24 +894,28 @@ export default function Home() {
               {/* ── SUBTAB 2: EXPERIENCES ── */}
               {activeSubTab === "experiences" && (
                 <>
-                  {/* Search Bar */}
-                  <div className="search-container" style={{ paddingTop: 14 }}>
-                    <div className="search-bar" onClick={() => setDrawerOpen(true)} role="button">
-                      <Search className="search-icon" size={18} />
-                      <div className="search-text">
-                        <span className="search-text-primary">Where?</span>
-                        <span className="search-text-secondary">Explore experiences near you</span>
+                  <div className="sticky-header-wrapper">
+                    <div className="search-container">
+                      <div className="search-bar">
+                        <Search className="search-icon" size={18} />
+                        <input
+                          type="text"
+                          className="search-input"
+                          placeholder="Search experiences (e.g. Food, Rickshaw...)"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <button 
+                          className="search-filter-btn" 
+                          aria-label="Filters"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setFilterModalOpen(true);
+                          }}
+                        >
+                          <SlidersHorizontal size={14} />
+                        </button>
                       </div>
-                      <button 
-                        className="search-filter-btn" 
-                        aria-label="Filters"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setFilterModalOpen(true);
-                        }}
-                      >
-                        <SlidersHorizontal size={14} />
-                      </button>
                     </div>
                   </div>
 
@@ -819,47 +951,51 @@ export default function Home() {
               {/* ── SUBTAB 3: SERVICES (AIRBNB SERVICES MOCKUP) ── */}
               {activeSubTab === "services" && (
                 <>
-                  {/* Search Bar */}
-                  <div className="search-container" style={{ paddingTop: 14 }}>
-                    <div className="search-bar" onClick={() => setDrawerOpen(true)} role="button">
-                      <Search className="search-icon" size={18} />
-                      <div className="search-text">
-                        <span className="search-text-primary">Type of service?</span>
-                        <span className="search-text-secondary">Search destinations · Add Dates · Add service</span>
+                  <div className="sticky-header-wrapper">
+                    <div className="search-container">
+                      <div className="search-bar">
+                        <Search className="search-icon" size={18} />
+                        <input
+                          type="text"
+                          className="search-input"
+                          placeholder="Search services (e.g. Photographer...)"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <button 
+                          className="search-filter-btn" 
+                          aria-label="Filters"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setFilterModalOpen(true);
+                          }}
+                        >
+                          <SlidersHorizontal size={14} />
+                        </button>
                       </div>
-                      <button 
-                        className="search-filter-btn" 
-                        aria-label="Filters"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setFilterModalOpen(true);
-                        }}
-                      >
-                        <SlidersHorizontal size={14} />
-                      </button>
                     </div>
-                  </div>
 
-                  {/* Services in New Delhi Section Header */}
-                  <div className="section-header" style={{ paddingBottom: 6 }}>
-                    <span className="section-title">Services in {geoInfo.city}</span>
-                  </div>
+                    {/* Services in New Delhi Section Header */}
+                    <div className="section-header" style={{ paddingBottom: 6 }}>
+                      <span className="section-title">Services in {geoInfo.city}</span>
+                    </div>
 
-                  {/* Category Scroll (Circular rounded images with counts) */}
-                  <div className="services-scroll">
-                    {SERVICES_CATEGORIES.map((cat) => (
-                      <button
-                        key={cat.label}
-                        className={`service-category-card${activeServiceCategory === cat.label ? " active" : ""}`}
-                        onClick={() => cat.count !== "Coming soon" && setActiveServiceCategory(cat.label)}
-                      >
-                        <div className="service-category-image">
-                          <img src={cat.img} alt={cat.label} />
-                        </div>
-                        <span className="service-category-label">{cat.label}</span>
-                        <span className="service-category-count">{cat.count}</span>
-                      </button>
-                    ))}
+                    {/* Category Scroll (Circular rounded images with counts) */}
+                    <div className="services-scroll">
+                      {SERVICES_CATEGORIES.map((cat) => (
+                        <button
+                          key={cat.label}
+                          className={`service-category-card${activeServiceCategory === cat.label ? " active" : ""}`}
+                          onClick={() => cat.count !== "Coming soon" && setActiveServiceCategory(cat.label)}
+                        >
+                          <div className="service-category-image">
+                            <img src={cat.img} alt={cat.label} />
+                          </div>
+                          <span className="service-category-label">{cat.label}</span>
+                          <span className="service-category-count">{cat.count}</span>
+                        </button>
+                      ))}
+                    </div>
                   </div>
 
                   {/* Services Listings Grid */}
@@ -960,7 +1096,7 @@ export default function Home() {
                 Trips
               </h1>
 
-              {!latestPlan ? (
+              {trips.length === 0 ? (
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: 400, textAlign: "center" }}>
                   <div style={{ width: 64, height: 64, borderRadius: "50%", background: "var(--border-subtle)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--text-muted)", marginBottom: 16 }}>
                     <Map size={28} />
@@ -972,7 +1108,7 @@ export default function Home() {
                     Use the Anywhere Door AI assistant to auto-generate customized itineraries, hotel matches, and splits.
                   </p>
                   <button
-                    onClick={() => setDrawerOpen(true)}
+                    onClick={() => { setActiveTrip(null); setDrawerOpen(true); }}
                     style={{ background: "var(--airbnb-coral)", color: "#fff", border: "none", borderRadius: "var(--radius-md)", padding: "10px 20px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-display)", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, margin: "0 auto" }}
                   >
                     <Sparkles size={14} fill="currentColor" />
@@ -980,83 +1116,170 @@ export default function Home() {
                   </button>
                 </div>
               ) : (
-                <div className="results-container" style={{ padding: 0 }}>
-                  <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 12 }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 4 }}>
                     <button
-                      onClick={() => setDrawerOpen(true)}
-                      style={{ display: "flex", alignItems: "center", gap: 6, background: "transparent", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-full)", padding: "6px 14px", fontSize: 12, color: "var(--text-muted)", cursor: "pointer" }}
+                      onClick={() => { setActiveTrip(null); setDrawerOpen(true); }}
+                      style={{ display: "flex", alignItems: "center", gap: 6, background: "var(--airbnb-coral)", color: "#fff", border: "none", borderRadius: "var(--radius-full)", padding: "8px 16px", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "var(--font-display)" }}
                     >
-                      <Sparkles size={12} style={{ color: "var(--airbnb-coral)" }} />
-                      Modify with AI
+                      <Sparkles size={12} fill="currentColor" />
+                      Plan a New Trip
                     </button>
                   </div>
 
-                  <div className="results-section-title" style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 0 }}>
-                    <Sparkles size={16} style={{ color: "var(--airbnb-coral)" }} />
-                    <span>Curated Accommodations</span>
-                  </div>
-                  {latestPlan.listings.map((listing: any, i: number) => (
-                    <div key={listing.name} className="ai-listing-card" style={{ animationDelay: `${i * 0.1}s` }}>
-                      <div className="ai-card-header">
-                        <span className="ai-card-name">{listing.name}</span>
-                        <span className="ai-card-price">{listing.price}</span>
-                      </div>
-                      <div className="ai-card-location" style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                        <MapPin size={12} style={{ color: "var(--text-muted)" }} />
-                        <span>{listing.location}</span>
-                      </div>
-                      <div className="ai-card-highlights">{listing.highlights}</div>
-                      <div className="ai-card-footer">
-                        <div className="ai-card-rating" style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                          <Heart size={12} fill="var(--airbnb-coral)" stroke="var(--airbnb-coral)" />
-                          <span>{listing.rating}</span>
-                        </div>
-                        <div className="ai-card-badge">{listing.badge}</div>
-                      </div>
-                    </div>
-                  ))}
+                  {trips.map((trip) => {
+                    const isExpanded = expandedTripId === trip.id;
+                    const plan = trip.plan;
 
-                  <div className="results-section-title" style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <CalendarDays size={16} style={{ color: "var(--airbnb-coral)" }} />
-                    <span>Daily Itinerary</span>
-                  </div>
-                  {latestPlan.itinerary.map((day: any, i: number) => (
-                    <div key={day.day} className="itinerary-card" style={{ animationDelay: `${i * 0.1}s` }}>
-                      <div className="itinerary-day-header">{day.day}</div>
-                      <div className="itinerary-activities">
-                        {day.activities.map((act: any, j: number) => (
-                          <div className="itinerary-activity" key={j}>
-                            <span className="activity-time">{act.time}</span>
-                            <div className="activity-dot" />
-                            <span className="activity-text">{act.description}</span>
+                    return (
+                      <div
+                        key={trip.id}
+                        className={`trip-accordion-item${isExpanded ? " expanded" : ""}`}
+                      >
+                        <div
+                          className="trip-header-main"
+                          onClick={() => setExpandedTripId(isExpanded ? null : trip.id)}
+                        >
+                          <div className="trip-header-left">
+                            <span className="trip-title-text">
+                              {trip.title}
+                            </span>
+                            <span className="trip-subtitle-text">
+                              {plan.listings.length} items • {plan.itinerary.length} days • {plan.budget.total} total
+                            </span>
                           </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
 
-                  <div className="results-section-title" style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <CreditCard size={16} style={{ color: "var(--airbnb-coral)" }} />
-                    <span>Cost Split Breakdown</span>
-                  </div>
-                  <div className="budget-card">
-                    <div className="budget-title">💳 Plan Summary</div>
-                    {[
-                      { label: "Accommodation", value: latestPlan.budget.accommodation },
-                      { label: "Activities", value: latestPlan.budget.activities },
-                      { label: "Food & Dining", value: latestPlan.budget.food },
-                      { label: "Transport", value: latestPlan.budget.transport },
-                      { label: "Total Cost", value: latestPlan.budget.total },
-                    ].map((row) => (
-                      <div className="budget-row" key={row.label}>
-                        <span className="budget-label">• {row.label}</span>
-                        <span className={`budget-value${row.label === "Total Cost" ? " total" : ""}`}>{row.value}</span>
+                          <div className="trip-header-actions">
+                            <button
+                              className="trip-btn modify"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveTrip(trip);
+                                setDrawerOpen(true);
+                              }}
+                            >
+                              <Sparkles size={12} fill="currentColor" />
+                              AI Edit
+                            </button>
+                            <button
+                              className="trip-btn delete"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                const nextTrips = trips.filter(t => t.id !== trip.id);
+                                setTrips(nextTrips);
+                                if (expandedTripId === trip.id) {
+                                  setExpandedTripId(nextTrips[0]?.id || null);
+                                }
+                                try {
+                                  const request = window.indexedDB.open("AnywhereDoorDB", 1);
+                                  request.onsuccess = (event: any) => {
+                                    const db = event.target.result;
+                                    const transaction = db.transaction("plans", "readwrite");
+                                    const store = transaction.objectStore("plans");
+                                    store.delete(trip.id);
+                                  };
+                                } catch (err) {
+                                  console.error("IndexedDB delete failed:", err);
+                                }
+                              }}
+                              aria-label="Delete trip"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+
+                        {isExpanded && (
+                          <div className="trip-content-details">
+                            {plan.message && (
+                              <div style={{
+                                fontSize: 12,
+                                color: "var(--text-secondary)",
+                                background: "var(--bg-glass)",
+                                padding: "10px 14px",
+                                borderRadius: "var(--radius-md)",
+                                border: "1px solid var(--border-subtle)",
+                                marginBottom: 16,
+                                lineHeight: "1.5"
+                              }}>
+                                {plan.message}
+                              </div>
+                            )}
+
+                            {/* Curated Accommodations */}
+                            <div className="results-section-title" style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 0 }}>
+                              <Sparkles size={16} style={{ color: "var(--airbnb-coral)" }} />
+                              <span>Picks For You</span>
+                            </div>
+                            {plan.listings.map((listing: any, idx: number) => (
+                              <div key={listing.name} className="ai-listing-card">
+                                <div className="ai-card-header">
+                                  <span className="ai-card-name">{listing.name}</span>
+                                  <span className="ai-card-price">{listing.price}</span>
+                                </div>
+                                <div className="ai-card-location" style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                                  <MapPin size={12} style={{ color: "var(--text-muted)" }} />
+                                  <span>{listing.location}</span>
+                                </div>
+                                <div className="ai-card-highlights">{listing.highlights}</div>
+                                <div className="ai-card-footer">
+                                  <div className="ai-card-rating" style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                                    <Star size={12} fill="#ffb100" stroke="#ffb100" />
+                                    <span>{listing.rating}</span>
+                                  </div>
+                                  <div className="ai-card-badge">{listing.badge}</div>
+                                </div>
+                              </div>
+                            ))}
+
+                            {/* Daily Itinerary */}
+                            <div className="results-section-title" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                              <CalendarDays size={16} style={{ color: "var(--airbnb-coral)" }} />
+                              <span>Itinerary</span>
+                            </div>
+                            {plan.itinerary.map((day: any) => (
+                              <div key={day.day} className="itinerary-card">
+                                <div className="itinerary-day-header">{day.day}</div>
+                                <div className="itinerary-activities">
+                                  {day.activities.map((act: any, j: number) => (
+                                    <div className="itinerary-activity" key={j}>
+                                      <span className="activity-time">{act.time}</span>
+                                      <div className="activity-dot" />
+                                      <span className="activity-text">{act.description}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
+
+                            {/* Cost Breakdown */}
+                            <div className="results-section-title" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                              <CreditCard size={16} style={{ color: "var(--airbnb-coral)" }} />
+                              <span>Cost Split Breakdown</span>
+                            </div>
+                            <div className="budget-card">
+                              <div className="budget-title">💳 Plan Summary</div>
+                              {[
+                                { label: "Accommodation", value: plan.budget.accommodation },
+                                { label: "Activities", value: plan.budget.activities },
+                                { label: "Food & Dining", value: plan.budget.food },
+                                { label: "Transport", value: plan.budget.transport },
+                                { label: "Total Cost", value: plan.budget.total },
+                              ].map((row) => (
+                                <div className="budget-row" key={row.label}>
+                                  <span className="budget-label">• {row.label}</span>
+                                  <span className={`budget-value${row.label === "Total Cost" ? " total" : ""}`}>{row.value}</span>
+                                </div>
+                              ))}
+                              <div style={{ marginTop: 12, padding: "8px 12px", background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.2)", borderRadius: "var(--radius-md)", fontSize: 13, color: "#34d399", fontWeight: 600, textAlign: "center" }}>
+                                👥 {plan.budget.perPerson}
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                    ))}
-                    <div style={{ marginTop: 12, padding: "8px 12px", background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.2)", borderRadius: "var(--radius-md)", fontSize: 13, color: "#34d399", fontWeight: 600, textAlign: "center" }}>
-                      👥 {latestPlan.budget.perPerson}
-                    </div>
-                  </div>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -1234,25 +1457,45 @@ export default function Home() {
           currency={geoInfo.currencySymbol}
           country={geoInfo.country}
           city={geoInfo.city}
-          onPlanGenerated={(plan) => {
-            setLatestPlan(plan);
-            // Save to IndexedDB
-            try {
-              const request = window.indexedDB.open("AnywhereDoorDB", 1);
-              request.onupgradeneeded = (event: any) => {
-                const db = event.target.result;
-                if (!db.objectStoreNames.contains("plans")) {
-                  db.createObjectStore("plans", { keyPath: "id" });
+          activeTrip={activeTrip}
+          onPlanGenerated={(plan, history) => {
+            if (!plan) return; // Reset/cleared search
+
+            if (activeTrip) {
+              // Modifying existing trip
+              const updatedTrips = trips.map(t => {
+                if (t.id === activeTrip.id) {
+                  return {
+                    ...t,
+                    title: plan.title || t.title,
+                    plan: plan,
+                    history: history,
+                    timestamp: Date.now()
+                  };
                 }
+                return t;
+              });
+              setTrips(updatedTrips);
+              saveTripToIndexedDB({
+                id: activeTrip.id,
+                title: plan.title || activeTrip.title,
+                plan: plan,
+                history: history,
+                timestamp: Date.now()
+              });
+            } else {
+              // Adding new trip
+              const newTripId = "trip-" + Date.now();
+              const newTrip = {
+                id: newTripId,
+                title: plan.title || `Trip to ${plan.listings[0]?.location.split(",")[0] || "Destination"}`,
+                plan: plan,
+                history: history,
+                timestamp: Date.now()
               };
-              request.onsuccess = (event: any) => {
-                const db = event.target.result;
-                const transaction = db.transaction("plans", "readwrite");
-                const store = transaction.objectStore("plans");
-                store.put({ id: "latest", data: plan, timestamp: Date.now() });
-              };
-            } catch (e) {
-              console.error("Failed to save plan to IndexedDB:", e);
+              setTrips([newTrip, ...trips]);
+              setExpandedTripId(newTripId);
+              saveTripToIndexedDB(newTrip);
             }
             setActiveNav(2); // Transition to Trips tab
           }}
