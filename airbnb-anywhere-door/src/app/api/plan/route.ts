@@ -773,13 +773,13 @@ export async function POST(req: NextRequest) {
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({
-      model: "gemini-3.5-flash",
-      generationConfig: {
-        responseMimeType: "application/json",
-        temperature: 0.85,
-      },
-    });
+    const modelsToTry = [
+      "gemini-3.5-flash-preview",
+      "gemini-3.5-flash",
+      "gemini-3-flash-preview",
+      "gemini-3.1-flash-lite",
+      "gemini-2.5-flash"
+    ];
 
     const systemPrompt = `You are "Anywhere Door", an elite AI travel concierge for Airbnb.
 
@@ -827,14 +827,43 @@ Rules:
 - Budget should reflect realistic pricing in ${currency} for the destination.
 - Return ONLY the JSON object — no markdown, no explanation, no extra text.`;
 
-    const result = await model.generateContent(
-      `${systemPrompt}\n\nUser travel request: ${prompt}`
-    );
-    const text = result.response.text();
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error("No valid JSON in model response");
+    let data: any = null;
+    let successfulModelName = "";
+    let lastError: any = null;
 
-    const data = JSON.parse(jsonMatch[0]);
+    for (const modelName of modelsToTry) {
+      try {
+        console.log(`Attempting plan generation with model: ${modelName}...`);
+        const model = genAI.getGenerativeModel({
+          model: modelName,
+          generationConfig: {
+            responseMimeType: "application/json",
+            temperature: 0.85,
+          },
+        });
+
+        const result = await model.generateContent(
+          `${systemPrompt}\n\nUser travel request: ${prompt}`
+        );
+        const text = result.response.text();
+        const jsonMatch = text.match(/\{[\s\S]*\}/);
+        if (!jsonMatch) throw new Error("No valid JSON in model response");
+
+        data = JSON.parse(jsonMatch[0]);
+        successfulModelName = modelName;
+        console.log(`Plan generation succeeded with model: ${modelName}`);
+        break;
+      } catch (err: any) {
+        console.warn(`Model ${modelName} failed:`, err?.message || err);
+        lastError = err;
+      }
+    }
+
+    if (!data) {
+      throw lastError || new Error("All models failed to generate plan.");
+    }
+
+    data.modelUsed = successfulModelName;
     return NextResponse.json(data);
   } catch (err) {
     console.error("Plan API error:", err);

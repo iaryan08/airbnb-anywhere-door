@@ -48,6 +48,7 @@ interface PlanResult {
   listings: Listing[];
   itinerary: ItineraryDay[];
   budget: Budget;
+  modelUsed?: string;
 }
 
 interface ThinkingStep {
@@ -1176,7 +1177,7 @@ export default function AnywhereDoor({
             </button>
           </div>
           <p style={{ fontSize: 10, color: "var(--text-muted)", textAlign: "center", padding: "8px 0 16px", fontFamily: "var(--font-body)" }}>
-            Powered by Gemini 3.5 Flash · Press Enter to generate
+            Powered by {result?.modelUsed ? `Gemini ${result.modelUsed.replace("gemini-", "").toUpperCase()}` : "Gemini 3.5 Flash / Preview"} · Press Enter to generate
           </p>
         </div>
       </div>
