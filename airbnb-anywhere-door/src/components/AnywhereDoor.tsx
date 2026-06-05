@@ -700,63 +700,146 @@ function getMockResponse(prompt: string, currencySymbol: string): PlanResult {
     };
   }
 
-  // DEFAULT
+  // 10. NAINITAL / NANINTAL / ROORKEE / UTTARAKHAND
+  if (p.includes("nainital") || p.includes("nanintal") || p.includes("nanital") || p.includes("roorkee") || p.includes("uttarakhand")) {
+    return {
+      listings: [
+        {
+          name: "Naini Lakefront Resort",
+          location: "Mall Road, Nainital",
+          price: isInr ? "₹8,500/night" : "$100/night",
+          rating: 4.96,
+          highlights: "Luxury lake-facing rooms, walking distance to boating deck, breakfast included.",
+          badge: "Guest Favourite",
+        },
+        {
+          name: "Snow View Pine Cottage",
+          location: "Snow View, Nainital",
+          price: isInr ? "₹5,800/night" : "$70/night",
+          rating: 4.91,
+          highlights: "Pine-wood cottage with private terrace and panoramic views of Nanda Devi peak.",
+          badge: "Superhost",
+        },
+        {
+          name: "Tallital Boutique Home",
+          location: "Tallital, Nainital",
+          price: isInr ? "₹3,900/night" : "$48/night",
+          rating: 4.82,
+          highlights: "Cosy boutique suite, walking distance to bus stand and local bazaar.",
+          badge: "Top Rated",
+        },
+      ],
+      itinerary: [
+        {
+          day: "Day 1 — Arrive & Naini Lake Boating",
+          activities: [
+            { time: "Afternoon", description: "Arrive in Nainital from Roorkee. Check in to your lakefront resort." },
+            { time: "Evening", description: "Enjoy a scenic row-boat ride on Naini Lake during sunset." },
+            { time: "Night", description: "Stroll along Mall Road and have dinner at Machan Restaurant." },
+          ],
+        },
+        {
+          day: "Day 2 — Snow View & Cave Garden",
+          activities: [
+            { time: "Morning", description: "Take the aerial ropeway to Snow View Point for Himalayan views." },
+            { time: "Afternoon", description: "Explore the Eco Cave Gardens and local Tibetan market." },
+            { time: "Evening", description: "Sunset tea at Tiffin Top (Dorothy's Seat) viewpoint." },
+          ],
+        },
+        {
+          day: "Day 3 — Bhimtal Lake Tour & Departure",
+          activities: [
+            { time: "Morning", description: "Drive to Bhimtal for boating and aquarium visit on the island." },
+            { time: "Afternoon", description: "Traditional Kumaoni lunch (Bhatt ki Churkani) at a local cafe." },
+            { time: "Evening", description: "Depart back to Roorkee." },
+          ],
+        },
+      ],
+      budget: {
+        accommodation: isInr ? "₹22,800" : "$270",
+        activities: isInr ? "₹4,500" : "$55",
+        food: isInr ? "₹6,000" : "$70",
+        transport: isInr ? "₹3,500" : "$40",
+        total: isInr ? "₹36,800" : "$435",
+        perPerson: isInr ? "₹9,200 / person (4 guests)" : "$108.75 / person (4 guests)",
+      },
+    };
+  }
+
+  // Extract a potential destination from prompt dynamically
+  let detectedCity = isInr ? "Udaipur, Rajasthan" : "Santorini, Greece";
+  let detectedName = isInr ? "Udaipur" : "Santorini";
+  const words = prompt.split(/\s+/);
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+    if (
+      word.length > 3 && 
+      word[0] === word[0].toUpperCase() && 
+      !["From", "Trip", "Budget", "With", "Near", "July", "June", "Plan", "Roorkee", "India", "Nainital"].includes(word)
+    ) {
+      detectedName = word;
+      detectedCity = isInr ? `${word}, India` : `${word}, Europe`;
+      break;
+    }
+  }
+
+  // DEFAULT FALLBACK (Generic Beach/Mansion/Chalet depending on Country)
   return {
     listings: [
       {
-        name: "Clifftop Heritage Mansion",
-        location: isInr ? "Udaipur, Rajasthan" : "Santorini, Greece",
+        name: isInr ? `Heritage Palace in ${detectedName}` : `Caldera Villa in ${detectedName}`,
+        location: detectedCity,
         price: isInr ? "₹12,500/night" : "$420/night",
         rating: 4.97,
         highlights: isInr
-          ? "Stunning views of Pichola Lake, private infinity pool, Rajasthani architecture with butler service."
-          : "Breathtaking caldera views, private infinity pool, butler service included.",
+          ? `Stunning views in ${detectedName}, private infinity pool, authentic architecture, and staff services.`
+          : `Breathtaking views in ${detectedName}, private infinity pool, butler service included.`,
         badge: "Guest Favourite",
       },
       {
-        name: isInr ? "Backwater Houseboat Suite" : "Designer Cave Suite",
-        location: isInr ? "Alleppey, Kerala" : "Oia, Santorini",
+        name: isInr ? `Backwater Suite in ${detectedName}` : `Designer Suite in ${detectedName}`,
+        location: detectedCity,
         price: isInr ? "₹8,200/night" : "$280/night",
         rating: 4.93,
         highlights: isInr
-          ? "Luxury houseboat with AC bedrooms, personal chef, and guided backwater tours at dawn."
-          : "Traditional cycladic cave carved into volcanic rock. Heated plunge pool, rooftop terrace.",
+          ? "Luxury stays with modern amenities, personal chef, and guided tours."
+          : "Traditional cycladic cave with heated plunge pool and private deck.",
         badge: "Superhost",
       },
       {
-        name: isInr ? "Snow Peak Forest Chalet" : "Luxury Seaview Penthouse",
-        location: isInr ? "Manali, Himachal Pradesh" : "Fira, Santorini",
+        name: isInr ? `Forest Chalet near ${detectedName}` : `Seaview Penthouse in ${detectedName}`,
+        location: detectedCity,
         price: isInr ? "₹6,800/night" : "$340/night",
         rating: 4.89,
         highlights: isInr
-          ? "Cosy pine-wood chalet, Himalayan views, fireplace, and skiing slopes 2km away."
+          ? "Cosy pine-wood cabin with mountain views, fireplace, and scenic surrounding deck."
           : "360° panoramic views, chef's kitchen, private jacuzzi.",
         badge: "Top Rated",
       },
     ],
     itinerary: [
       {
-        day: isInr ? "Day 1 — Arrival & Lake Pichola Sunset" : "Day 1 — Arrival & Caldera Sunset",
+        day: isInr ? `Day 1 — Arrival & ${detectedName} Tour` : "Day 1 — Arrival & Caldera Sunset",
         activities: [
-          { time: "Afternoon", description: isInr ? "Check in at your heritage mansion and freshen up." : "Check in and freshen up at your villa." },
-          { time: "Evening", description: isInr ? "Sunset boat ride on Lake Pichola with views of City Palace." : "Walk the rim path from Fira to Oia — the world's most dramatic sunset." },
-          { time: "Night", description: isInr ? "Dinner at a rooftop restaurant with traditional Rajasthani thali." : "Dinner at Ambrosia restaurant with caldera views." },
+          { time: "Afternoon", description: `Check in at your resort in ${detectedName} and freshen up.` },
+          { time: "Evening", description: `Enjoy scenic local sightseeing and sunset walks in ${detectedName}.` },
+          { time: "Night", description: `Dinner at a local restaurant with authentic local food.` },
         ],
       },
       {
-        day: isInr ? "Day 2 — City Palace & Bazaars" : "Day 2 — Island & Volcano",
+        day: `Day 2 — ${detectedName} Highlights`,
         activities: [
-          { time: "Morning", description: isInr ? "Visit the magnificent City Palace museum and Jagdish Temple." : "Boat tour to the active Nea Kameni volcano and hot springs." },
-          { time: "Afternoon", description: isInr ? "Explore the colourful Hathi Pol bazaar for handicrafts and textiles." : "Visit Akrotiri archaeological site." },
-          { time: "Evening", description: isInr ? "Monsoon Palace (Sajjangarh) for panoramic sunset views." : "Wine tasting at Santo Wines with sunset backdrop." },
+          { time: "Morning", description: `Guided historical/sightseeing tour around ${detectedName}.` },
+          { time: "Afternoon", description: "Shopping at local markets for souvenirs and handicrafts." },
+          { time: "Evening", description: "Sunset panoramic viewpoints tour." },
         ],
       },
       {
-        day: isInr ? "Day 3 — Leisure & Departure" : "Day 3 — Beaches & Leisure",
+        day: "Day 3 — Leisure & Departure",
         activities: [
-          { time: "Morning", description: isInr ? "Spa session at your heritage property." : "Red Beach and White Beach — volcanic sand." },
-          { time: "Afternoon", description: isInr ? "Vintage car museum or Shilpgram rural arts centre." : "ATV ride around the island's scenic coast." },
-          { time: "Evening", description: isInr ? "Final lakeside dinner before departure." : "Farewell dinner at your villa's private terrace." },
+          { time: "Morning", description: "Relaxing wellness/spa session." },
+          { time: "Afternoon", description: "Traditional lunch at a highly-rated local diner." },
+          { time: "Evening", description: `Check out and departure back home.` },
         ],
       },
     ],
@@ -835,12 +918,18 @@ export default function AnywhereDoor({
     setResult(null);
     runStepsAnimation();
 
+    // 6-second timeout controller to trigger fallback immediately in case of network timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 6000);
+
     try {
       const res = await fetch("/api/plan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: finalPrompt, currency, country, city }),
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
       const data: PlanResult = await res.json();
       setSteps(THINKING_STEPS.map((label) => ({ label, status: "done" })));
       await new Promise((r) => setTimeout(r, 400));
@@ -848,7 +937,9 @@ export default function AnywhereDoor({
       if (onPlanGenerated) {
         onPlanGenerated(data);
       }
-    } catch {
+    } catch (err) {
+      clearTimeout(timeoutId);
+      console.warn("API call failed or timed out. Falling back to local search database:", err);
       const mock = getMockResponse(finalPrompt, currency);
       setResult(mock);
       setSteps(THINKING_STEPS.map((label) => ({ label, status: "done" })));

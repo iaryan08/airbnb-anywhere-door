@@ -417,6 +417,33 @@ export default function Home() {
     }
   }, []);
 
+  // Load latest plan from IndexedDB on mount
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const request = window.indexedDB.open("AnywhereDoorDB", 1);
+      request.onupgradeneeded = (event: any) => {
+        const db = event.target.result;
+        if (!db.objectStoreNames.contains("plans")) {
+          db.createObjectStore("plans", { keyPath: "id" });
+        }
+      };
+      request.onsuccess = (event: any) => {
+        const db = event.target.result;
+        const transaction = db.transaction("plans", "readonly");
+        const store = transaction.objectStore("plans");
+        const getReq = store.get("latest");
+        getReq.onsuccess = (e: any) => {
+          if (e.target.result && e.target.result.data) {
+            setLatestPlan(e.target.result.data);
+          }
+        };
+      };
+    } catch (e) {
+      console.error("Failed to load plan from IndexedDB:", e);
+    }
+  }, []);
+
   const toggleWishlist = (id: string) => {
     setWishlistedIds((prev) => {
       const next = prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id];
@@ -1191,6 +1218,24 @@ export default function Home() {
           city={geoInfo.city}
           onPlanGenerated={(plan) => {
             setLatestPlan(plan);
+            // Save to IndexedDB
+            try {
+              const request = window.indexedDB.open("AnywhereDoorDB", 1);
+              request.onupgradeneeded = (event: any) => {
+                const db = event.target.result;
+                if (!db.objectStoreNames.contains("plans")) {
+                  db.createObjectStore("plans", { keyPath: "id" });
+                }
+              };
+              request.onsuccess = (event: any) => {
+                const db = event.target.result;
+                const transaction = db.transaction("plans", "readwrite");
+                const store = transaction.objectStore("plans");
+                store.put({ id: "latest", data: plan, timestamp: Date.now() });
+              };
+            } catch (e) {
+              console.error("Failed to save plan to IndexedDB:", e);
+            }
             setActiveNav(2); // Transition to Trips tab
           }}
         />
