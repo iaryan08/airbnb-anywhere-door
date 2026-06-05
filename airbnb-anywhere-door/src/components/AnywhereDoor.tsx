@@ -921,19 +921,18 @@ export default function AnywhereDoor({
     setError(null);
     runStepsAnimation();
 
-    // 6-second timeout controller to trigger fallback immediately in case of network timeout
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 6000);
+    const fetchPromise = fetch("/api/plan", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: finalPrompt, currency, country, city }),
+    });
+
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Request timed out after 6 seconds. Please check your Gemini API key configuration on Vercel.")), 6000)
+    );
 
     try {
-      const res = await fetch("/api/plan", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: finalPrompt, currency, country, city }),
-        signal: controller.signal,
-      });
-      clearTimeout(timeoutId);
-      
+      const res = await Promise.race([fetchPromise, timeoutPromise]) as Response;
       const data = await res.json();
       if (!res.ok || data.error) {
         throw new Error(data.error || `HTTP error! Status: ${res.status}`);
@@ -946,17 +945,8 @@ export default function AnywhereDoor({
         onPlanGenerated(data);
       }
     } catch (err: any) {
-      clearTimeout(timeoutId);
-      console.error("API call failed or timed out:", err);
-      let errorMsg = "Failed to compile your travel plan. Please check your network connection.";
-      if (err instanceof Error) {
-        if (err.name === "AbortError") {
-          errorMsg = "Request timed out after 6 seconds. Please check your Gemini API key configuration on Vercel.";
-        } else {
-          errorMsg = err.message;
-        }
-      }
-      setError(errorMsg);
+      console.warn("API call failed or timed out:", err?.message || err);
+      setError(err?.message || "Failed to compile your travel plan. Please check your network connection.");
       setSteps(THINKING_STEPS.map((label) => ({ label, status: "error" })));
     } finally {
       setIsLoading(false);
