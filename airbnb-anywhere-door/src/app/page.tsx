@@ -1056,15 +1056,75 @@ export default function Home() {
 
   // Helper to replace static/hardcoded cities in listings with the geolocated city name
   const getDynamicLocation = (location: string, country: string) => {
-    return location;
+    const city = geoInfo.city || "New Delhi";
+    const userCountry = geoInfo.country || "India";
+
+    if (country && country !== userCountry) {
+      return `${location.split(",")[0]}, ${city}`;
+    }
+
+    if (userCountry !== "Switzerland") {
+      if (location.includes("Goa")) return `Beachfront, ${city}`;
+      if (location.includes("Varkala") || location.includes("Kerala")) return `Lakeside Beach, ${city}`;
+      if (location.includes("Jibhi") || location.includes("Himachal")) return `Pine Hills, ${city}`;
+      if (location.includes("Udaipur") || location.includes("Rajasthan") || location.includes("Jodhpur")) return `Heritage Zone, ${city}`;
+      if (location.includes("Gurugram") || location.includes("Haryana")) return `Downtown, ${city}`;
+      if (location.includes("Coorg") || location.includes("Karnataka")) return `Countryside, ${city}`;
+      if (location.includes("Delhi") || location.includes("New Delhi") || location.includes("Chandni Chowk")) {
+        if (location.includes("Chandni Chowk")) return `Market Area, ${city}`;
+        if (location.includes("Connaught Place")) return `City Center, ${city}`;
+        if (location.includes("Humayun")) return `Historic Garden, ${city}`;
+        if (location.includes("Lodhi")) return `Art District, ${city}`;
+        if (location.includes("Hauz Khas")) return `Lake Village, ${city}`;
+        if (location.includes("Sunder Nursery")) return `Heritage Park, ${city}`;
+        if (location.includes("Saket")) return `Studio Zone, ${city}`;
+        return `Central, ${city}`;
+      }
+      return `${location.split(",")[0]}, ${city}`;
+    } else {
+      if (location.includes("Lausanne")) return `Lakeside, ${city}`;
+      if (location.includes("Montreux")) return `Riviera, ${city}`;
+      if (location.includes("Zermatt")) return `Alpine Village, ${city}`;
+      if (location.includes("Grindelwald")) return `Glacier Valley, ${city}`;
+      if (location.includes("Geneva")) return `Downtown, ${city}`;
+      if (location.includes("Lugano")) return `Lakefront, ${city}`;
+      if (location.includes("Verbier")) return `Ski Resort, ${city}`;
+      if (location.includes("Zurich")) return `Old Town, ${city}`;
+      if (location.includes("Lucerne")) return `Lake Shore, ${city}`;
+      return `${location.split(",")[0]}, ${city}`;
+    }
   };
 
   const getDynamicName = (name: string, country: string) => {
-    return name;
+    const city = geoInfo.city || "New Delhi";
+    let updated = name;
+    updated = updated.replace(/New Delhi/g, city);
+    updated = updated.replace(/Delhi/g, city);
+    updated = updated.replace(/Zurich/g, city);
+    updated = updated.replace(/Lucerne/g, city);
+    updated = updated.replace(/Zermatt/g, city);
+    updated = updated.replace(/Geneva/g, city);
+    updated = updated.replace(/Goa/g, city);
+    updated = updated.replace(/Varkala/g, city);
+    updated = updated.replace(/Jibhi/g, city);
+    updated = updated.replace(/Udaipur/g, city);
+    updated = updated.replace(/Gurugram/g, city);
+    updated = updated.replace(/Coorg/g, city);
+    updated = updated.replace(/Alleppey/g, city);
+    updated = updated.replace(/Jodhpur/g, city);
+
+    if (updated.includes("Taj Mahal Sunrise Tour")) {
+      updated = `Scenic Sunrise Landmark Tour from ${city}`;
+    }
+    return updated;
   };
 
   // Dynamic stays filtering based on interactive filters + category
   const filteredStays = staysListings.filter((l) => {
+    // Avoid mixing country listings when using mock data fallbacks
+    const targetCountry = geoInfo.country === "Switzerland" ? "Switzerland" : "India";
+    if (l.country && l.country !== targetCountry) return false;
+
     if (l.category !== activeCategory) return false;
     if (l.price > maxPriceFilter) return false;
     if (selectedPropertyType !== "Any") {
@@ -1091,6 +1151,10 @@ export default function Home() {
 
   // Dynamic experiences filtering based on interactive filters
   const filteredExperiences = experiencesListings.filter((l) => {
+    // Avoid mixing country listings when using mock data fallbacks
+    const targetCountry = geoInfo.country === "Switzerland" ? "Switzerland" : "India";
+    if (l.country && l.country !== targetCountry) return false;
+
     if (l.price > maxPriceFilter) return false;
     if (minRatingFilter > 0 && l.rating < minRatingFilter) return false;
     if (searchQuery.trim() !== "") {
@@ -1105,6 +1169,10 @@ export default function Home() {
 
   // Dynamic services filtering based on category + interactive filters
   const filteredServices = servicesListings.filter((l) => {
+    // Avoid mixing country listings when using mock data fallbacks
+    const targetCountry = geoInfo.country === "Switzerland" ? "Switzerland" : "India";
+    if (l.country && l.country !== targetCountry) return false;
+
     if (l.category !== activeServiceCategory) return false;
     if (l.price > maxPriceFilter) return false;
     if (minRatingFilter > 0 && l.rating < minRatingFilter) return false;
@@ -1392,7 +1460,6 @@ export default function Home() {
                   {/* Stays Grid */}
                   <div className="section-header">
                     <span className="section-title">{sectionTitle}</span>
-                    <span className="section-link">Show all →</span>
                   </div>
 
                   <div className="listings-grid">
@@ -1464,7 +1531,6 @@ export default function Home() {
                   {/* Experiences Grid */}
                   <div className="section-header">
                     <span className="section-title">{sectionTitle}</span>
-                    <span className="section-link">Show all →</span>
                   </div>
 
                   <div className="listings-grid">
@@ -1561,7 +1627,6 @@ export default function Home() {
                   {/* Services Listings Grid */}
                   <div className="section-header">
                     <span className="section-title">{sectionTitle}</span>
-                    <span className="section-link">Show all →</span>
                   </div>
 
                   <div className="listings-grid">
