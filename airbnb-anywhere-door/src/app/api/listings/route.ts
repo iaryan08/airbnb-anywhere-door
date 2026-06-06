@@ -16,12 +16,18 @@ interface CacheData {
   };
 }
 
+// Strips UTF-8/UTF-16 BOM that PowerShell/Windows writes to files
+function stripBOM(str: string): string {
+  return str.charCodeAt(0) === 0xFEFF ? str.slice(1) : str;
+}
+
 // Read cache helper
 function getCachedData(key: string): any | null {
   try {
     if (fs.existsSync(CACHE_FILE)) {
-      const content = fs.readFileSync(CACHE_FILE, "utf-8");
-      if (!content.trim()) return null;
+      const raw = fs.readFileSync(CACHE_FILE, "utf-8");
+      const content = stripBOM(raw).trim();
+      if (!content) return null;
       const cache: CacheData = JSON.parse(content);
       const entry = cache[key];
       if (entry && Date.now() - entry.timestamp < CACHE_TTL_MS) {
@@ -29,7 +35,9 @@ function getCachedData(key: string): any | null {
       }
     }
   } catch (e) {
-    console.error("Error reading listings cache file:", e);
+    console.error("Error reading listings cache file (resetting):", e);
+    // Self-heal: overwrite corrupt file so next request can write cleanly
+    try { fs.writeFileSync(CACHE_FILE, "{}", "utf-8"); } catch (_) {}
   }
   return null;
 }
@@ -39,9 +47,15 @@ function setCachedData(key: string, data: any) {
   try {
     let cache: CacheData = {};
     if (fs.existsSync(CACHE_FILE)) {
-      const content = fs.readFileSync(CACHE_FILE, "utf-8");
-      if (content.trim()) {
-        cache = JSON.parse(content);
+      const raw = fs.readFileSync(CACHE_FILE, "utf-8");
+      const content = stripBOM(raw).trim();
+      if (content) {
+        try {
+          cache = JSON.parse(content);
+        } catch (_) {
+          // Corrupt existing file — start fresh
+          cache = {};
+        }
       }
     }
     cache[key] = {
@@ -138,7 +152,7 @@ export async function POST(req: NextRequest) {
           const properties = serpData.properties || [];
 
           if (properties.length > 0) {
-            const mappedStays = properties.slice(0, 8).map((property: any, index: number) => {
+            const mappedStays = properties.slice(0, 12).map((property: any, index: number) => {
               const rating = property.overall_rating || property.rating || (4.5 + Math.random() * 0.45);
               
               // Extract best image
@@ -270,11 +284,13 @@ Currency: ${currency}
 ${searchContext}
 
 Based on the location and search grounding context, generate a JSON with:
-1. Generate 4-6 popular local experiences/activities to do in this city.
-2. Generate 4-6 local service listings (specifically category "Photography" or "Make-up").
+1. Generate 6-8 popular local experiences/activities to do in this city.
+2. Generate 5-7 local service listings (specifically category "Photography" or "Make-up").
 
 Ensure that:
 - Prices must be raw numbers (representing price in INR) that match the realistic cost tier of the city (e.g. 5000, 15000, 2500). DO NOT include currency symbols or text in the price field.
+- For experiences/activities, if the activity/experience is inherently free to do (e.g. self-guided campus walks, public parks/gardens/lakes/dams, spiritual visits to shrines/temples/mosques/churches, sightseeing public engineering marvels or historic public landmarks with no entrance tickets), set its price to 0. DO NOT invent non-zero fees for free public attractions.
+- Service listings (like Photography or Make-up) must represent independent local businesses, agencies, or freelancers. Do NOT generate services that imply closed/restricted public institutions, government offices, or universities (e.g. IIT) are running commercial services or charging public fees.
 - Experiences ids should be "dyn-exp-1", "dyn-exp-2", ..., "dyn-exp-N".
 - Services ids should be "dyn-service-1", "dyn-service-2", ..., "dyn-service-N".
 
@@ -324,12 +340,14 @@ Currency: ${currency}
 ${searchContext}
 
 Based on the location and search grounding context, generate a JSON with:
-1. Generate 8-10 popular stays/hotels in this city. For each stay, map it to an appropriate category selected ONLY from: [${allowedCatsStr}]. Do NOT use "Beach" since it is not in the allowed list for this location. Each stay should have unique details, a realistic name, and amenities matching its assigned category.
-2. Generate 4-6 popular local experiences/activities to do in this city.
-3. Generate 4-6 local service listings (specifically category "Photography" or "Make-up").
+1. Generate 12-14 popular stays/hotels in this city. For each stay, map it to an appropriate category selected ONLY from: [${allowedCatsStr}]. Do NOT use "Beach" since it is not in the allowed list for this location. Aim for at least 2 entries per allowed category for variety. Each stay should have unique details, a realistic name, and amenities matching its assigned category.
+2. Generate 6-8 popular local experiences/activities to do in this city.
+3. Generate 5-7 local service listings (specifically category "Photography" or "Make-up").
 
 Ensure that:
 - Prices must be raw numbers (representing price in INR) that match the realistic cost tier of the city (e.g. 5000, 15000, 2500). DO NOT include currency symbols or text in the price field.
+- For experiences/activities, if the activity/experience is inherently free to do (e.g. self-guided campus walks, public parks/gardens/lakes/dams, spiritual visits to shrines/temples/mosques/churches, sightseeing public engineering marvels or historic public landmarks with no entrance tickets), set its price to 0. DO NOT invent non-zero fees for free public attractions.
+- Service listings (like Photography or Make-up) must represent independent local businesses, agencies, or freelancers. Do NOT generate services that imply closed/restricted public institutions, government offices, or universities (e.g. IIT) are running commercial services or charging public fees.
 - Stays ids should be "dyn-stay-1", "dyn-stay-2", ..., "dyn-stay-N".
 - Experiences ids should be "dyn-exp-1", "dyn-exp-2", ..., "dyn-exp-N".
 - Services ids should be "dyn-service-1", "dyn-service-2", ..., "dyn-service-N".
@@ -591,7 +609,46 @@ Output ONLY a JSON block matching this structure, with no markdown formatting an
             emoji: "🥾",
             category: "Adventure",
             country,
-          }
+          },
+          {
+            id: "dyn-exp-5",
+            name: "Yoga & Meditation at Sunrise",
+            location: `Riverside, ${city}`,
+            price: 1200,
+            rating: 4.95,
+            tags: ["Morning Session", "Guided", "Beginner Friendly"],
+            badge: "Top Rated",
+            gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+            emoji: "🧘",
+            category: "Wellness",
+            country,
+          },
+          {
+            id: "dyn-exp-6",
+            name: "Night Heritage Walk & Ghost Stories",
+            location: `Old Quarter, ${city}`,
+            price: 2000,
+            rating: 4.88,
+            tags: ["Guided Tour", "Lantern Walk", "History & Lore"],
+            badge: "Rare Find",
+            gradient: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
+            emoji: "🔦",
+            category: "Sightseeing",
+            country,
+          },
+          {
+            id: "dyn-exp-7",
+            name: "Local Cooking Class & Market Visit",
+            location: `Spice Market, ${city}`,
+            price: 2800,
+            rating: 4.94,
+            tags: ["3 Dishes", "Market Walk", "Recipe Book"],
+            badge: "Guest Favourite",
+            gradient: "linear-gradient(135deg, #ff6a00 0%, #ee0979 100%)",
+            emoji: "👨‍🍳",
+            category: "Food",
+            country,
+          },
         ],
         services: [
           {
@@ -631,6 +688,32 @@ Output ONLY a JSON block matching this structure, with no markdown formatting an
             gradient: "linear-gradient(135deg, #4776e6 0%, #8e54e9 100%)",
             emoji: "🎥",
             category: "Photography",
+            country,
+          },
+          {
+            id: "dyn-service-4",
+            name: "Studio Headshots & LinkedIn Portraits",
+            location: `Photo Studio, ${city}`,
+            price: 3500,
+            rating: 4.85,
+            tags: ["Quick Session", "3 Outfits", "Fast Delivery"],
+            badge: "New",
+            gradient: "linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)",
+            emoji: "👤",
+            category: "Photography",
+            country,
+          },
+          {
+            id: "dyn-service-5",
+            name: "Party & Event Make-up Artist",
+            location: `Home Visit Available, ${city}`,
+            price: 4500,
+            rating: 4.89,
+            tags: ["Home Visit", "All Skin Tones", "Touch-up Kit"],
+            badge: "Guest Favourite",
+            gradient: "linear-gradient(135deg, #c94b4b 0%, #4b134f 100%)",
+            emoji: "💅",
+            category: "Make-up",
             country,
           }
         ]

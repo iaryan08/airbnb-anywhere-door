@@ -445,17 +445,22 @@ body {
 }
 
 .listing-card {
-  border-radius: 0;
-  overflow: visible;
-  background: transparent;
-  border: none;
-  transition: transform var(--transition-smooth);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  transition: all var(--transition-smooth);
   cursor: pointer;
-  box-shadow: none;
+  box-shadow: var(--shadow-card);
+  box-sizing: border-box;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
 }
 .listing-card:hover {
-  transform: translateY(-2px);
-  box-shadow: none;
+  transform: translateY(-4px);
+  border-color: var(--border-medium);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
 }
 
 .listing-image-placeholder {
@@ -466,7 +471,7 @@ body {
   justify-content: center;
   position: relative;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: var(--radius-md);
 }
 
 .listing-info { padding: 8px 0 0 0; }
@@ -526,6 +531,17 @@ body {
   background: var(--airbnb-coral-glow);
   color: var(--airbnb-coral);
   border: 1px solid rgba(255, 56, 92, 0.18);
+}
+
+.listing-tagline {
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin-top: 6px;
+  margin-bottom: 6px;
 }
 
 .guest-fav-badge {
@@ -786,9 +802,20 @@ body {
   transition: all var(--transition-fast);
   flex-shrink: 0;
   align-self: center;
+  padding: 0;
+}
+.send-btn svg {
+  display: block;
+  flex-shrink: 0;
+  margin: 0;
 }
 .send-btn:hover { transform: scale(1.1); }
 .send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+  transform-origin: center;
+}
 
 /*    AI THINKING STEPS
    */
@@ -1039,6 +1066,18 @@ body {
   border-radius: var(--radius-full);
   margin-bottom: 24px;
   box-shadow: inset 0 0 12px rgba(255, 56, 92, 0.1);
+}
+.slide-cover-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #ff385c, #6366f1);
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 .slide h1 {
   font-size: clamp(38px, 4.5vw, 54px);
@@ -1683,15 +1722,25 @@ body {
 }
 
 @media print {
+  * { 
+    filter: none !important;
+    -webkit-filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
   body { 
     background: #08080c !important; 
     color: #ffffff !important; 
     -webkit-print-color-adjust: exact; 
     print-color-adjust: exact; 
   }
-  .deck-page, .slides-wrapper, .slide {
+  .deck-page, .slides-wrapper {
     background-color: #08080c !important;
-    background-image: none !important; /* Remove dot grid vector paths */
+    background-image: none !important; /* Remove dot grid vector paths on wrapper */
   }
   .deck-nav { display: none !important; }
   .slides-wrapper { height: auto; overflow: visible; padding-top: 0; margin-top: 0; scroll-snap-type: none; }
@@ -1699,9 +1748,10 @@ body {
     height: 100vh; 
     page-break-after: always; 
     break-after: page; 
-    background: #08080c !important; 
-    -webkit-print-color-adjust: exact; 
-    print-color-adjust: exact; 
+    background-color: #08080c !important; 
+    background-image: none !important; /* Disable dynamic radial gradients in PDF to avoid CPU/GPU rendering choke */
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
     padding: 40px 80px !important; /* Premium original padding */
   }
   .slide-number { display: none; }
@@ -1715,6 +1765,9 @@ body {
   }
   .slide-cover-badge {
     color: #ffffff !important;
+    background: linear-gradient(135deg, #ff385c, #6366f1) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
   .slide h1 {
     font-size: 42px !important;
@@ -1725,8 +1778,10 @@ body {
     margin-bottom: 20px !important;
   }
   
-  /* Disable radial background orbs in PDF if they add rendering weight */
-  .slide-bg-orb { display: none !important; }
+  /* Hide radial background orbs in PDF to avoid CPU/GPU choke from large blurs */
+  .slide-bg-orb { 
+    display: none !important; 
+  }
 
   /* Disable heavy print performance bottlenecks (large blurs & animations) */
   .slide-card { 

@@ -110,7 +110,7 @@ export default function DeckPage() {
             <div className="slide-cover-grid">
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "24px" }}>
-                  <span className="slide-cover-badge" style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", background: "linear-gradient(135deg, #ff385c, #6366f1)", padding: "6px 16px", borderRadius: "20px", border: "1px solid rgba(255,255,255,0.1)", color: "#ffffff" }}>
+                  <span className="slide-cover-badge">
                     One Prompt. Perfect Trip. Zero Filters.
                   </span>
                 </div>
@@ -351,7 +351,7 @@ export default function DeckPage() {
                 <div className="slide-card" style={{ padding: "14px 18px", flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
                   <div style={{ fontSize: "13px", fontWeight: 700, color: "#ffffff", display: "flex", justifyContent: "space-between" }}>
                     <span>1. AI Property Matchmaker</span>
-                    <span style={{ fontSize: "11px", color: "#ff385c", fontWeight: 600 }}>Gemini 3.5 Flash + Tavily API</span>
+                    <span style={{ fontSize: "11px", color: "#ff385c", fontWeight: 600 }}>Gemini + Tavily + SerpApi + Pexels</span>
                   </div>
                   <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.55)", margin: "4px 0 8px 0" }}>Parses multi-variable constraints to surface the top 3 exact matches using high-speed structured JSON.</p>
                   <div className="ux-flow-step-preview" style={{ display: "flex", gap: "8px", justifyContent: "space-between", margin: 0 }}>
@@ -396,7 +396,7 @@ export default function DeckPage() {
             </div>
 
             <div className="ux-flow-footer" style={{ borderTop: "1px solid rgba(255, 255, 255, 0.08)", marginTop: "20px", paddingTop: "12px", fontSize: "11px", color: "var(--text-muted)", textAlign: "center" }}>
-              <strong>Technical Infrastructure:</strong> Built with a CORS-Free Geolocation Proxy (<code>/api/geolocation</code>) and dual-mode responsive design to ensure a native-feeling prototype across mobile and desktop.
+              <strong>Technical Infrastructure:</strong> Integrated with a Geolocation Proxy, Gemini API, SerpApi Google Hotels, Pexels Image Search, and Tavily grounding search with robust process caching.
             </div>
           </div>
           <div className="slide-number">05 / 07</div>
@@ -489,7 +489,7 @@ export default function DeckPage() {
                   <span>✅ Engineered Workaround</span>
                 </div>
                 <div className="risk-col-item">
-                  The AI outputs <strong>structured JSON constraints</strong> passed directly into live, verified Airbnb inventory matching APIs, ensuring 100% reality grounding.
+                  The AI outputs <strong>structured JSON constraints</strong> passed directly into live SerpApi Google Hotels and Pexels Image Search APIs for 100% verified listings.
                 </div>
                 <div className="risk-col-item">
                   Implementing <strong>progressive rendering</strong> and <strong>animated step-by-step progress tracking UI</strong>, keeping perceived wait time under 2 seconds.
@@ -498,7 +498,7 @@ export default function DeckPage() {
                   Server-side API processing and proxy routing; <strong>zero persistent storage</strong> of user prompt details without explicit opt-in consent.
                 </div>
                 <div className="risk-col-item">
-                  Deploying <strong>semantic query caching</strong>, session rate-limiting, and utilizing highly cost-efficient Google Gemini 3.5 Flash models.
+                  Deploying <strong>persistent local cache files</strong> (24h TTL) and in-memory process caches to bypass duplicate API requests and keep costs at $0.00.
                 </div>
               </div>
             </div>

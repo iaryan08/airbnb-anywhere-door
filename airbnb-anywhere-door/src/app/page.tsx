@@ -743,7 +743,7 @@ export default function Home() {
     setSearchQuery("");
   }, [activeSubTab]);
 
-  const [activeCategory, setActiveCategory] = useState("Beach");
+  const [activeCategory, setActiveCategory] = useState("Cabins");
   const [activeServiceCategory, setActiveServiceCategory] = useState("Photography");
   const [activeNav, setActiveNav] = useState(0);
   const [headerScrolled, setHeaderScrolled] = useState(false);
@@ -777,9 +777,37 @@ export default function Home() {
     currencySymbol: "₹",
   });
   
-  const [staysListings, setStaysListings] = useState(STAYS_LISTINGS);
-  const [experiencesListings, setExperiencesListings] = useState(EXPERIENCES_LISTINGS);
-  const [servicesListings, setServicesListings] = useState(SERVICES_LISTINGS);
+  // Start empty — only populated after API resolves (dynamic or mock fallback)
+  const [listingsLoading, setListingsLoading] = useState(true);
+  const [staysListings, setStaysListings] = useState<typeof STAYS_LISTINGS>([]);
+  const [experiencesListings, setExperiencesListings] = useState<typeof EXPERIENCES_LISTINGS>([]);
+  const [servicesListings, setServicesListings] = useState<typeof SERVICES_LISTINGS>([]);
+
+  // Auto-reset activeCategory when dynamic listings load and current selection has no matches
+  useEffect(() => {
+    const hasMatch = staysListings.some((l) => l.category === activeCategory);
+    if (!hasMatch && staysListings.length > 0) {
+      const orderedCats = STAYS_CATEGORIES.map((c) => c.label);
+      const firstAvail = orderedCats.find((cat) =>
+        staysListings.some((l) => l.category === cat)
+      );
+      if (firstAvail) setActiveCategory(firstAvail);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [staysListings]);
+
+  // Auto-reset activeServiceCategory when dynamic listings load and current selection has no matches
+  useEffect(() => {
+    const hasMatch = servicesListings.some((l) => l.category === activeServiceCategory);
+    if (!hasMatch && servicesListings.length > 0) {
+      const orderedCats = SERVICES_CATEGORIES.map((c) => c.label);
+      const firstAvail = orderedCats.find((cat) =>
+        servicesListings.some((l) => l.category === cat)
+      );
+      if (firstAvail) setActiveServiceCategory(firstAvail);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [servicesListings]);
 
   // Helper to save trip to IndexedDB
   const saveTripToIndexedDB = (trip: any) => {
@@ -899,7 +927,38 @@ export default function Home() {
   // Load dynamic listings for geolocated city
   useEffect(() => {
     if (!geoInfo.city) return;
-    
+
+    const CACHE_KEY = "airbnb-listings-cache-v3";
+    const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+    // --- Check localStorage cache first ---
+    try {
+      const raw = localStorage.getItem(CACHE_KEY);
+      if (raw) {
+        const cached = JSON.parse(raw);
+        const sameLocation =
+          cached.city?.toLowerCase() === geoInfo.city.toLowerCase() &&
+          cached.country?.toLowerCase() === geoInfo.country.toLowerCase();
+        const fresh = Date.now() - (cached.timestamp || 0) < CACHE_TTL_MS;
+
+        if (sameLocation && fresh && cached.data) {
+          console.log("Client listings cache HIT for:", geoInfo.city, geoInfo.country);
+          const d = cached.data;
+          setStaysListings(d.stays?.length > 0 ? d.stays : STAYS_LISTINGS);
+          setExperiencesListings(d.experiences?.length > 0 ? d.experiences : EXPERIENCES_LISTINGS);
+          setServicesListings(d.services?.length > 0 ? d.services : SERVICES_LISTINGS);
+          setListingsLoading(false);
+          return; // ← skip API call entirely
+        }
+      }
+    } catch (_) {
+      // Corrupt cache — continue to fetch
+    }
+
+    // --- Cache miss / expired / city changed → fetch API ---
+    setListingsLoading(true);
+    console.log("Client listings cache MISS — fetching /api/listings for:", geoInfo.city);
+
     const localTavilyKey = typeof window !== 'undefined' ? localStorage.getItem("tavily-api-key") || "" : "";
     const localUseTavily = typeof window !== 'undefined' ? localStorage.getItem("use-tavily") === "true" : false;
 
@@ -919,18 +978,36 @@ export default function Home() {
         return res.json();
       })
       .then((data) => {
-        if (data.stays && data.stays.length > 0) {
-          setStaysListings(data.stays);
-        }
-        if (data.experiences && data.experiences.length > 0) {
-          setExperiencesListings(data.experiences);
-        }
-        if (data.services && data.services.length > 0) {
-          setServicesListings(data.services);
+        // Use dynamic data if valid — never mix with mock
+        setStaysListings(data.stays?.length > 0 ? data.stays : STAYS_LISTINGS);
+        setExperiencesListings(data.experiences?.length > 0 ? data.experiences : EXPERIENCES_LISTINGS);
+        setServicesListings(data.services?.length > 0 ? data.services : SERVICES_LISTINGS);
+
+        // Write to localStorage cache
+        try {
+          localStorage.setItem(
+            CACHE_KEY,
+            JSON.stringify({
+              city: geoInfo.city,
+              country: geoInfo.country,
+              timestamp: Date.now(),
+              data,
+            })
+          );
+          console.log("Client listings cache WRITTEN for:", geoInfo.city);
+        } catch (_) {
+          // Storage quota exceeded — no-op
         }
       })
       .catch((err) => {
-        console.error("Error loading dynamic listings, keeping default mock data fallback:", err);
+        // Full mock fallback on any error — never a partial/mixed state
+        console.error("Dynamic listings failed, falling back to full mock data:", err);
+        setStaysListings(STAYS_LISTINGS);
+        setExperiencesListings(EXPERIENCES_LISTINGS);
+        setServicesListings(SERVICES_LISTINGS);
+      })
+      .finally(() => {
+        setListingsLoading(false);
       });
   }, [geoInfo.city, geoInfo.country]);
 
@@ -949,8 +1026,18 @@ export default function Home() {
     CNY: 11.8,
   };
 
+  const parseNumericPrice = (priceVal: any): number => {
+    if (typeof priceVal === "number") return priceVal;
+    if (!priceVal || typeof priceVal !== "string") return 0;
+    if (priceVal.toLowerCase().includes("free")) return 0;
+    const clean = priceVal.replace(/₹/g, "").replace(/,/g, "").replace(/\s/g, "");
+    const match = clean.match(/\d+/);
+    return match ? parseInt(match[0], 10) : 0;
+  };
+
   // Convert static prices based on currency symbol detected
   const getFormattedPrice = (inrPrice: number) => {
+    if (inrPrice <= 0) return "Free";
     const rate = EXCHANGE_RATES[geoInfo.currency] || 1.0;
     const symbol = geoInfo.currencySymbol;
     const converted = Math.round(inrPrice / rate);
@@ -1031,11 +1118,84 @@ export default function Home() {
   const isOverlayOpen = drawerOpen || filterModalOpen;
   // Clean all listings matching stays, services, and experiences for wishlist displays
   const getFullListingDetails = (id: string) => {
-    return (
+    // 1. Check standard listings first
+    const standard = (
       staysListings.find((l) => l.id === id) ||
       servicesListings.find((l) => l.id === id) ||
       experiencesListings.find((l) => l.id === id)
     );
+    if (standard) return standard;
+
+    // 2. Check all saved trips (IndexedDB loaded plans)
+    for (const trip of trips) {
+      const plan = trip.plan;
+      if (!plan) continue;
+
+      // Check stays inside the trip plan
+      const tripStays = plan.stays || plan.listings || [];
+      const stayIdx = tripStays.findIndex((_: any, idx: number) => `stay-ai-${trip.id}-${idx}` === id);
+      if (stayIdx !== -1) {
+        const item = tripStays[stayIdx];
+        return {
+          id,
+          name: item.name,
+          location: item.location,
+          price: parseNumericPrice(item.price),
+          rating: item.rating,
+          tagline: item.highlights,
+          tags: [],
+          badge: item.badge,
+          category: "Cabins",
+          country: item.country || "",
+          gradient: item.gradient || "linear-gradient(135deg, #1e110a 0%, #3a2214 50%, #52311d 100%)",
+          emoji: item.emoji || "🏡",
+        };
+      }
+
+      // Check experiences inside the trip plan
+      const tripExperiences = plan.experiences || [];
+      const expIdx = tripExperiences.findIndex((_: any, idx: number) => `exp-ai-${trip.id}-${idx}` === id);
+      if (expIdx !== -1) {
+        const item = tripExperiences[expIdx];
+        return {
+          id,
+          name: item.name,
+          location: item.location,
+          price: parseNumericPrice(item.price),
+          rating: item.rating,
+          tagline: item.highlights,
+          tags: [],
+          badge: item.badge,
+          category: "Experiences",
+          country: item.country || "",
+          gradient: item.gradient || "linear-gradient(135deg, #0a2a1a 0%, #0f3d25 50%, #1a5c35 100%)",
+          emoji: item.emoji || "🏔️",
+        };
+      }
+
+      // Check services inside the trip plan
+      const tripServices = plan.services || [];
+      const svcIdx = tripServices.findIndex((_: any, idx: number) => `service-ai-${trip.id}-${idx}` === id);
+      if (svcIdx !== -1) {
+        const item = tripServices[svcIdx];
+        return {
+          id,
+          name: item.name,
+          location: item.location,
+          price: parseNumericPrice(item.price),
+          rating: item.rating,
+          tagline: item.highlights,
+          tags: [],
+          badge: item.badge,
+          category: "Photography",
+          country: item.country || "",
+          gradient: item.gradient || "linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 50%, #3d2470 100%)",
+          emoji: item.emoji || "📷",
+        };
+      }
+    }
+
+    return null;
   };
 
   const sectionTitle =
@@ -1203,7 +1363,9 @@ export default function Home() {
 
                     {/* Category Pills */}
                     <div className="categories-scroll" role="tablist" aria-label="Listing categories">
-                      {STAYS_CATEGORIES.map((cat) => {
+                      {STAYS_CATEGORIES.filter((cat) => 
+                        listingsLoading || staysListings.some((l) => l.category === cat.label)
+                      ).map((cat) => {
                         const IconComponent = cat.icon;
                         return (
                           <button
@@ -1231,23 +1393,39 @@ export default function Home() {
                   </div>
 
                   <div className="listings-grid">
-                    {filteredStays.map((listing, i) => (
-                      <ListingCard
-                        key={listing.id}
-                        id={listing.id}
-                        name={getDynamicName(listing.name, listing.country || geoInfo.country)}
-                        location={getDynamicLocation(listing.location, listing.country || geoInfo.country)}
-                        price={getFormattedPrice(listing.price)}
-                        rating={listing.rating}
-                        tags={listing.tags}
-                        badge={listing.badge}
-                        gradient={listing.gradient}
-                        emoji={listing.emoji}
-                        index={i}
-                        wishlisted={wishlistedIds.includes(listing.id)}
-                        onWishlistToggle={() => toggleWishlist(listing.id)}
-                      />
-                    ))}
+                    {listingsLoading
+                      ? Array.from({ length: 6 }).map((_, i) => (
+                          <div key={i} className="listing-skeleton">
+                            <div className="skeleton-image" />
+                            <div className="skeleton-body">
+                              <div className="skeleton-line wide" />
+                              <div className="skeleton-line medium" />
+                              <div className="skeleton-line narrow" />
+                              <div className="skeleton-tags">
+                                <div className="skeleton-tag" />
+                                <div className="skeleton-tag" />
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      : filteredStays.map((listing, i) => (
+                          <ListingCard
+                            key={listing.id}
+                            id={listing.id}
+                            name={getDynamicName(listing.name, listing.country || geoInfo.country)}
+                            location={getDynamicLocation(listing.location, listing.country || geoInfo.country)}
+                            price={getFormattedPrice(listing.price)}
+                            type="stay"
+                            rating={listing.rating}
+                            tags={listing.tags}
+                            badge={listing.badge}
+                            gradient={listing.gradient}
+                            emoji={listing.emoji}
+                            index={i}
+                            wishlisted={wishlistedIds.includes(listing.id)}
+                            onWishlistToggle={() => toggleWishlist(listing.id)}
+                          />
+                        ))}
                   </div>
                 </>
               )}
@@ -1287,24 +1465,40 @@ export default function Home() {
                   </div>
 
                   <div className="listings-grid">
-                    {filteredExperiences.map((listing, i) => (
-                      <ListingCard
-                        key={listing.id}
-                        id={listing.id}
-                        name={getDynamicName(listing.name, listing.country || geoInfo.country)}
-                        location={getDynamicLocation(listing.location, listing.country || geoInfo.country)}
-                        price={getFormattedPrice(listing.price)}
-                        priceUnit="/ guest"
-                        rating={listing.rating}
-                        tags={listing.tags}
-                        badge={listing.badge}
-                        gradient={listing.gradient}
-                        emoji={listing.emoji}
-                        index={i}
-                        wishlisted={wishlistedIds.includes(listing.id)}
-                        onWishlistToggle={() => toggleWishlist(listing.id)}
-                      />
-                    ))}
+                    {listingsLoading
+                      ? Array.from({ length: 4 }).map((_, i) => (
+                          <div key={i} className="listing-skeleton">
+                            <div className="skeleton-image" />
+                            <div className="skeleton-body">
+                              <div className="skeleton-line wide" />
+                              <div className="skeleton-line medium" />
+                              <div className="skeleton-line narrow" />
+                              <div className="skeleton-tags">
+                                <div className="skeleton-tag" />
+                                <div className="skeleton-tag" />
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      : filteredExperiences.map((listing, i) => (
+                          <ListingCard
+                            key={listing.id}
+                            id={listing.id}
+                            name={getDynamicName(listing.name, listing.country || geoInfo.country)}
+                            location={getDynamicLocation(listing.location, listing.country || geoInfo.country)}
+                            price={getFormattedPrice(listing.price)}
+                            priceUnit="/ guest"
+                            type="experience"
+                            rating={listing.rating}
+                            tags={listing.tags}
+                            badge={listing.badge}
+                            gradient={listing.gradient}
+                            emoji={listing.emoji}
+                            index={i}
+                            wishlisted={wishlistedIds.includes(listing.id)}
+                            onWishlistToggle={() => toggleWishlist(listing.id)}
+                          />
+                        ))}
                   </div>
                 </>
               )}
@@ -1343,7 +1537,9 @@ export default function Home() {
 
                     {/* Category Scroll (Circular rounded images with counts) */}
                     <div className="services-scroll">
-                      {SERVICES_CATEGORIES.map((cat) => (
+                      {SERVICES_CATEGORIES.filter((cat) =>
+                        listingsLoading || servicesListings.some((l) => l.category === cat.label)
+                      ).map((cat) => (
                         <button
                           key={cat.label}
                           className={`service-category-card${activeServiceCategory === cat.label ? " active" : ""}`}
@@ -1366,24 +1562,40 @@ export default function Home() {
                   </div>
 
                   <div className="listings-grid">
-                    {filteredServices.map((listing, i) => (
-                      <ListingCard
-                        key={listing.id}
-                        id={listing.id}
-                        name={getDynamicName(listing.name, listing.country || geoInfo.country)}
-                        location={getDynamicLocation(listing.location, listing.country || geoInfo.country)}
-                        price={getFormattedPrice(listing.price)}
-                        priceUnit={listing.category === "Photography" ? "/ session" : "/ service"}
-                        rating={listing.rating}
-                        tags={listing.tags}
-                        badge={listing.badge}
-                        gradient={listing.gradient}
-                        emoji={listing.emoji}
-                        index={i}
-                        wishlisted={wishlistedIds.includes(listing.id)}
-                        onWishlistToggle={() => toggleWishlist(listing.id)}
-                      />
-                    ))}
+                    {listingsLoading
+                      ? Array.from({ length: 4 }).map((_, i) => (
+                          <div key={i} className="listing-skeleton">
+                            <div className="skeleton-image" />
+                            <div className="skeleton-body">
+                              <div className="skeleton-line wide" />
+                              <div className="skeleton-line medium" />
+                              <div className="skeleton-line narrow" />
+                              <div className="skeleton-tags">
+                                <div className="skeleton-tag" />
+                                <div className="skeleton-tag" />
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      : filteredServices.map((listing, i) => (
+                          <ListingCard
+                            key={listing.id}
+                            id={listing.id}
+                            name={getDynamicName(listing.name, listing.country || geoInfo.country)}
+                            location={getDynamicLocation(listing.location, listing.country || geoInfo.country)}
+                            price={getFormattedPrice(listing.price)}
+                            priceUnit={listing.category === "Photography" ? "/ session" : "/ service"}
+                            type="service"
+                            rating={listing.rating}
+                            tags={listing.tags}
+                            badge={listing.badge}
+                            gradient={listing.gradient}
+                            emoji={listing.emoji}
+                            index={i}
+                            wishlisted={wishlistedIds.includes(listing.id)}
+                            onWishlistToggle={() => toggleWishlist(listing.id)}
+                          />
+                        ))}
                   </div>
                 </>
               )}
@@ -1435,6 +1647,7 @@ export default function Home() {
                                 : "/ night")
                         }
                         rating={listing.rating}
+                        tagline={(listing as any).tagline}
                         tags={listing.tags}
                         badge={listing.badge}
                         gradient={listing.gradient}
@@ -1442,6 +1655,11 @@ export default function Home() {
                         index={i}
                         wishlisted={true}
                         onWishlistToggle={() => toggleWishlist(listing.id)}
+                        type={
+                          listing.id.startsWith("exp") 
+                            ? "experience" 
+                            : (listing.id.startsWith("service") ? "service" : "stay")
+                        }
                       />
                     );
                   })}
@@ -1575,20 +1793,27 @@ export default function Home() {
                                   <span>Top Stays</span>
                                 </div>
                                 <div className="listings-grid" style={{ padding: 0, gap: 16, marginBottom: 20 }}>
-                                  {(plan.stays || plan.listings || []).map((listing: any, idx: number) => (
-                                    <ListingCard
-                                      key={listing.name}
-                                      id={`ai-stay-${idx}`}
-                                      name={listing.name}
-                                      location={listing.location}
-                                      price={listing.price}
-                                      rating={listing.rating}
-                                      tags={listing.highlights ? [listing.highlights] : []}
-                                      badge={listing.badge}
-                                      index={idx}
-                                      priceUnit=""
-                                    />
-                                  ))}
+                                  {(plan.stays || plan.listings || []).map((listing: any, idx: number) => {
+                                    const cardId = `stay-ai-${trip.id}-${idx}`;
+                                    return (
+                                      <ListingCard
+                                        key={listing.name}
+                                        id={cardId}
+                                        name={listing.name}
+                                        location={listing.location}
+                                        price={getFormattedPrice(parseNumericPrice(listing.price))}
+                                        rating={listing.rating}
+                                        tagline={listing.highlights}
+                                        tags={[]}
+                                        badge={listing.badge}
+                                        index={idx}
+                                        priceUnit="/ night"
+                                        wishlisted={wishlistedIds.includes(cardId)}
+                                        onWishlistToggle={() => toggleWishlist(cardId)}
+                                        type="stay"
+                                      />
+                                    );
+                                  })}
                                 </div>
                               </>
                             )}
@@ -1601,20 +1826,27 @@ export default function Home() {
                                   <span>Recommended Experiences</span>
                                 </div>
                                 <div className="listings-grid" style={{ padding: 0, gap: 16, marginBottom: 20 }}>
-                                  {plan.experiences.map((listing: any, idx: number) => (
-                                    <ListingCard
-                                      key={listing.name}
-                                      id={`ai-exp-${idx}`}
-                                      name={listing.name}
-                                      location={listing.location}
-                                      price={listing.price}
-                                      rating={listing.rating}
-                                      tags={listing.highlights ? [listing.highlights] : []}
-                                      badge={listing.badge}
-                                      index={idx}
-                                      priceUnit=""
-                                    />
-                                  ))}
+                                  {plan.experiences.map((listing: any, idx: number) => {
+                                    const cardId = `exp-ai-${trip.id}-${idx}`;
+                                    return (
+                                      <ListingCard
+                                        key={listing.name}
+                                        id={cardId}
+                                        name={listing.name}
+                                        location={listing.location}
+                                        price={getFormattedPrice(parseNumericPrice(listing.price))}
+                                        rating={listing.rating}
+                                        tagline={listing.highlights}
+                                        tags={[]}
+                                        badge={listing.badge}
+                                        index={idx}
+                                        priceUnit="/ guest"
+                                        wishlisted={wishlistedIds.includes(cardId)}
+                                        onWishlistToggle={() => toggleWishlist(cardId)}
+                                        type="experience"
+                                      />
+                                    );
+                                  })}
                                 </div>
                               </>
                             )}
@@ -1627,20 +1859,27 @@ export default function Home() {
                                   <span>Local Services</span>
                                 </div>
                                 <div className="listings-grid" style={{ padding: 0, gap: 16, marginBottom: 20 }}>
-                                  {plan.services.map((listing: any, idx: number) => (
-                                    <ListingCard
-                                      key={listing.name}
-                                      id={`ai-service-${idx}`}
-                                      name={listing.name}
-                                      location={listing.location}
-                                      price={listing.price}
-                                      rating={listing.rating}
-                                      tags={listing.highlights ? [listing.highlights] : []}
-                                      badge={listing.badge}
-                                      index={idx}
-                                      priceUnit=""
-                                    />
-                                  ))}
+                                  {plan.services.map((listing: any, idx: number) => {
+                                    const cardId = `service-ai-${trip.id}-${idx}`;
+                                    return (
+                                      <ListingCard
+                                        key={listing.name}
+                                        id={cardId}
+                                        name={listing.name}
+                                        location={listing.location}
+                                        price={getFormattedPrice(parseNumericPrice(listing.price))}
+                                        rating={listing.rating}
+                                        tagline={listing.highlights}
+                                        tags={[]}
+                                        badge={listing.badge}
+                                        index={idx}
+                                        priceUnit={listing.category === "Photography" ? "/ session" : "/ service"}
+                                        wishlisted={wishlistedIds.includes(cardId)}
+                                        onWishlistToggle={() => toggleWishlist(cardId)}
+                                        type="service"
+                                      />
+                                    );
+                                  })}
                                 </div>
                               </>
                             )}

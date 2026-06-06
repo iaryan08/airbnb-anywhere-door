@@ -1,378 +1,4 @@
 {
-  "roorkee-india": {
-    "data": {
-      "stays": [
-        {
-          "id": "serp-stay-1",
-          "name": "HOTEL RAJMAHAL Roorkee, Haridwar (UK)",
-          "location": "Roorkee, India",
-          "price": 1789,
-          "rating": 4.5,
-          "tags": [
-            "Breakfast ($)",
-            "Free Wi-Fi",
-            "Free parking"
-          ],
-          "badge": "Guest Favourite",
-          "gradient": "linear-gradient(135deg, #1a1200 0%, #2e2000 50%, #4a3300 100%)",
-          "emoji": "🏝️",
-          "category": "Beach",
-          "country": "India",
-          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAGPoptNkykLFRq45EikxJw2H-v_XVxFlR_bhNHg-8puDkUvGfajDGzkpvcaFIgb6KQbAv1C4LSxuKvd6SO8GNt5ncM8ZrSueBbyCQYyk-tpoXVTEzHJgLpnCT0GuAaxczkeIYABUJA898Y=s10000"
-        },
-        {
-          "id": "serp-stay-2",
-          "name": "Motel Divine International, Roorkee",
-          "location": "Roorkee, India",
-          "price": 1886,
-          "rating": 3.8,
-          "tags": [
-            "Free breakfast",
-            "Free Wi-Fi",
-            "Free parking"
-          ],
-          "badge": "Superhost",
-          "gradient": "linear-gradient(135deg, #0a2a1a 0%, #0f3d25 50%, #1a5c35 100%)",
-          "emoji": "🌲",
-          "category": "Cabins",
-          "country": "India",
-          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAFhw869S65PaVUbm_3fhhX9LI1hKBLBr4-MLuyKYoSlqgW92dNTxUFxNQ40lpAakfWYujuRBYwgWg-On0USoZ6W30HmlQPz9aDeyelbLKQXIo0Ex1i0FJiB8NTwbN0CPT2SQYAQcg=s10000"
-        },
-        {
-          "id": "serp-stay-3",
-          "name": "Hotel Siddharth",
-          "location": "Roorkee, India",
-          "price": 1756,
-          "rating": 3.9,
-          "tags": [
-            "Free breakfast",
-            "Free Wi-Fi",
-            "Free parking"
-          ],
-          "badge": "Top Rated",
-          "gradient": "linear-gradient(135deg, #1e110a 0%, #3a2214 50%, #52311d 100%)",
-          "emoji": "🏰",
-          "category": "Mansions",
-          "country": "India",
-          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEYsXJL0sRMN-TX1haD-ZBYATlMmIXQF1lLoXWR_0w5dfntyllUfE02t47wIuBQYbpshqFFTa1E-PLsPGCaA27D8qxMZN2rAC2qrdOETrNwW9DLlp4yUkLc-iZLIBVfyWcWcxrb=s10000"
-        },
-        {
-          "id": "serp-stay-4",
-          "name": "Motel Blue Sapphire",
-          "location": "Roorkee, India",
-          "price": 1808,
-          "rating": 4.1,
-          "tags": [
-            "Free breakfast",
-            "Free Wi-Fi",
-            "Air conditioning"
-          ],
-          "badge": "Rare Find",
-          "gradient": "linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 50%, #3d2470 100%)",
-          "emoji": "🏔️",
-          "category": "Mountains",
-          "country": "India",
-          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAGOss6yOligcqRRbmQecXG3qp9ASifvzFoE3SwCiRzjyagoTN56WbM8Hlxcml2WYuZt_27xo__qFKlRgovQsmufeAosgelqQa8HSFB_1VPiu5jIAxGTVQDRJI9PogkKJp0wz7wObw=s10000"
-        },
-        {
-          "id": "serp-stay-5",
-          "name": "Itsy Hotels K K Residency Staywell",
-          "location": "Roorkee, India",
-          "price": 1841,
-          "rating": 4,
-          "tags": [
-            "Free breakfast",
-            "Free Wi-Fi",
-            "Free parking"
-          ],
-          "badge": "Guest Favourite",
-          "gradient": "linear-gradient(135deg, #0d1a2a 0%, #1a2d45 50%, #243d60 100%)",
-          "emoji": "🌊",
-          "category": "Lakefront",
-          "country": "India",
-          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEnsPZAaW8yM21qnpM_SupyfeJzdBhtaN-xgF4hxP81133ShBiqDPx8220CmME3uRM3QS49nnFxJNkQzTleOH0UDpHZAWniYb2c64_6M-l1iX-5Xxm_mjE6LVjHPFerCkZPBrNm7KwUODTP=s10000"
-        },
-        {
-          "id": "serp-stay-6",
-          "name": "Sultan Paradise",
-          "location": "Roorkee, India",
-          "price": 1948,
-          "rating": 4.8,
-          "tags": [
-            "Free WiFi",
-            "AC",
-            "Room Service"
-          ],
-          "badge": "Superhost",
-          "gradient": "linear-gradient(135deg, #1a1200 0%, #2e2000 50%, #4a3300 100%)",
-          "emoji": "🏯",
-          "category": "Heritage",
-          "country": "India",
-          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHLpOp04BY0v3RAjBVDS0t2gzNTiU5mi4QCXVgcFsJXD2bLZppzYBvLUtb-wX0EGURglLaBLQR7g_D-fhTigwKovMmFvyHyZqdbSXbJuhMWMG1F0IrwNCqtGtcmUw4JnOv_h6ZcFrs-cRqg=s10000"
-        }
-      ],
-      "experiences": [
-        {
-          "id": "dyn-exp-1",
-          "name": "Ganges Canal & Solani Aqueduct Heritage Walk",
-          "location": "Solani Aqueduct, Roorkee",
-          "price": 1200,
-          "rating": 4.9,
-          "tags": [
-            "History",
-            "Architecture",
-            "Guided Tour"
-          ],
-          "badge": "Guest Favourite",
-          "gradient": "linear-gradient(135deg, #e65c00 0%, #F9D423 100%)",
-          "emoji": "🚶",
-          "category": "Sightseeing",
-          "country": "India"
-        },
-        {
-          "id": "dyn-exp-2",
-          "name": "Bird Watching & Nature Walk in Roorkee Forests",
-          "location": "Malsi Forest Fringe, Roorkee",
-          "price": 1500,
-          "rating": 4.85,
-          "tags": [
-            "Nature",
-            "Photography",
-            "Birds"
-          ],
-          "badge": "Eco-Friendly",
-          "gradient": "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)",
-          "emoji": "🦜",
-          "category": "Nature",
-          "country": "India"
-        }
-      ],
-      "services": [
-        {
-          "id": "dyn-service-1",
-          "name": "Heritage Canal Photography Session",
-          "location": "Ganga Canal Banks, Roorkee",
-          "price": 4500,
-          "rating": 4.95,
-          "tags": [
-            "Outdoor Portraits",
-            "Professional Gear",
-            "Edited Photos"
-          ],
-          "badge": "Top Rated",
-          "gradient": "linear-gradient(135deg, #1f1c2c 0%, #928dab 100%)",
-          "emoji": "📷",
-          "category": "Photography",
-          "country": "India"
-        },
-        {
-          "id": "dyn-service-2",
-          "name": "Elegant Glow Bridal & Event Make-up",
-          "location": "Civil Lines, Roorkee",
-          "price": 7500,
-          "rating": 4.88,
-          "tags": [
-            "Bridal",
-            "Party Makeup",
-            "Mac Products"
-          ],
-          "badge": "Expert",
-          "gradient": "linear-gradient(135deg, #f857a6 0%, #ff5858 100%)",
-          "emoji": "💄",
-          "category": "Make-up",
-          "country": "India"
-        }
-      ]
-    },
-    "timestamp": 1780776836882
-  },
-  "new-delhi-india": {
-    "data": {
-      "stays": [
-        {
-          "id": "serp-stay-1",
-          "name": "Hyatt Centric Janakpuri New Delhi",
-          "location": "New Delhi, India",
-          "price": 4977,
-          "rating": 3.9,
-          "tags": [
-            "Free breakfast",
-            "Free Wi-Fi",
-            "Free parking"
-          ],
-          "badge": "Guest Favourite",
-          "gradient": "linear-gradient(135deg, #1a1200 0%, #2e2000 50%, #4a3300 100%)",
-          "emoji": "🏝️",
-          "category": "Beach",
-          "country": "India",
-          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAFcdEyBSh3aBPWulSQaLkpL0kLaLv2yQcux_pRnz5vb-B1HY5mnjJmsvS0dA39RN0L0KGeiF2Z2xLoIAprB4G_mtunBTUyePx34XfPg_RL5skLGfag62KDrE010vtXo9K121xzq=s10000"
-        },
-        {
-          "id": "serp-stay-2",
-          "name": "The Lalit New Delhi",
-          "location": "New Delhi, India",
-          "price": 8731,
-          "rating": 4.4,
-          "tags": [
-            "Free breakfast",
-            "Free Wi-Fi",
-            "Free parking"
-          ],
-          "badge": "Superhost",
-          "gradient": "linear-gradient(135deg, #0a2a1a 0%, #0f3d25 50%, #1a5c35 100%)",
-          "emoji": "🌲",
-          "category": "Cabins",
-          "country": "India",
-          "imageUrl": "https://photos.hotelbeds.com/giata/original/11/114899/114899a_hb_r_018.jpg"
-        },
-        {
-          "id": "serp-stay-3",
-          "name": "Taj Palace, New Delhi",
-          "location": "New Delhi, India",
-          "price": 9337,
-          "rating": 4.7,
-          "tags": [
-            "Breakfast ($)",
-            "Wi-Fi ($)",
-            "Free parking"
-          ],
-          "badge": "Top Rated",
-          "gradient": "linear-gradient(135deg, #1e110a 0%, #3a2214 50%, #52311d 100%)",
-          "emoji": "🏰",
-          "category": "Mansions",
-          "country": "India",
-          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHH7mD1oWsxJx056z_qUaTYQztb8tBmgAz5rZWPT8TIUkRhieTDHcMgJTGBHdaLTb9ues7Z_DEfHablfKVVlENLEzdi_exJZ8PDqQKsMEFszLdGoRnDL3wKtoPxJwTMNO6x66kOJw=s10000"
-        },
-        {
-          "id": "serp-stay-4",
-          "name": "ITC Maurya, a Luxury Collection Hotel, New Delhi",
-          "location": "New Delhi, India",
-          "price": 11825,
-          "rating": 4.7,
-          "tags": [
-            "Free Wi-Fi",
-            "Free parking",
-            "Outdoor pool"
-          ],
-          "badge": "Rare Find",
-          "gradient": "linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 50%, #3d2470 100%)",
-          "emoji": "🏔️",
-          "category": "Mountains",
-          "country": "India",
-          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEnS9wxMICZVCjs8K4vjTL6s5AeYvRNsBTWMmdJrNTb5kTtfROS3xr4eGYARun3uAvPixTg-SEOowJ4YwbeKhQZV9R2CtXAXv8Ul8-xDjcQ4pyHrl9vQdticDnJ6Fi7Qi-KhfAURK8T5vXA=s10000"
-        },
-        {
-          "id": "serp-stay-5",
-          "name": "Ambassador, New Delhi - IHCL SeleQtions",
-          "location": "New Delhi, India",
-          "price": 10359,
-          "rating": 4.4,
-          "tags": [
-            "Free breakfast",
-            "Free Wi-Fi",
-            "Free parking"
-          ],
-          "badge": "Guest Favourite",
-          "gradient": "linear-gradient(135deg, #0d1a2a 0%, #1a2d45 50%, #243d60 100%)",
-          "emoji": "🌊",
-          "category": "Lakefront",
-          "country": "India",
-          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAG9UTvRzhU8XLTgFf9gTZBnK2weDrgkjxi4_8zZgHubiwj6zhEIx6ZZtmw7JJCTxpbdM5nDv2MhBHcZE_hS_NbrU6jgIGEhlnR6AD7vP-78YKaJl9hijSm5RS383JFZw2kykmEYOQ=s10000"
-        },
-        {
-          "id": "serp-stay-6",
-          "name": "The Park",
-          "location": "New Delhi, India",
-          "price": 5698,
-          "rating": 4,
-          "tags": [
-            "Free breakfast",
-            "Free Wi-Fi",
-            "Free parking"
-          ],
-          "badge": "Superhost",
-          "gradient": "linear-gradient(135deg, #1a1200 0%, #2e2000 50%, #4a3300 100%)",
-          "emoji": "🏯",
-          "category": "Heritage",
-          "country": "India",
-          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAG9d1gbZJ7C45EHeTcWnGSHlDIhLPiHJLx4T2fKLdsFT5fE4TirWbjDti2GgYbp11ldyMyI74Wc0txWMQMwRBpzf2aMcEiOXmdQppywStWrF-2aeQ0y2hG-4ZxRlOdqUeSyRLhDY-qVqfo=s10000"
-        }
-      ],
-      "experiences": [
-        {
-          "id": "dyn-exp-1",
-          "name": "Old Delhi Street Food & Heritage Walk",
-          "location": "Chandni Chowk, New Delhi",
-          "price": 1800,
-          "rating": 4.96,
-          "tags": [
-            "Food Tour",
-            "History",
-            "Local Guide"
-          ],
-          "badge": "Best Seller",
-          "gradient": "linear-gradient(135deg, #f12711 0%, #f5af19 100%)",
-          "emoji": "🍛",
-          "category": "Sightseeing",
-          "country": "India"
-        },
-        {
-          "id": "dyn-exp-2",
-          "name": "Sunrise Bicycle Tour of Old Delhi",
-          "location": "Connaught Place, New Delhi",
-          "price": 2200,
-          "rating": 4.91,
-          "tags": [
-            "Cycling",
-            "Adventure",
-            "Heritage"
-          ],
-          "badge": "Outdoor",
-          "gradient": "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)",
-          "emoji": "🚴",
-          "category": "Sightseeing",
-          "country": "India"
-        }
-      ],
-      "services": [
-        {
-          "id": "dyn-service-1",
-          "name": "Vinod Verma Travel Photography",
-          "location": "New Delhi",
-          "price": 7500,
-          "rating": 4.92,
-          "tags": [
-            "Travel Photography",
-            "Portrait Shoot",
-            "Sustainable Tourism"
-          ],
-          "badge": "Expert",
-          "gradient": "linear-gradient(135deg, #3a7bd5 0%, #3a6073 100%)",
-          "emoji": "📷",
-          "category": "Photography",
-          "country": "India"
-        },
-        {
-          "id": "dyn-service-2",
-          "name": "Komal Gulati Bridal & Party Make-up",
-          "location": "South Extension, New Delhi",
-          "price": 15000,
-          "rating": 4.94,
-          "tags": [
-            "Bridal Makeup",
-            "Party Styling",
-            "Studio Session"
-          ],
-          "badge": "Premium",
-          "gradient": "linear-gradient(135deg, #f857a6 0%, #ff5858 100%)",
-          "emoji": "💄",
-          "category": "Make-up",
-          "country": "India"
-        }
-      ]
-    },
-    "timestamp": 1780776844425
-  },
   "v2-roorkee-india": {
     "data": {
       "stays": [
@@ -519,142 +145,294 @@
           "category": "Cabins",
           "country": "India",
           "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAH2p4SSj9HPiUkNzt5lHBNQ8NiTnuPHkFRhpX4aqVUfXkGYefk1y8votBiRjRZbkWIUy1D_AJYNQZkR1MhB0CSTex208IUADop7gznD8cgBZiL32jJqg3GLsGYGoXgVh6ptqouTA7kar8n_=s10000"
+        },
+        {
+          "id": "serp-stay-9",
+          "name": "Hotel Centrum Roorkee",
+          "location": "Roorkee, India",
+          "price": 8500,
+          "rating": 3.9,
+          "tags": [
+            "Free breakfast",
+            "Free Wi-Fi",
+            "Free parking"
+          ],
+          "badge": "Guest Favourite",
+          "gradient": "linear-gradient(135deg, #1a1200 0%, #2e2000 50%, #4a3300 100%)",
+          "emoji": "🏰",
+          "category": "Mansions",
+          "country": "India",
+          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAE0LoUdyKVP8ttTyfpIUTylJ5Vb8GU9pXdz5R6py-cJ_RYIrl9cVUEIRDJGcduoU2s0c2UoWU27WWuS1gi04X522fEIB5O8x9c2CIIfx6hTe-OatuaKSytXi26xVpBxAnasV7KmhGSeG99p=s10000"
+        },
+        {
+          "id": "serp-stay-10",
+          "name": "Hotel Deep Residency",
+          "location": "Roorkee, India",
+          "price": 2457,
+          "rating": 4,
+          "tags": [
+            "Free breakfast",
+            "Free Wi-Fi",
+            "Free parking"
+          ],
+          "badge": "Superhost",
+          "gradient": "linear-gradient(135deg, #0a2a1a 0%, #0f3d25 50%, #1a5c35 100%)",
+          "emoji": "🏔️",
+          "category": "Mountains",
+          "country": "India",
+          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHV4MqYijmcKmnBMcozDh1G3sRErqGg4DY8v0bqBhajfdNUEL-R3uUDFkGWgQNCzHyN9wJ0mDpj-tKVUt68m5XXcAchfFi1awX3P_P29_iGdm2Zp18rrrPPoi5C7KuArg610SVGlw=s10000"
+        },
+        {
+          "id": "serp-stay-11",
+          "name": "Hotel Heavens garden",
+          "location": "Roorkee, India",
+          "price": 1762,
+          "rating": 3.9,
+          "tags": [
+            "Breakfast ($)",
+            "Wi-Fi",
+            "Free parking"
+          ],
+          "badge": "Top Rated",
+          "gradient": "linear-gradient(135deg, #1e110a 0%, #3a2214 50%, #52311d 100%)",
+          "emoji": "🌊",
+          "category": "Lakefront",
+          "country": "India",
+          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAH4pwcJZyub9fvHFv7euabPiF-I2-LT7f9Ho4uwQEidpVfvR6GUV8xod2Tp8upjCiSGkZx_hngeXfW6zWxU6vFXUrp_9AVwuTWVVsdRUYryUbeYNGABAAE0DOJ3l8y1Bqjkt0CCJg=s10000"
+        },
+        {
+          "id": "serp-stay-12",
+          "name": "Hotel GSP Pacific",
+          "location": "Roorkee, India",
+          "price": 8500,
+          "rating": 4.8,
+          "tags": [
+            "Free breakfast",
+            "Free Wi-Fi",
+            "Free parking"
+          ],
+          "badge": "Rare Find",
+          "gradient": "linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 50%, #3d2470 100%)",
+          "emoji": "🏯",
+          "category": "Heritage",
+          "country": "India",
+          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHAuNhZS4ijKNKYGQhGSwsEvwBD0Un_NaXtt3W9y60wh9gwY0T7cHGPKWUFd2pnUVw-9BDznMHnJi7hNzG7tSS4tRy3GnZVibakU26Dm48FmYyDMFgTclKEuTa6_mZtX61G2CtyOBw_ENfU=s10000"
         }
       ],
       "experiences": [
         {
           "id": "dyn-exp-1",
-          "name": "Upper Ganges Canal Heritage Walk",
-          "location": "Canal Bank, Roorkee",
-          "price": 800,
-          "rating": 4.7,
+          "name": "Heritage Walk: IIT Roorkee Main Building",
+          "location": "IIT Roorkee Campus, Roorkee",
+          "price": 0,
+          "rating": 4.9,
           "tags": [
-            "Heritage",
-            "Walking Tour"
+            "Architecture",
+            "History"
           ],
           "badge": "Popular",
-          "gradient": "linear-gradient(135deg, #00c6ff 0%, #0072ff 100%)",
-          "emoji": "🚶",
+          "gradient": "linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)",
+          "emoji": "🏛️",
           "category": "Sightseeing",
           "country": "India"
         },
         {
           "id": "dyn-exp-2",
-          "name": "IIT Roorkee Campus Botanical Tour",
-          "location": "IIT Roorkee Campus, Roorkee",
-          "price": 1200,
+          "name": "Solani Aqueduct Engineering Tour",
+          "location": "Upper Ganges Canal, Roorkee",
+          "price": 0,
           "rating": 4.8,
           "tags": [
-            "Nature",
-            "Education"
+            "Engineering",
+            "Landmark"
           ],
-          "badge": "Top Rated",
-          "gradient": "linear-gradient(135deg, #56ab2f 0%, #a8e063 100%)",
-          "emoji": "🌿",
-          "category": "Nature",
+          "badge": "Historical",
+          "gradient": "linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%)",
+          "emoji": "🌉",
+          "category": "History",
           "country": "India"
         },
         {
           "id": "dyn-exp-3",
-          "name": "Roorkee War Memorial History Session",
-          "location": "War Memorial, Roorkee",
-          "price": 500,
-          "rating": 4.5,
+          "name": "Piran Kaliyar Sharif Spiritual Visit",
+          "location": "Piran Kaliyar, Roorkee",
+          "price": 0,
+          "rating": 4.7,
           "tags": [
-            "History",
+            "Spiritual",
             "Culture"
           ],
-          "badge": "Educational",
-          "gradient": "linear-gradient(135deg, #485563 0%, #29323c 100%)",
-          "emoji": "🎖️",
+          "badge": "Must See",
+          "gradient": "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)",
+          "emoji": "🕌",
           "category": "Culture",
           "country": "India"
         },
         {
           "id": "dyn-exp-4",
-          "name": "Local Riverbank Sunset Photography Expedition",
-          "location": "Ganges Canal Perimeter, Roorkee",
-          "price": 2500,
-          "rating": 4.9,
+          "name": "Roorkee Local Food & Chaat Trail",
+          "location": "Civil Lines Market, Roorkee",
+          "price": 150,
+          "rating": 4.85,
           "tags": [
-            "Photography",
-            "Sunset"
+            "Street Food",
+            "Local Flavors"
           ],
-          "badge": "Guest Favourite",
-          "gradient": "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
-          "emoji": "🌅",
-          "category": "Photography",
+          "badge": "Foodie Choice",
+          "gradient": "linear-gradient(135deg, #f12711 0%, #f5af19 100%)",
+          "emoji": "🍲",
+          "category": "Food",
+          "country": "India"
+        },
+        {
+          "id": "dyn-exp-5",
+          "name": "Ganga Canal Sunset Cycling",
+          "location": "Canal Banks, Roorkee",
+          "price": 0,
+          "rating": 4.6,
+          "tags": [
+            "Fitness",
+            "Scenic"
+          ],
+          "badge": "Outdoor Fun",
+          "gradient": "linear-gradient(135deg, #ff9966 0%, #ff5e62 100%)",
+          "emoji": "🚴",
+          "category": "Outdoor",
+          "country": "India"
+        },
+        {
+          "id": "dyn-exp-6",
+          "name": "Crystal World Amusement Day Trip",
+          "location": "Haridwar-Roorkee Highway, Roorkee",
+          "price": 1100,
+          "rating": 4.5,
+          "tags": [
+            "Family",
+            "Adventure"
+          ],
+          "badge": "Top Rated",
+          "gradient": "linear-gradient(135deg, #00c6ff 0%, #0072ff 100%)",
+          "emoji": "🎢",
+          "category": "Entertainment",
+          "country": "India"
+        },
+        {
+          "id": "dyn-exp-7",
+          "name": "Botany Walk at Saharanpur Road Gardens",
+          "location": "Garden Colony, Roorkee",
+          "price": 0,
+          "rating": 4.4,
+          "tags": [
+            "Nature",
+            "Relaxing"
+          ],
+          "badge": "Quiet Escape",
+          "gradient": "linear-gradient(135deg, #56ab2f 0%, #a8e063 100%)",
+          "emoji": "🌿",
+          "category": "Nature",
           "country": "India"
         }
       ],
       "services": [
         {
           "id": "dyn-service-1",
-          "name": "Classic Portrait Studio Session",
+          "name": "Visual Stories Photography",
           "location": "Civil Lines, Roorkee",
-          "price": 3500,
-          "rating": 4.8,
+          "price": 5500,
+          "rating": 4.9,
           "tags": [
-            "Photography",
-            "Professional"
+            "Wedding",
+            "Events"
           ],
-          "badge": "Top Choice",
-          "gradient": "linear-gradient(135deg, #1f1c2c 0%, #928dab 100%)",
+          "badge": "Premium",
+          "gradient": "linear-gradient(135deg, #232526 0%, #414345 100%)",
           "emoji": "📷",
           "category": "Photography",
           "country": "India"
         },
         {
           "id": "dyn-service-2",
-          "name": "Bridal Glow Makeup Artistry",
-          "location": "Model Town, Roorkee",
-          "price": 8500,
-          "rating": 4.9,
+          "name": "Roorkee Bridal Makeover Studio",
+          "location": "Ramnagar, Roorkee",
+          "price": 3500,
+          "rating": 4.8,
           "tags": [
-            "Make-up",
-            "Bridal"
+            "Bridal",
+            "Party"
           ],
-          "badge": "Premium",
-          "gradient": "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+          "badge": "Top Rated",
+          "gradient": "linear-gradient(135deg, #ec008c 0%, #fc6767 100%)",
           "emoji": "💄",
           "category": "Make-up",
           "country": "India"
         },
         {
           "id": "dyn-service-3",
-          "name": "Outdoor Event Photography",
-          "location": "Roorkee City Wide, Roorkee",
-          "price": 12000,
-          "rating": 4.7,
+          "name": "Roorkee Portrait Experts",
+          "location": "Civil Lines, Roorkee",
+          "price": 1200,
+          "rating": 4.95,
           "tags": [
-            "Events",
-            "Photography"
+            "Portraits",
+            "Graduation"
           ],
-          "badge": "Reliable",
-          "gradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-          "emoji": "🎥",
+          "badge": "Student Choice",
+          "gradient": "linear-gradient(135deg, #1D976C 0%, #93F9B9 100%)",
+          "emoji": "🎓",
           "category": "Photography",
           "country": "India"
         },
         {
           "id": "dyn-service-4",
-          "name": "Daily Makeup & Hair Styling",
-          "location": "Near Canal Road, Roorkee",
-          "price": 2000,
-          "rating": 4.6,
+          "name": "Glow & Glam Professional Salon",
+          "location": "Bypass Road, Roorkee",
+          "price": 1800,
+          "rating": 4.7,
           "tags": [
-            "Make-up",
-            "Quick"
+            "Fashion",
+            "Styling"
+          ],
+          "badge": "Expert",
+          "gradient": "linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%)",
+          "emoji": "✨",
+          "category": "Make-up",
+          "country": "India"
+        },
+        {
+          "id": "dyn-service-5",
+          "name": "Lens & Light Cinematography",
+          "location": "Malviya Chowk, Roorkee",
+          "price": 9500,
+          "rating": 4.8,
+          "tags": [
+            "Video",
+            "Drone"
           ],
           "badge": "New",
-          "gradient": "linear-gradient(135deg, #f7797d 0%, #f7797d 100%)",
-          "emoji": "✨",
+          "gradient": "linear-gradient(135deg, #000000 0%, #434343 100%)",
+          "emoji": "🎥",
+          "category": "Photography",
+          "country": "India"
+        },
+        {
+          "id": "dyn-service-6",
+          "name": "Elite Bridal Artistry by Anjali",
+          "location": "Civil Lines, Roorkee",
+          "price": 5000,
+          "rating": 4.9,
+          "tags": [
+            "Luxury",
+            "Airbrush"
+          ],
+          "badge": "Artist Choice",
+          "gradient": "linear-gradient(135deg, #D4145A 0%, #FBB03B 100%)",
+          "emoji": "🖌️",
           "category": "Make-up",
           "country": "India"
         }
       ]
     },
-    "timestamp": 1780777531925
+    "timestamp": 1780779493203
   },
   "v2-new-delhi-india": {
     "data": {
@@ -802,86 +580,190 @@
           "category": "Cabins",
           "country": "India",
           "imageUrl": "https://photos.hotelbeds.com/giata/original/10/1009004/1009004a_hb_l_007.jpg"
+        },
+        {
+          "id": "serp-stay-9",
+          "name": "Hotel The Royal Plaza",
+          "location": "New Delhi, India",
+          "price": 4811,
+          "rating": 3.8,
+          "tags": [
+            "Breakfast ($)",
+            "Free Wi-Fi",
+            "Free parking"
+          ],
+          "badge": "Guest Favourite",
+          "gradient": "linear-gradient(135deg, #1a1200 0%, #2e2000 50%, #4a3300 100%)",
+          "emoji": "🏰",
+          "category": "Mansions",
+          "country": "India",
+          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEhdLRv3NmT3HsBuHsPnlrFiBv8TVjget0x1EC8i8ORqnU5dCBXAaRga1UtBPXADQoc3n3fPWG8s-OsBA-qC22TvW3aGQ7nEnfKwXf1HVG-A7sFA3jsrLF0kZfxaBHfsVkQtlckd2qzNRkY=s10000"
+        },
+        {
+          "id": "serp-stay-10",
+          "name": "The Oberoi, New Delhi",
+          "location": "New Delhi, India",
+          "price": 18540,
+          "rating": 4.6,
+          "tags": [
+            "Breakfast ($)",
+            "Free Wi-Fi",
+            "Free parking"
+          ],
+          "badge": "Superhost",
+          "gradient": "linear-gradient(135deg, #0a2a1a 0%, #0f3d25 50%, #1a5c35 100%)",
+          "emoji": "🏔️",
+          "category": "Mountains",
+          "country": "India",
+          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEVGVjuLw09SZdUtd6BSTmNzWwtZkEmivzj7s6oLCo9s99Vn7ZmZcozVY_eCmYNh5FEYCOjfYTXw-lUuk2rRMeV0sv4o-eNxhIDbKjLC58qfcwIdY8Wp0Ooqhz3ZP-K3cQvzn9eL5SsUIkc=s10000"
+        },
+        {
+          "id": "serp-stay-11",
+          "name": "Hotel Ajanta - Free Airport Pick Up Service",
+          "location": "New Delhi, India",
+          "price": 2674,
+          "rating": 4.6,
+          "tags": [
+            "Free breakfast",
+            "Free Wi-Fi",
+            "Free parking"
+          ],
+          "badge": "Top Rated",
+          "gradient": "linear-gradient(135deg, #1e110a 0%, #3a2214 50%, #52311d 100%)",
+          "emoji": "🌊",
+          "category": "Lakefront",
+          "country": "India",
+          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAFyj0FQQXHYZL4sA97yHDkryCfMhHsfEv4zmCATmwrzcGLWzf5-iOKeFjHFFxYjDw50qGXs_MkqmihTo12Ij5tXu1Uvles0mMGz-FI3zR0v0Ac1rvW5xMd_6nnDGluHiNLx8m0L=s10000"
+        },
+        {
+          "id": "serp-stay-12",
+          "name": "Shangri-La Eros New Delhi",
+          "location": "New Delhi, India",
+          "price": 14239,
+          "rating": 4.6,
+          "tags": [
+            "Free breakfast",
+            "Free Wi-Fi",
+            "Free parking"
+          ],
+          "badge": "Rare Find",
+          "gradient": "linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 50%, #3d2470 100%)",
+          "emoji": "🏯",
+          "category": "Heritage",
+          "country": "India",
+          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEz3mFD2JrR-HP8EyMiBqVwQA-7uFcr2JSWVh4h3OsN89fL5k0qJc-Wt-ng0b4nW4Mdz8-tB_2XrLmc9w-KnxsdJ0xlQhCyk7GSNguC5VjmsZhBFtAOuf-9GjJggnU6v5v51FJgpFaoo235=s10000"
         }
       ],
       "experiences": [
         {
           "id": "dyn-exp-1",
-          "name": "Old Delhi Heritage Food Walk",
+          "name": "Heritage Walk through Old Delhi",
           "location": "Chandni Chowk, New Delhi",
-          "price": 2500,
-          "rating": 4.95,
+          "price": 1200,
+          "rating": 4.8,
           "tags": [
-            "Culinary",
+            "History",
             "Culture"
           ],
-          "badge": "Guest Favourite",
-          "gradient": "linear-gradient(135deg, #e65c00 0%, #F9D423 100%)",
-          "emoji": "🍛",
+          "badge": "Popular",
+          "gradient": "linear-gradient(135deg, #ff9966 0%, #ff5e62 100%)",
+          "emoji": "🕌",
           "category": "Sightseeing",
           "country": "India"
         },
         {
           "id": "dyn-exp-2",
-          "name": "Humayun's Tomb Sunset Photography Tour",
-          "location": "Nizamuddin, New Delhi",
-          "price": 3200,
-          "rating": 4.85,
+          "name": "Culinary Tour of South Delhi",
+          "location": "Hauz Khas, New Delhi",
+          "price": 3500,
+          "rating": 4.9,
           "tags": [
-            "Architecture",
-            "Photography"
+            "Food",
+            "Local"
           ],
-          "badge": "Top Rated",
-          "gradient": "linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%)",
-          "emoji": "📸",
-          "category": "Sightseeing",
+          "badge": "Guest Favourite",
+          "gradient": "linear-gradient(135deg, #f83600 0%, #f9d423 100%)",
+          "emoji": "🍛",
+          "category": "Food",
           "country": "India"
         },
         {
           "id": "dyn-exp-3",
-          "name": "Lotus Temple Spiritual Meditation Session",
-          "location": "Kalkaji, New Delhi",
-          "price": 1200,
-          "rating": 4.78,
+          "name": "Humayun's Tomb Sunset Tour",
+          "location": "Nizamuddin, New Delhi",
+          "price": 1800,
+          "rating": 4.7,
           "tags": [
-            "Wellness",
+            "Architecture",
             "History"
           ],
-          "badge": "Popular",
-          "gradient": "linear-gradient(135deg, #f7ff00 0%, #db36a4 100%)",
-          "emoji": "🧘",
+          "badge": "Top Rated",
+          "gradient": "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+          "emoji": "🏛️",
           "category": "Sightseeing",
           "country": "India"
         },
         {
           "id": "dyn-exp-4",
-          "name": "Lodi Garden Morning Nature Walk",
-          "location": "Lodi Estate, New Delhi",
+          "name": "Yoga Session at Lodi Gardens",
+          "location": "Lodi Road, New Delhi",
           "price": 800,
           "rating": 4.9,
           "tags": [
-            "Nature",
-            "Exercise"
+            "Wellness",
+            "Nature"
           ],
-          "badge": "Highly Rated",
-          "gradient": "linear-gradient(135deg, #56ab2f 0%, #a8e063 100%)",
-          "emoji": "🌳",
-          "category": "Sightseeing",
+          "badge": "Sustainable",
+          "gradient": "linear-gradient(135deg, #a8ff78 0%, #78ffd6 100%)",
+          "emoji": "🧘",
+          "category": "Wellness",
+          "country": "India"
+        },
+        {
+          "id": "dyn-exp-5",
+          "name": "Art Gallery Crawl",
+          "location": "Khan Market, New Delhi",
+          "price": 2200,
+          "rating": 4.6,
+          "tags": [
+            "Art",
+            "Culture"
+          ],
+          "badge": "Curated",
+          "gradient": "linear-gradient(135deg, #ee9ca7 0%, #ffdde1 100%)",
+          "emoji": "🎨",
+          "category": "Art",
+          "country": "India"
+        },
+        {
+          "id": "dyn-exp-6",
+          "name": "Delhi Night Market Exploration",
+          "location": "Connaught Place, New Delhi",
+          "price": 1500,
+          "rating": 4.5,
+          "tags": [
+            "Shopping",
+            "Nightlife"
+          ],
+          "badge": "Local Pick",
+          "gradient": "linear-gradient(135deg, #232526 0%, #414345 100%)",
+          "emoji": "🛍️",
+          "category": "Shopping",
           "country": "India"
         }
       ],
       "services": [
         {
           "id": "dyn-service-1",
-          "name": "Professional Candid Travel Portraiture",
-          "location": "South Delhi Studio, New Delhi",
-          "price": 8500,
-          "rating": 4.92,
+          "name": "Street Photography Masterclass",
+          "location": "Old Delhi, New Delhi",
+          "price": 4500,
+          "rating": 4.9,
           "tags": [
             "Photography",
-            "Outdoor"
+            "Tutorial"
           ],
-          "badge": "Pro Photographer",
+          "badge": "Pro",
           "gradient": "linear-gradient(135deg, #1f1c2c 0%, #928dab 100%)",
           "emoji": "📷",
           "category": "Photography",
@@ -889,54 +771,70 @@
         },
         {
           "id": "dyn-service-2",
-          "name": "Bridal and Event Makeup Artistry",
-          "location": "Greater Kailash, New Delhi",
+          "name": "Traditional Indian Bridal Make-up",
+          "location": "GK-II, New Delhi",
           "price": 12000,
-          "rating": 4.98,
+          "rating": 4.95,
           "tags": [
-            "Make-up",
-            "Beauty"
+            "Beauty",
+            "Events"
           ],
-          "badge": "Expert",
-          "gradient": "linear-gradient(135deg, #ee9ca7 0%, #ffdde1 100%)",
+          "badge": "Premium",
+          "gradient": "linear-gradient(135deg, #c31432 0%, #240b36 100%)",
           "emoji": "💄",
           "category": "Make-up",
           "country": "India"
         },
         {
           "id": "dyn-service-3",
-          "name": "Corporate Headshot Photography",
-          "location": "Connaught Place, New Delhi",
-          "price": 5000,
-          "rating": 4.88,
+          "name": "Portrait Shoot in Heritage Sites",
+          "location": "Lodhi Estate, New Delhi",
+          "price": 6000,
+          "rating": 4.8,
           "tags": [
             "Photography",
-            "Business"
+            "Travel"
           ],
-          "badge": "New",
-          "gradient": "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-          "emoji": "👔",
+          "badge": "Top Rated",
+          "gradient": "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)",
+          "emoji": "📸",
           "category": "Photography",
           "country": "India"
         },
         {
           "id": "dyn-service-4",
-          "name": "Glamour Make-over for Special Occasions",
-          "location": "Vasant Kunj, New Delhi",
-          "price": 6500,
-          "rating": 4.75,
+          "name": "Professional Event Make-up",
+          "location": "Defence Colony, New Delhi",
+          "price": 5500,
+          "rating": 4.7,
           "tags": [
-            "Make-up",
-            "Style"
+            "Beauty",
+            "Fashion"
           ],
-          "badge": "Popular",
-          "gradient": "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+          "badge": "New",
+          "gradient": "linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)",
           "emoji": "✨",
           "category": "Make-up",
+          "country": "India"
+        },
+        {
+          "id": "dyn-service-5",
+          "name": "Corporate Headshots Session",
+          "location": "Cyber Hub/Delhi Border, New Delhi",
+          "price": 8000,
+          "rating": 4.9,
+          "tags": [
+            "Photography",
+            "Business"
+          ],
+          "badge": "Certified",
+          "gradient": "linear-gradient(135deg, #485563 0%, #29323c 100%)",
+          "emoji": "👔",
+          "category": "Photography",
           "country": "India"
         }
       ]
     },
-    "timestamp": 1780777535560
+    "timestamp": 1780779501565
   }
 }

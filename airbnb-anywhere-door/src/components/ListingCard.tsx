@@ -22,6 +22,7 @@ interface ListingCardProps {
   imageUrl?: string;
   /** Short AI-generated description — rendered clamped to 2 lines, never in a tag pill */
   tagline?: string;
+  type?: "stay" | "experience" | "service";
 }
 
 export default function ListingCard({
@@ -41,6 +42,7 @@ export default function ListingCard({
   priceUnit = "/ night",
   imageUrl: propImageUrl,
   tagline,
+  type = "stay",
 }: ListingCardProps) {
   const [localWishlisted, setLocalWishlisted] = useState(false);
   const [imgError, setImgError] = useState(false);
@@ -66,7 +68,7 @@ export default function ListingCard({
 
   // Fetch real Pexels image (query: location + name keywords) - only when card is visible in viewport and no imageUrl is passed
   const imageQuery = `${location} ${name.split(" ").slice(0, 3).join(" ")}`;
-  const { url: pexelsUrl, alt: imageAlt, photographer, loading: imgLoading } = usePropertyImage(imageQuery, isVisible && !propImageUrl);
+  const { url: pexelsUrl, alt: imageAlt, photographer, loading: imgLoading } = usePropertyImage(imageQuery, isVisible && !propImageUrl, type);
 
   const resolvedImageUrl = propImageUrl || pexelsUrl;
   const showRealImage = resolvedImageUrl && !imgError;
@@ -211,7 +213,13 @@ export default function ListingCard({
 
         <div className="listing-price-row" style={{ marginTop: 10 }}>
           <div className="listing-price">
-            {price} {priceUnit && <span>{priceUnit}</span>}
+            {price.toLowerCase() === "free" ? (
+              "Free"
+            ) : (
+              <>
+                {price} {priceUnit && <span>{priceUnit}</span>}
+              </>
+            )}
           </div>
           <button
             className={`listing-wishlist${isWishlisted ? " active" : ""}`}
