@@ -33,8 +33,8 @@
 
   --drawer-bg: linear-gradient(180deg, #12121a 0%, #0e0e18 100%);
   --bottom-nav-bg: #0a0a0f;
-  --top-nav-bg: rgba(10, 10, 15, 0.8);
-  --explore-subtabs-bg: rgba(18, 18, 26, 0.8);
+  --top-nav-bg: rgba(10, 10, 15, 0.5);
+  --explore-subtabs-bg: rgba(18, 18, 26, 0.5);
   --phone-shell-bg: radial-gradient(ellipse at 50% 0%, rgba(255,56,92,0.08) 0%, transparent 60%),
                     linear-gradient(180deg, #0a0a0f 0%, #08080d 100%);
 
@@ -74,8 +74,8 @@
 
   --drawer-bg: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
   --bottom-nav-bg: #ffffff;
-  --top-nav-bg: rgba(255, 255, 255, 0.85);
-  --explore-subtabs-bg: rgba(247, 247, 247, 0.85);
+  --top-nav-bg: rgba(255, 255, 255, 0.5);
+  --explore-subtabs-bg: rgba(255, 255, 255, 0.5);
   --phone-shell-bg: radial-gradient(ellipse at 50% 0%, rgba(255,56,92,0.06) 0%, transparent 60%),
                     linear-gradient(180deg, #f0ede8 0%, #ebe8e3 100%);
 }
@@ -280,8 +280,8 @@ body {
   top: 0;
   z-index: 10;
   background: var(--explore-subtabs-bg, var(--bg-secondary));
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   transform: translateZ(0);
 }
 
@@ -2003,8 +2003,8 @@ body {
   margin-top: -24px;
   margin-bottom: 20px;
   border-bottom: 1px solid var(--border-subtle);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   transform: translateZ(0);
 }
 
@@ -2067,8 +2067,8 @@ body {
     left: 0;
     right: 0;
     z-index: 1000;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     transform: translateZ(0);
   }
 
