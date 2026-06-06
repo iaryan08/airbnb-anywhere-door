@@ -836,5 +836,453 @@
       ]
     },
     "timestamp": 1780779501565
+  },
+  "v2-zurich-switzerland": {
+    "data": {
+      "stays": [
+        {
+          "id": "serp-stay-1",
+          "name": "Placid Hotel Zurich",
+          "location": "Zurich, Switzerland",
+          "price": 14939,
+          "rating": 4.2,
+          "tags": [
+            "Breakfast ($)",
+            "Free Wi-Fi",
+            "Parking ($)"
+          ],
+          "badge": "Guest Favourite",
+          "gradient": "linear-gradient(135deg, #1a1200 0%, #2e2000 50%, #4a3300 100%)",
+          "emoji": "🌲",
+          "category": "Cabins",
+          "country": "Switzerland",
+          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAG-UfM2bCfq1sFJgu-LNxa5o5nVQ4tHOpkA2QBMCj0Mbuzon6H5O1A3Ao4vfb4rTlDDYMA8nJNmONg1wnBGUSJ_J4-g8Ya1E8RlLZBDchea39g1vmMqQ7C5LPW66-nN-aO9lr3vnA=s10000"
+        },
+        {
+          "id": "serp-stay-2",
+          "name": "Kameha Grand Zurich, Autograph Collection",
+          "location": "Zurich, Switzerland",
+          "price": 22550,
+          "rating": 4.3,
+          "tags": [
+            "Breakfast ($)",
+            "Free Wi-Fi",
+            "Parking ($)"
+          ],
+          "badge": "Superhost",
+          "gradient": "linear-gradient(135deg, #0a2a1a 0%, #0f3d25 50%, #1a5c35 100%)",
+          "emoji": "🏰",
+          "category": "Mansions",
+          "country": "Switzerland",
+          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEtnke6d7xSZIRAfWBN5aWYk6TNqJX81ojq6aKuPoYgk_glZ5HSmwi7Yr3pwAs8jK2-5nOE-NPn8zSJmnxoIKV14oTo9D-hGTMS0buCcnBvxvKM0dooxv5kcnjeza0cEY2day5ojvA-1_AT=s10000"
+        },
+        {
+          "id": "serp-stay-3",
+          "name": "Crowne Plaza Zurich by IHG",
+          "location": "Zurich, Switzerland",
+          "price": 18682,
+          "rating": 4,
+          "tags": [
+            "Breakfast ($)",
+            "Free Wi-Fi",
+            "Parking ($)"
+          ],
+          "badge": "Top Rated",
+          "gradient": "linear-gradient(135deg, #1e110a 0%, #3a2214 50%, #52311d 100%)",
+          "emoji": "🏔️",
+          "category": "Mountains",
+          "country": "Switzerland",
+          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEAKjZPUq3nCnZ5EeaLDRiezIFVVY5C8xeoOwQF-LhWrWhqszE3BpswwoVQ_Skp9djGOB0FidRC9UMrbJZqnLPGpAl5Mf96Z0SNm7mIPwtOZiHuX5fsw5ignezvbK7tYihMBGMRoUQo4Peo=s10000"
+        },
+        {
+          "id": "serp-stay-4",
+          "name": "Hotel Schweizerhof Zürich",
+          "location": "Zurich, Switzerland",
+          "price": 69243,
+          "rating": 4.5,
+          "tags": [
+            "Free breakfast",
+            "Free Wi-Fi",
+            "Parking ($)"
+          ],
+          "badge": "Rare Find",
+          "gradient": "linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 50%, #3d2470 100%)",
+          "emoji": "🌊",
+          "category": "Lakefront",
+          "country": "Switzerland",
+          "imageUrl": "https://cdn.worldota.net/t/1024x768/content/17/4d/174d4c49518d228661b20bd0754d2cec56480385.JPEG"
+        },
+        {
+          "id": "serp-stay-5",
+          "name": "Hotel UTO KULM car-free hideaway in Zurich",
+          "location": "Zurich, Switzerland",
+          "price": 17134,
+          "rating": 4.1,
+          "tags": [
+            "Breakfast ($)",
+            "Free Wi-Fi",
+            "Free parking"
+          ],
+          "badge": "Guest Favourite",
+          "gradient": "linear-gradient(135deg, #0d1a2a 0%, #1a2d45 50%, #243d60 100%)",
+          "emoji": "🏯",
+          "category": "Heritage",
+          "country": "Switzerland",
+          "imageUrl": "https://photos.hotelbeds.com/giata/original/70/701455/701455a_hb_ro_029_20250416_113833.jpg"
+        },
+        {
+          "id": "serp-stay-6",
+          "name": "PLATZHIRSCH ZÜRICH Downtown Boutique Hotel & Sushi Lounge",
+          "location": "Zurich, Switzerland",
+          "price": 34106,
+          "rating": 4.3,
+          "tags": [
+            "Breakfast ($)",
+            "Free Wi-Fi",
+            "Parking ($)"
+          ],
+          "badge": "Superhost",
+          "gradient": "linear-gradient(135deg, #051a24 0%, #0d3246 50%, #184c68 100%)",
+          "emoji": "🏙️",
+          "category": "City",
+          "country": "Switzerland",
+          "imageUrl": "https://d2hyz2bfif3cr8.cloudfront.net/imageRepo/6/0/87/752/472/47144w_S.jpg"
+        },
+        {
+          "id": "serp-stay-7",
+          "name": "MEININGER Hotel Zürich Greencity",
+          "location": "Zurich, Switzerland",
+          "price": 11972,
+          "rating": 4,
+          "tags": [
+            "Breakfast ($)",
+            "Free Wi-Fi",
+            "Parking ($)"
+          ],
+          "badge": "Top Rated",
+          "gradient": "linear-gradient(135deg, #2b1f15 0%, #423021 50%, #5c442f 100%)",
+          "emoji": "🌿",
+          "category": "Countryside",
+          "country": "Switzerland",
+          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEHbMs05KXklp1_z4Z3x-xSH29s4b_x6wd3FBNVOnojcZHMztzGrSbmMS3JnFxU_jLl4UudRZyytf9_6uEQmy3R-ccdsieVCSUm9acDSSbTcBXLyVMqpSwM9XMnd-TOK_XLN2lM=s10000"
+        },
+        {
+          "id": "serp-stay-8",
+          "name": "Radisson Hotel & Suites Zurich",
+          "location": "Zurich, Switzerland",
+          "price": 20395,
+          "rating": 3.9,
+          "tags": [
+            "Breakfast ($)",
+            "Free Wi-Fi",
+            "Parking ($)"
+          ],
+          "badge": "Rare Find",
+          "gradient": "linear-gradient(135deg, #1c1c1c 0%, #2d2d2d 50%, #3e3e3e 100%)",
+          "emoji": "🌲",
+          "category": "Cabins",
+          "country": "Switzerland",
+          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAF1TWjDSgUxNEcw-1W9vFia7gV34kf_OAcBOBpqzHqtP-hrfX9A-H6CXvwBtnxm7yvZN3-SLU6Ihj_j0bYMjDTOQ7Rq-Ux4iqbx5J-nlPkPid59RN98tpZDMf3wV3wrIS-w4dL8SNqPYg4=s10000"
+        },
+        {
+          "id": "serp-stay-9",
+          "name": "Swiss Star California - Self Check-In - Superior Studio with Balcony",
+          "location": "Zurich, Switzerland",
+          "price": 10163,
+          "rating": 4.65,
+          "tags": [
+            "Air conditioning",
+            "Kid-friendly",
+            "Crib"
+          ],
+          "badge": "Guest Favourite",
+          "gradient": "linear-gradient(135deg, #1a1200 0%, #2e2000 50%, #4a3300 100%)",
+          "emoji": "🏰",
+          "category": "Mansions",
+          "country": "Switzerland",
+          "imageUrl": "https://static.cupid.travel/hotels/85172974.jpg"
+        },
+        {
+          "id": "serp-stay-10",
+          "name": "Mercure Zurich City",
+          "location": "Zurich, Switzerland",
+          "price": 23900,
+          "rating": 4.1,
+          "tags": [
+            "Breakfast ($)",
+            "Free Wi-Fi",
+            "Parking ($)"
+          ],
+          "badge": "Superhost",
+          "gradient": "linear-gradient(135deg, #0a2a1a 0%, #0f3d25 50%, #1a5c35 100%)",
+          "emoji": "🏔️",
+          "category": "Mountains",
+          "country": "Switzerland",
+          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAGPU-kHfmw1b3Y9oaESgFO1st2lZzPqGROKhIIYjGU-GoGkyk-DtHEslg1h6BQZlxDxAiftat-PeZhQH-QcsisrSR2tMbBrMVROo8kFtNYgiejoHfv1Uup-ey2suI52SMKAVOhneaLGC3Ps=s10000"
+        },
+        {
+          "id": "serp-stay-11",
+          "name": "Hotel Swiss Night by Fassbind",
+          "location": "Zurich, Switzerland",
+          "price": 20996,
+          "rating": 4.2,
+          "tags": [
+            "Breakfast",
+            "Free Wi-Fi",
+            "Parking"
+          ],
+          "badge": "Top Rated",
+          "gradient": "linear-gradient(135deg, #1e110a 0%, #3a2214 50%, #52311d 100%)",
+          "emoji": "🌊",
+          "category": "Lakefront",
+          "country": "Switzerland",
+          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEhFPt4k_GKqgWxOKmaSJbg3earu4rripGH8sIidxzluSsqaR97gZ_2y2m_1JG9D57NyULSxgVweCox7f5KiDuGOHQkSXWjX0NBhoBULsahUwqpv98CmgMEm5CDmiunwoT6ZNo=s10000"
+        },
+        {
+          "id": "serp-stay-12",
+          "name": "Moxy Zurich",
+          "location": "Zurich, Switzerland",
+          "price": 21982,
+          "rating": 4.2,
+          "tags": [
+            "Breakfast ($)",
+            "Free Wi-Fi",
+            "Parking ($)"
+          ],
+          "badge": "Rare Find",
+          "gradient": "linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 50%, #3d2470 100%)",
+          "emoji": "🏯",
+          "category": "Heritage",
+          "country": "Switzerland",
+          "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEEnvcpa6UjYS7DWfUm47a9SNZO-U6O_GvPcRILOqLYnkmFwjc2ZrQgkdEVPR9EeWouowvV1ygh-udJa55Ic7nlyQEK6n0uT2LvZIJC3X2ZXIcIapV58-33MoVzymqxm-I-H7IH=s10000"
+        }
+      ],
+      "experiences": [
+        {
+          "id": "dyn-exp-1",
+          "name": "Self-Guided Walk in Historic Niederdorf",
+          "location": "Niederdorf, Zurich",
+          "price": 0,
+          "rating": 4.85,
+          "tags": [
+            "Culture",
+            "History",
+            "Free"
+          ],
+          "badge": "Top Rated",
+          "gradient": "linear-gradient(135deg, #1fa2ff 0%, #12d8fa 50%, #a6ffcb 100%)",
+          "emoji": "🚶",
+          "category": "Sightseeing",
+          "country": "Switzerland"
+        },
+        {
+          "id": "dyn-exp-2",
+          "name": "Lindt Home of Chocolate Exhibition",
+          "location": "Kilchberg, Zurich",
+          "price": 2200,
+          "rating": 4.92,
+          "tags": [
+            "Food",
+            "Museum",
+            "Family"
+          ],
+          "badge": "Best Seller",
+          "gradient": "linear-gradient(135deg, #8a2387 0%, #e94057 50%, #f27121 100%)",
+          "emoji": "🍫",
+          "category": "Food & Drink",
+          "country": "Switzerland"
+        },
+        {
+          "id": "dyn-exp-3",
+          "name": "Lake Zurich Scenic Afternoon Cruise",
+          "location": "Zürichsee, Zurich",
+          "price": 2800,
+          "rating": 4.78,
+          "tags": [
+            "Cruises",
+            "Scenic",
+            "Nature"
+          ],
+          "badge": "Guest Favourite",
+          "gradient": "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+          "emoji": "🚢",
+          "category": "Sightseeing",
+          "country": "Switzerland"
+        },
+        {
+          "id": "dyn-exp-4",
+          "name": "Uetliberg Mountain Train & Panoramic Hike",
+          "location": "Uetliberg, Zurich",
+          "price": 1900,
+          "rating": 4.88,
+          "tags": [
+            "Hiking",
+            "Adventure",
+            "Nature"
+          ],
+          "badge": "Highly Rated",
+          "gradient": "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)",
+          "emoji": "⛰️",
+          "category": "Adventure",
+          "country": "Switzerland"
+        },
+        {
+          "id": "dyn-exp-5",
+          "name": "Sunset Picnic & Views at Lindenhof",
+          "location": "Lindenhof Hill, Zurich",
+          "price": 0,
+          "rating": 4.91,
+          "tags": [
+            "Romantic",
+            "Scenic",
+            "Free"
+          ],
+          "badge": "Must Visit",
+          "gradient": "linear-gradient(135deg, #ff9966 0%, #ff5e62 100%)",
+          "emoji": "🌅",
+          "category": "Sightseeing",
+          "country": "Switzerland"
+        },
+        {
+          "id": "dyn-exp-6",
+          "name": "Swiss National Museum Guided Tour",
+          "location": "Museumstrasse, Zurich",
+          "price": 1400,
+          "rating": 4.72,
+          "tags": [
+            "History",
+            "Art",
+            "Indoor"
+          ],
+          "badge": "Recommended",
+          "gradient": "linear-gradient(135deg, #3a7bd5 0%, #3a6073 100%)",
+          "emoji": "🏛️",
+          "category": "Culture",
+          "country": "Switzerland"
+        },
+        {
+          "id": "dyn-exp-7",
+          "name": "Day Trip to Mount Titlis Eternal Snow",
+          "location": "Engelberg, Zurich Pickup",
+          "price": 18500,
+          "rating": 4.96,
+          "tags": [
+            "Day Trip",
+            "Snow",
+            "Alps"
+          ],
+          "badge": "Premium Experience",
+          "gradient": "linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)",
+          "emoji": "❄️",
+          "category": "Adventure",
+          "country": "Switzerland"
+        }
+      ],
+      "services": [
+        {
+          "id": "dyn-service-1",
+          "name": "Zurich Old Town Portrait Sessions",
+          "location": "Altstadt, Zurich",
+          "price": 24000,
+          "rating": 4.95,
+          "tags": [
+            "Outdoor",
+            "Portraits",
+            "Couples"
+          ],
+          "badge": "Popular",
+          "gradient": "linear-gradient(135deg, #2c3e50 0%, #fd746c 100%)",
+          "emoji": "📷",
+          "category": "Photography",
+          "country": "Switzerland"
+        },
+        {
+          "id": "dyn-service-2",
+          "name": "Alps & Lakes Proposal Photography",
+          "location": "Zürichsee Lakefront, Zurich",
+          "price": 48000,
+          "rating": 4.99,
+          "tags": [
+            "Proposal",
+            "Exclusive",
+            "Drone"
+          ],
+          "badge": "Highly Rated",
+          "gradient": "linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)",
+          "emoji": "💍",
+          "category": "Photography",
+          "country": "Switzerland"
+        },
+        {
+          "id": "dyn-service-3",
+          "name": "Glance & Glow Professional Make-up",
+          "location": "Enge, Zurich",
+          "price": 16500,
+          "rating": 4.88,
+          "tags": [
+            "Editorial",
+            "Bridal",
+            "Styling"
+          ],
+          "badge": "Top Artist",
+          "gradient": "linear-gradient(135deg, #f857a6 0%, #ff5858 100%)",
+          "emoji": "💄",
+          "category": "Make-up",
+          "country": "Switzerland"
+        },
+        {
+          "id": "dyn-service-4",
+          "name": "Corporate & Personal Branding Headshots",
+          "location": "Bahnhofstrasse, Zurich",
+          "price": 19500,
+          "rating": 4.91,
+          "tags": [
+            "Corporate",
+            "Studio",
+            "LinkedIn"
+          ],
+          "badge": "B2B Favourite",
+          "gradient": "linear-gradient(135deg, #3d7eaa 0%, #ffe47e 100%)",
+          "emoji": "💼",
+          "category": "Photography",
+          "country": "Switzerland"
+        },
+        {
+          "id": "dyn-service-5",
+          "name": "Swiss Wedding Hair & Bridal Makeup Studio",
+          "location": "Seefeld, Zurich",
+          "price": 32000,
+          "rating": 4.97,
+          "tags": [
+            "Wedding",
+            "Premium",
+            "Hairstyling"
+          ],
+          "badge": "Elite Tier",
+          "gradient": "linear-gradient(135deg, #ee9ca7 0%, #ffdde1 100%)",
+          "emoji": "👰",
+          "category": "Make-up",
+          "country": "Switzerland"
+        },
+        {
+          "id": "dyn-service-6",
+          "name": "Street Style & Vacation Photography",
+          "location": "Europaallee, Zurich",
+          "price": 15000,
+          "rating": 4.86,
+          "tags": [
+            "Casual",
+            "Solo Travelers",
+            "Instagram"
+          ],
+          "badge": "Trending",
+          "gradient": "linear-gradient(135deg, #4da0b0 0%, #d39d38 100%)",
+          "emoji": "🤳",
+          "category": "Photography",
+          "country": "Switzerland"
+        }
+      ]
+    },
+    "timestamp": 1780783608226
   }
 }

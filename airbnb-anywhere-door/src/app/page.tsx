@@ -85,7 +85,7 @@ const STAYS_CATEGORIES = [
 ];
 
 /*  Stays Database  */
-const STAYS_LISTINGS = [
+const STAYS_LISTINGS_INDIA = [
   {
     id: "beach-1",
     name: "Coconut Grove Beach Villa",
@@ -203,6 +203,9 @@ const STAYS_LISTINGS = [
     category: "Countryside",
     country: "India",
   },
+];
+
+const STAYS_LISTINGS_SWITZERLAND = [
   {
     id: "beach-swiss",
     name: "Lake Geneva Sunshore Villa",
@@ -463,7 +466,7 @@ const SERVICES_CATEGORIES = [
 ];
 
 /*  Airbnb Services Listings (Photographers in New Delhi)  */
-const SERVICES_LISTINGS = [
+const SERVICES_LISTINGS_INDIA = [
   {
     id: "service-1",
     name: "New Delhi photo session by a Female Photographer",
@@ -555,6 +558,9 @@ const SERVICES_LISTINGS = [
     category: "Photography",
     country: "India",
   },
+];
+
+const SERVICES_LISTINGS_SWITZERLAND = [
   {
     id: "service-swiss-1",
     name: "Zurich Old Town Photo Shoot",
@@ -597,7 +603,7 @@ const SERVICES_LISTINGS = [
 ];
 
 /*  Airbnb Experiences Listings  */
-const EXPERIENCES_LISTINGS = [
+const EXPERIENCES_LISTINGS_INDIA = [
   {
     id: "exp-1",
     name: "Old Delhi Street Food & Rickshaw Tour",
@@ -624,6 +630,9 @@ const EXPERIENCES_LISTINGS = [
     category: "Sightseeing",
     country: "India",
   },
+];
+
+const EXPERIENCES_LISTINGS_SWITZERLAND = [
   {
     id: "exp-swiss-1",
     name: "Lake Lucerne Scenic Boat Tour",
@@ -780,9 +789,9 @@ export default function Home() {
   
   // Start with mock listings initially as fallback; while calling API show loader
   const [listingsLoading, setListingsLoading] = useState(false);
-  const [staysListings, setStaysListings] = useState<typeof STAYS_LISTINGS>(STAYS_LISTINGS);
-  const [experiencesListings, setExperiencesListings] = useState<typeof EXPERIENCES_LISTINGS>(EXPERIENCES_LISTINGS);
-  const [servicesListings, setServicesListings] = useState<typeof SERVICES_LISTINGS>(SERVICES_LISTINGS);
+  const [staysListings, setStaysListings] = useState<typeof STAYS_LISTINGS_INDIA>(STAYS_LISTINGS_INDIA);
+  const [experiencesListings, setExperiencesListings] = useState<typeof EXPERIENCES_LISTINGS_INDIA>(EXPERIENCES_LISTINGS_INDIA);
+  const [servicesListings, setServicesListings] = useState<typeof SERVICES_LISTINGS_INDIA>(SERVICES_LISTINGS_INDIA);
 
   // Auto-reset activeCategory when dynamic listings load and current selection has no matches
   useEffect(() => {
@@ -903,7 +912,7 @@ export default function Home() {
           const symbolMap: Record<string, string> = {
             INR: "₹", USD: "$", EUR: "€", GBP: "£",
             AED: "د.إ", SGD: "S$", AUD: "A$", CAD: "C$",
-            JPY: "¥", CNY: "¥", THB: "฿", MYR: "RM", CHF: "CHF",
+            JPY: "¥", CNY: "¥", THB: "฿", MYR: "RM", CHF: "Fr.",
           };
           const countryCurrencyMap: Record<string, string> = {
             IN: "INR", US: "USD", GB: "GBP", DE: "EUR", FR: "EUR", IT: "EUR", ES: "EUR", NL: "EUR",
@@ -932,6 +941,10 @@ export default function Home() {
           };
           const rawCountry = data.country || "India";
           const resolvedCountry = countryNames[rawCountry] ?? countryNames[data.countryCode] ?? rawCountry;
+          const isSwiss = resolvedCountry === "Switzerland" || resolvedCountry === "CH";
+          setStaysListings(isSwiss ? STAYS_LISTINGS_SWITZERLAND : STAYS_LISTINGS_INDIA);
+          setExperiencesListings(isSwiss ? EXPERIENCES_LISTINGS_SWITZERLAND : EXPERIENCES_LISTINGS_INDIA);
+          setServicesListings(isSwiss ? SERVICES_LISTINGS_SWITZERLAND : SERVICES_LISTINGS_INDIA);
           setGeoInfo({
             city: data.city ?? "Delhi",
             regionName: data.regionName ?? "",
@@ -968,9 +981,13 @@ export default function Home() {
         if (sameLocation && fresh && cached.data) {
           console.log("Client listings cache HIT for:", geoInfo.city, geoInfo.country);
           const d = cached.data;
-          setStaysListings(d.stays?.length > 0 ? d.stays : STAYS_LISTINGS);
-          setExperiencesListings(d.experiences?.length > 0 ? d.experiences : EXPERIENCES_LISTINGS);
-          setServicesListings(d.services?.length > 0 ? d.services : SERVICES_LISTINGS);
+          const isSwiss = geoInfo.country === "Switzerland" || geoInfo.country === "CH";
+          const fallbackStays = isSwiss ? STAYS_LISTINGS_SWITZERLAND : STAYS_LISTINGS_INDIA;
+          const fallbackExperiences = isSwiss ? EXPERIENCES_LISTINGS_SWITZERLAND : EXPERIENCES_LISTINGS_INDIA;
+          const fallbackServices = isSwiss ? SERVICES_LISTINGS_SWITZERLAND : SERVICES_LISTINGS_INDIA;
+          setStaysListings(d.stays?.length > 0 ? d.stays : fallbackStays);
+          setExperiencesListings(d.experiences?.length > 0 ? d.experiences : fallbackExperiences);
+          setServicesListings(d.services?.length > 0 ? d.services : fallbackServices);
           setListingsLoading(false);
           return; // ← skip API call entirely
         }
@@ -1003,9 +1020,13 @@ export default function Home() {
       })
       .then((data) => {
         // Use dynamic data if valid — never mix with mock
-        setStaysListings(data.stays?.length > 0 ? data.stays : STAYS_LISTINGS);
-        setExperiencesListings(data.experiences?.length > 0 ? data.experiences : EXPERIENCES_LISTINGS);
-        setServicesListings(data.services?.length > 0 ? data.services : SERVICES_LISTINGS);
+        const isSwiss = geoInfo.country === "Switzerland" || geoInfo.country === "CH";
+        const fallbackStays = isSwiss ? STAYS_LISTINGS_SWITZERLAND : STAYS_LISTINGS_INDIA;
+        const fallbackExperiences = isSwiss ? EXPERIENCES_LISTINGS_SWITZERLAND : EXPERIENCES_LISTINGS_INDIA;
+        const fallbackServices = isSwiss ? SERVICES_LISTINGS_SWITZERLAND : SERVICES_LISTINGS_INDIA;
+        setStaysListings(data.stays?.length > 0 ? data.stays : fallbackStays);
+        setExperiencesListings(data.experiences?.length > 0 ? data.experiences : fallbackExperiences);
+        setServicesListings(data.services?.length > 0 ? data.services : fallbackServices);
 
         // Write to localStorage cache
         try {
@@ -1026,9 +1047,10 @@ export default function Home() {
       .catch((err) => {
         // Full mock fallback on any error — never a partial/mixed state
         console.error("Dynamic listings failed, falling back to full mock data:", err);
-        setStaysListings(STAYS_LISTINGS);
-        setExperiencesListings(EXPERIENCES_LISTINGS);
-        setServicesListings(SERVICES_LISTINGS);
+        const isSwiss = geoInfo.country === "Switzerland" || geoInfo.country === "CH";
+        setStaysListings(isSwiss ? STAYS_LISTINGS_SWITZERLAND : STAYS_LISTINGS_INDIA);
+        setExperiencesListings(isSwiss ? EXPERIENCES_LISTINGS_SWITZERLAND : EXPERIENCES_LISTINGS_INDIA);
+        setServicesListings(isSwiss ? SERVICES_LISTINGS_SWITZERLAND : SERVICES_LISTINGS_INDIA);
       })
       .finally(() => {
         setListingsLoading(false);
@@ -1066,8 +1088,8 @@ export default function Home() {
     const symbol = geoInfo.currencySymbol;
     const converted = Math.round(inrPrice / rate);
     
-    if (symbol === "CHF") {
-      return `CHF ${converted.toLocaleString("en-US")}`;
+    if (symbol === "Fr." || symbol === "CHF") {
+      return `Fr. ${converted.toLocaleString("en-US")}`;
     }
     if (symbol === "₹") {
       return `₹${converted.toLocaleString("en-IN")}`;
@@ -1142,9 +1164,6 @@ export default function Home() {
 
   // Dynamic stays filtering based on interactive filters + category
   const filteredStays = staysListings.filter((l) => {
-    // Avoid mixing country listings when using mock data fallbacks
-    const targetCountry = (geoInfo.country === "Switzerland" || geoInfo.country === "CH") ? "Switzerland" : "India";
-    if (l.country && l.country !== targetCountry) return false;
 
     if (l.category !== activeCategory) return false;
     if (l.price > maxPriceFilter) return false;
@@ -1172,9 +1191,6 @@ export default function Home() {
 
   // Dynamic experiences filtering based on interactive filters
   const filteredExperiences = experiencesListings.filter((l) => {
-    // Avoid mixing country listings when using mock data fallbacks
-    const targetCountry = (geoInfo.country === "Switzerland" || geoInfo.country === "CH") ? "Switzerland" : "India";
-    if (l.country && l.country !== targetCountry) return false;
 
     if (l.price > maxPriceFilter) return false;
     if (minRatingFilter > 0 && l.rating < minRatingFilter) return false;
@@ -1190,9 +1206,6 @@ export default function Home() {
 
   // Dynamic services filtering based on category + interactive filters
   const filteredServices = servicesListings.filter((l) => {
-    // Avoid mixing country listings when using mock data fallbacks
-    const targetCountry = (geoInfo.country === "Switzerland" || geoInfo.country === "CH") ? "Switzerland" : "India";
-    if (l.country && l.country !== targetCountry) return false;
 
     if (l.category !== activeServiceCategory) return false;
     if (l.price > maxPriceFilter) return false;
@@ -2113,7 +2126,7 @@ export default function Home() {
                     onChange={(e) => {
                       const selectedVal = e.target.value;
                       const symbolMap: Record<string, string> = {
-                        INR: "₹", USD: "$", EUR: "€", GBP: "£", CHF: "CHF",
+                        INR: "₹", USD: "$", EUR: "€", GBP: "£", CHF: "Fr.",
                         AED: "د.إ", SGD: "S$", AUD: "A$", CAD: "C$", JPY: "¥", CNY: "¥"
                       };
                       setGeoInfo(prev => ({
@@ -2139,7 +2152,7 @@ export default function Home() {
                     <option value="USD" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>USD ($)</option>
                     <option value="EUR" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>EUR (€)</option>
                     <option value="GBP" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>GBP (£)</option>
-                    <option value="CHF" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>CHF (CHF)</option>
+                    <option value="CHF" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>CHF (Fr.)</option>
                     <option value="AED" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>AED (د.إ)</option>
                     <option value="SGD" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>SGD (S$)</option>
                     <option value="AUD" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>AUD (A$)</option>
