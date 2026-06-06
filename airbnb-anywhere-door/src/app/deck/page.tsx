@@ -109,17 +109,20 @@ export default function DeckPage() {
           <div className="slide-content">
             <div className="slide-cover-grid">
               <div>
-                <div className="slide-tag">Product Pitch Deck</div>
-                <h1 style={{ fontSize: "clamp(36px, 4.5vw, 60px)", fontWeight: 900, lineHeight: 1.1, letterSpacing: "-2px", marginBottom: "20px" }}>
-                  Airbnb <br /><span className="highlight">&quot;Anywhere Door&quot;</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "24px" }}>
+                  <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", background: "linear-gradient(135deg, #ff385c, #6366f1)", padding: "6px 16px", borderRadius: "20px", border: "1px solid rgba(255,255,255,0.1)" }}>
+                    One Prompt. Perfect Trip. Zero Filters.
+                  </span>
+                </div>
+                <h1 style={{ fontSize: "clamp(36px, 4.5vw, 60px)", fontWeight: 900, lineHeight: 1.1, letterSpacing: "-2px", marginBottom: "24px" }}>
+                  Airbnb <br /><span className="highlight">Anywhere Door 🚪✨</span>
                 </h1>
                 <p style={{ fontSize: "clamp(15px, 1.8vw, 19px)", opacity: 0.85, marginBottom: "40px", maxWidth: "600px" }}>
                   An AI-first reimagining of Airbnb for group travel and zero-friction trip planning.
                 </p>
                 <div className="presenter-info" style={{ marginTop: "40px", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "24px" }}>
-                  <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--text-muted)", marginBottom: "8px", fontWeight: 700 }}>Submitted by</div>
-                  <div style={{ fontSize: "22px", fontWeight: 800, color: "var(--text-primary)", letterSpacing: "-0.5px" }}>Aryan Mehra</div>
-                  <div style={{ fontSize: "14px", color: "var(--text-secondary)", marginTop: "4px" }}>Enrollment Number: 23115025</div>
+                  <div style={{ fontSize: "20px", fontWeight: 800, color: "var(--text-primary)", letterSpacing: "-0.5px" }}>Aryan Mehra</div>
+                  <div style={{ fontSize: "13px", color: "var(--text-secondary)", marginTop: "4px" }}>Enrollment Number: 23115025</div>
                 </div>
               </div>
               
@@ -171,29 +174,54 @@ export default function DeckPage() {
           />
           <div className="slide-content">
             <div className="slide-tag">02 / Problem</div>
-            <h1>
-              Travel planning is{" "}
-              <span className="highlight">broken.</span>
-            </h1>
-            <p>
-              The average Airbnb user spends <strong style={{ color: "var(--text-primary)" }}>4.2 hours</strong> across multiple sessions comparing listings, reading hundreds of reviews, cross-referencing dates, and coordinating with travel companions — before making a single booking.
-            </p>
-            <div className="stat-row">
-              <div className="stat-item">
-                <div className="stat-value">4.2h</div>
-                <div className="stat-label">Avg. time to book</div>
+            <h2>The Abandonment Funnel: <span className="highlight">Why traditional search bleeds $9.6B in booking revenue.</span></h2>
+            
+            <div style={{ display: "grid", gridTemplateColumns: "0.95fr 1.05fr", gap: "36px", marginTop: "32px", alignItems: "center" }}>
+              {/* Left Side: 68% Stat Box */}
+              <div className="slide-card" style={{ padding: "28px", borderLeft: "4px solid var(--airbnb-coral)" }}>
+                <div style={{ fontSize: "52px", fontWeight: 900, color: "var(--airbnb-coral)", lineHeight: 1, marginBottom: "16px", background: "linear-gradient(135deg, #ff385c, #ff6b35)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>68%</div>
+                <div style={{ fontSize: "14px", fontWeight: 700, color: "#ffffff", marginBottom: "8px" }}>Search Abandonment Rate</div>
+                <p style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>
+                  Users drop off mid-way through their search, resulting in an estimated <strong>$9.6B in lost booking revenue</strong> for the travel industry.
+                </p>
               </div>
-              <div className="stat-item">
-                <div className="stat-value">68%</div>
-                <div className="stat-label">Users abandon mid-search</div>
+
+              {/* Right Side: Funnel Diagram */}
+              <div className="funnel-container">
+                <div className="funnel-stage">
+                  <div className="funnel-stage-num">01</div>
+                  <div className="funnel-stage-text">
+                    <strong>Stage 1 (Top):</strong> 4.2 hours spent per trip comparing listings across multiple sessions.
+                  </div>
+                </div>
+                <div className="funnel-stage" style={{ width: "92%", marginLeft: "4%" }}>
+                  <div className="funnel-stage-num">02</div>
+                  <div className="funnel-stage-text">
+                    <strong>Stage 2 (Middle):</strong> Cognitive overload from toggling 23+ rigid search filters.
+                  </div>
+                </div>
+                <div className="funnel-stage" style={{ width: "84%", marginLeft: "8%" }}>
+                  <div className="funnel-stage-num">03</div>
+                  <div className="funnel-stage-text">
+                    <strong>Stage 3 (Bottom):</strong> Fragmented planning in external group chats and maps.
+                  </div>
+                </div>
               </div>
-              <div className="stat-item">
-                <div className="stat-value">$9.6B</div>
-                <div className="stat-label">Lost revenue from drop-offs</div>
+            </div>
+
+            {/* Bottom Row: Core Problem & Hypothesis */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginTop: "24px" }}>
+              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "8px", padding: "16px 20px" }}>
+                <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--airbnb-coral)", fontWeight: 700, marginBottom: "4px" }}>Core Problem Statement</div>
+                <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.7)", margin: 0, lineHeight: 1.5 }}>
+                  Travel planning is broken. Traditional travel interfaces force users to act as database query tools rather than travelers.
+                </p>
               </div>
-              <div className="stat-item">
-                <div className="stat-value">23+</div>
-                <div className="stat-label">Filter options overwhelm users</div>
+              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "8px", padding: "16px 20px" }}>
+                <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.15em", color: "#6366f1", fontWeight: 700, marginBottom: "4px" }}>Strategic Hypothesis</div>
+                <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.7)", margin: 0, lineHeight: 1.5 }}>
+                  If we remove the friction of comparison paralysis and external coordination via an intent-driven interface, booking conversion rates will drastically increase.
+                </p>
               </div>
             </div>
           </div>
@@ -207,33 +235,40 @@ export default function DeckPage() {
             style={{ width: 400, height: 400, bottom: -150, left: -100, ["--orb-color" as any]: "rgba(99, 102, 241, 0.12)" }}
           />
           <div className="slide-content">
-            <div className="slide-tag">03 / Why GenAI</div>
-            <h2>The Doraemon Principle</h2>
-            <p>
-              Doraemon&apos;s gadgets don&apos;t ask you to fill out forms — they understand your desire and deliver the outcome instantly. Generative AI enables the same magic: context-aware understanding that removes all friction between intent and outcome.
-            </p>
-            <div className="slide-grid">
-              <div className="slide-card">
-                <div className="slide-card-icon">🧠</div>
-                <div className="slide-card-title">Context Understanding</div>
-                <div className="slide-card-text">
-                  LLMs parse natural language intent, group dynamics, budget constraints, and travel style in a single prompt.
-                </div>
-              </div>
-              <div className="slide-card">
-                <div className="slide-card-icon">⚡</div>
-                <div className="slide-card-title">Instant Synthesis</div>
-                <div className="slide-card-text">
-                  Simultaneously curate listings, generate itineraries, and calculate cost splits — in under 3 seconds.
-                </div>
-              </div>
-              <div className="slide-card">
-                <div className="slide-card-icon">🎯</div>
-                <div className="slide-card-title">Zero Friction</div>
-                <div className="slide-card-text">
-                  No filters, no sorting, no comparison paralysis. One input → perfect result. Traditional ML cannot do this.
-                </div>
-              </div>
+            <div className="slide-tag">03 / Paradigm Shift</div>
+            <h2>The Paradigm Shift: <span className="highlight">From query building to natural language intent execution.</span></h2>
+            
+            <table className="comparison-table">
+              <thead>
+                <tr style={{ borderBottom: "2px solid rgba(255,255,255,0.1)" }}>
+                  <th className="comparison-header" style={{ width: "50%" }}>Traditional UI (Predictive ML)</th>
+                  <th className="comparison-header" style={{ width: "50%", color: "var(--airbnb-coral)" }}>Anywhere Door (GenAI) 🌟</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="comparison-row">
+                  <td className="comparison-cell">The user acts as a database engineer.</td>
+                  <td className="comparison-cell anywhere-door-col"><strong>The Doraemon Principle:</strong> Remove all friction between user intent and travel outcome.</td>
+                </tr>
+                <tr className="comparison-row">
+                  <td className="comparison-cell">Manual toggling of 23+ rigid checkboxes.</td>
+                  <td className="comparison-cell anywhere-door-col">A single, conversational natural language prompt.</td>
+                </tr>
+                <tr className="comparison-row">
+                  <td className="comparison-cell">Manual comparison paralysis; reading hundreds of unorganized reviews.</td>
+                  <td className="comparison-cell anywhere-door-col">AI context understanding, live intent parsing, and constraint matching.</td>
+                </tr>
+                <tr className="comparison-row">
+                  <td className="comparison-cell">A raw, overwhelming list of 100+ properties.</td>
+                  <td className="comparison-cell anywhere-door-col">Top 3 curated matches with auto-synthesized Pros/Cons, custom drafted itinerary, and automated cost splits.</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style={{ background: "rgba(99, 102, 241, 0.05)", border: "1px solid rgba(99, 102, 241, 0.15)", borderRadius: "8px", padding: "14px 20px", marginTop: "24px" }}>
+              <p style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.75)", margin: 0, textAlign: "center", lineHeight: 1.5 }}>
+                <strong>Summary:</strong> Traditional ML only optimizes search rankings within rigid filters. Generative AI fundamentally synthesizes and generates the entire end-to-end trip experience in seconds.
+              </p>
             </div>
           </div>
           <div className="slide-number">03 / 07</div>
@@ -247,32 +282,43 @@ export default function DeckPage() {
           />
           <div className="slide-content">
             <div className="slide-tag">04 / User Segments</div>
-            <h2>Who benefits <span className="highlight">most?</span></h2>
-            <p>
-              Three high-value segments with acute pain points that the Anywhere Door directly resolves — driving both booking conversion and revenue per trip.
-            </p>
-            <div className="slide-grid">
+            <h2>Target demographics and the Anywhere Door unified solution.</h2>
+            
+            <div className="slide-grid" style={{ marginTop: "24px" }}>
               <div className="slide-card">
                 <div className="slide-card-icon">👨‍👩‍👧‍👦</div>
                 <div className="slide-card-title">Group Travelers</div>
                 <div className="slide-card-text">
-                  Coordinating 4–10 people across preferences, budgets, and schedules. AI generates consensus-optimized plans instantly.
+                  Stressed coordinators managing 4-10 differing opinions, budgets, and dates across external chats.
                 </div>
               </div>
               <div className="slide-card">
                 <div className="slide-card-icon">💼</div>
                 <div className="slide-card-title">Business Nomads</div>
                 <div className="slide-card-text">
-                  Professionals needing fast, reliable bookings with workspace requirements. AI pre-qualifies listings against their non-negotiables.
+                  Remote workers with strict non-negotiable constraints (e.g., guaranteed fast Wi-Fi, dedicated desk).
                 </div>
               </div>
               <div className="slide-card">
                 <div className="slide-card-icon">🌍</div>
                 <div className="slide-card-title">First-Time Internationals</div>
                 <div className="slide-card-text">
-                  Unfamiliar with local areas, visa requirements, and safety. AI acts as a local expert, guiding every decision.
+                  Users needing local guidance, safety reassurance, and visa/navigation security.
                 </div>
               </div>
+            </div>
+
+            {/* Connecting Banner */}
+            <div className="solution-overview-banner">
+              <div className="solution-overview-title">
+                ✨ Core Insight
+              </div>
+              <p style={{ fontSize: "14px", fontWeight: 700, color: "#ffffff", margin: "0 0 8px 0" }}>
+                Users don&apos;t want to search for a trip; they want to experience it.
+              </p>
+              <p style={{ fontSize: "12.5px", color: "rgba(255, 255, 255, 0.65)", margin: 0, lineHeight: 1.5 }}>
+                <strong>High-Level Solution:</strong> The Anywhere Door acts as a floating conversational travel assistant that replaces the traditional search bar. It executes complex travel curation, itinerary drafting, and budget splitting in a single prompt.
+              </p>
             </div>
           </div>
           <div className="slide-number">04 / 07</div>
@@ -285,35 +331,69 @@ export default function DeckPage() {
             style={{ width: 600, height: 300, bottom: -100, right: -200, ["--orb-color" as any]: "rgba(255, 56, 92, 0.12)" }}
           />
           <div className="slide-content">
-            <div className="slide-tag">05 / Solution</div>
-            <h2>
-              Introducing{" "}
-              <span className="highlight">Anywhere Door</span>
-            </h2>
-            <p>
-              A floating AI companion embedded directly in the Airbnb app. One prompt replaces the entire search-filter-compare-book journey. Powered by Gemini 2.5 Flash for speed, multimodal understanding, and structured output generation.
-            </p>
-            <div className="slide-grid" style={{ marginTop: 28 }}>
-              <div className="slide-card">
-                <div className="slide-card-icon">🗣️</div>
-                <div className="slide-card-title">Natural Language Input</div>
-                <div className="slide-card-text">&quot;Beach house in Bali for 6 people, July, ~$200/night, needs a pool.&quot;</div>
+            <div className="slide-tag">05 / UX Flow</div>
+            <h2>Architectural UX flow: <span className="highlight">Synthesizing a perfect trip in under three seconds.</span></h2>
+            
+            <div style={{ display: "grid", gridTemplateColumns: "0.85fr 1.15fr", gap: "32px", marginTop: "24px", alignItems: "start" }}>
+              {/* Left Column: Speech Bubble Input */}
+              <div style={{ background: "linear-gradient(135deg, rgba(255, 56, 92, 0.08), rgba(99, 102, 241, 0.08))", border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "16px", padding: "24px", position: "relative" }}>
+                <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--text-muted)", marginBottom: "8px", fontWeight: 700 }}>Conversational Input Prompt</div>
+                <p style={{ fontSize: "15px", fontWeight: 700, color: "#ffffff", margin: 0, lineHeight: 1.5 }}>
+                  &quot;A quiet, remote cabin in the mountains for 4 friends under $250/night, must have a hot tub and fast Wi-Fi for remote work&quot;
+                </p>
+                {/* Visual bubble pointer */}
+                <div style={{ position: "absolute", right: "-10px", top: "50px", width: "20px", height: "20px", background: "#08080c", borderLeft: "1px solid rgba(255, 255, 255, 0.1)", borderBottom: "1px solid rgba(255, 255, 255, 0.1)", transform: "rotate(-135deg)" }} />
               </div>
-              <div className="slide-card">
-                <div className="slide-card-icon">🏡</div>
-                <div className="slide-card-title">Curated Listings</div>
-                <div className="slide-card-text">Top 3 AI-ranked properties with condensed review synthesis and key highlights.</div>
+
+              {/* Right Column: 4 Steps with Previews */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                {/* Step 1 */}
+                <div className="slide-card" style={{ padding: "14px 18px" }}>
+                  <div style={{ fontSize: "13px", fontWeight: 700, color: "#ffffff", display: "flex", justifyContent: "space-between" }}>
+                    <span>1. AI Property Matchmaker</span>
+                    <span style={{ fontSize: "11px", color: "var(--airbnb-coral)", fontWeight: 600 }}>Gemini 3.5 Flash + Tavily API</span>
+                  </div>
+                  <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.55)", margin: "4px 0 8px 0" }}>Parses multi-variable constraints to surface the top 3 exact matches using high-speed structured JSON.</p>
+                  <div className="ux-flow-step-preview" style={{ display: "flex", gap: "8px", justifyContent: "space-between", margin: 0 }}>
+                    <span>🏡 Cabin #1: $220/night (WiFi, Tub)</span>
+                    <span>🏡 Cabin #2: $245/night (WiFi, Tub)</span>
+                  </div>
+                </div>
+
+                {/* Step 2 */}
+                <div className="slide-card" style={{ padding: "14px 18px" }}>
+                  <div style={{ fontSize: "13px", fontWeight: 700, color: "#ffffff" }}>2. Review Synthesizer</div>
+                  <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.55)", margin: "4px 0 8px 0" }}>Condenses hundreds of fragmented guest reviews into a scannable Pros &amp; Cons bulleted summary.</p>
+                  <div className="ux-flow-step-preview" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", margin: 0 }}>
+                    <span style={{ color: "#34d399" }}>🟢 Pros: Stunning views, clean, amazing tub</span>
+                    <span style={{ color: "#f87171" }}>🔴 Cons: Steep driveway, cell signal</span>
+                  </div>
+                </div>
+
+                {/* Step 3 */}
+                <div className="slide-card" style={{ padding: "14px 18px" }}>
+                  <div style={{ fontSize: "13px", fontWeight: 700, color: "#ffffff" }}>3. Tailored Daily Itineraries</div>
+                  <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.55)", margin: "4px 0 8px 0" }}>Automatically drafts a custom day-by-day activity plan pushed directly into the Trips tab.</p>
+                  <div className="ux-flow-step-preview" style={{ display: "flex", justifyContent: "space-between", margin: 0 }}>
+                    <span>🚶 09:00 AM: Hike to Blue Lake (2.5 mi)</span>
+                    <span>🍴 01:00 PM: Lunch at Mountain Cafe</span>
+                  </div>
+                </div>
+
+                {/* Step 4 */}
+                <div className="slide-card" style={{ padding: "14px 18px" }}>
+                  <div style={{ fontSize: "13px", fontWeight: 700, color: "#ffffff" }}>4. Smart Split Billing</div>
+                  <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.55)", margin: "4px 0 8px 0" }}>Generates an automated per-person split billing ledger to eliminate group checkout friction.</p>
+                  <div className="ux-flow-step-preview" style={{ display: "flex", justifyContent: "space-between", fontWeight: 700, color: "var(--airbnb-coral)", margin: 0 }}>
+                    <span>💰 Total Cost: $250.00</span>
+                    <span>👥 Per Person Split (x4): $62.50 each</span>
+                  </div>
+                </div>
               </div>
-              <div className="slide-card">
-                <div className="slide-card-icon">🗓️</div>
-                <div className="slide-card-title">Auto Itinerary</div>
-                <div className="slide-card-text">Day-by-day activity plan tailored to group size, interests, and local events.</div>
-              </div>
-              <div className="slide-card">
-                <div className="slide-card-icon">💰</div>
-                <div className="slide-card-title">Cost Splitting</div>
-                <div className="slide-card-text">Full trip budget breakdown with per-person split calculated automatically.</div>
-              </div>
+            </div>
+
+            <div style={{ borderTop: "1px solid rgba(255, 255, 255, 0.08)", marginTop: "20px", paddingTop: "12px", fontSize: "11px", color: "var(--text-muted)", textAlign: "center" }}>
+              <strong>Technical Infrastructure:</strong> Built with a CORS-Free Geolocation Proxy (<code>/api/geolocation</code>) and dual-mode responsive design to ensure a native-feeling prototype across mobile and desktop.
             </div>
           </div>
           <div className="slide-number">05 / 07</div>
@@ -327,37 +407,42 @@ export default function DeckPage() {
           />
           <div className="slide-content">
             <div className="slide-tag">06 / Success Metrics</div>
-            <h2>Measuring <span className="highlight">impact</span></h2>
-            <p>
-              We define success through three measurable outcomes tied directly to Airbnb&apos;s core revenue drivers and user satisfaction scores.
-            </p>
-            <div className="slide-grid" style={{ marginTop: 28 }}>
-              <div className="slide-card">
-                <div className="slide-card-icon">📈</div>
-                <div className="slide-card-title">Booking Conversion Rate</div>
-                <div className="slide-card-text">
-                  <strong style={{ color: "#10b981" }}>Target: +22%</strong> for sessions using Anywhere Door vs. standard search. Measured via A/B test over 90 days.
+            <h2>Measuring strategic impact: <span className="highlight">Increasing revenue and eliminating operational friction.</span></h2>
+            
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", marginTop: "32px" }}>
+              {/* Metric 1 */}
+              <div className="slide-card" style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+                <div style={{ fontSize: "32px", width: "56px", height: "56px", borderRadius: "50%", background: "rgba(52, 211, 153, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "#34d399", flexShrink: 0, fontWeight: 800 }}>↑</div>
+                <div>
+                  <div style={{ fontSize: "20px", fontWeight: 800, color: "#ffffff" }}>+22% Conversion Increase</div>
+                  <p style={{ fontSize: "12px", color: "rgba(255, 255, 255, 0.55)", margin: "4px 0 0 0", lineHeight: 1.4 }}>Eliminating the 68% search abandonment rate by curing comparison paralysis.</p>
                 </div>
               </div>
-              <div className="slide-card">
-                <div className="slide-card-icon">💳</div>
-                <div className="slide-card-title">Average Booking Value</div>
-                <div className="slide-card-text">
-                  <strong style={{ color: "#10b981" }}>Target: +18%</strong> increase in nightly rate booked. AI recommendations skew premium and multi-night.
+
+              {/* Metric 2 */}
+              <div className="slide-card" style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+                <div style={{ fontSize: "32px", width: "56px", height: "56px", borderRadius: "50%", background: "rgba(248, 113, 113, 0.08)", display: "flex", alignItems: "center", justifyContent: "center", color: "#f87171", flexShrink: 0, fontWeight: 800 }}>↓</div>
+                <div>
+                  <div style={{ fontSize: "20px", fontWeight: 800, color: "#ffffff" }}>&lt; 8 Minutes Time Saved</div>
+                  <p style={{ fontSize: "12px", color: "rgba(255, 255, 255, 0.55)", margin: "4px 0 0 0", lineHeight: 1.4 }}>Reduction in Time-to-Book from 4.2 hours to under 8 minutes via context-aware prompt execution.</p>
                 </div>
               </div>
-              <div className="slide-card">
-                <div className="slide-card-icon">⭐</div>
-                <div className="slide-card-title">Net Promoter Score</div>
-                <div className="slide-card-text">
-                  <strong style={{ color: "#10b981" }}>Target: +15 NPS points</strong> from users who complete a trip planned via Anywhere Door.
+
+              {/* Metric 3 */}
+              <div className="slide-card" style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+                <div style={{ fontSize: "32px", width: "56px", height: "56px", borderRadius: "50%", background: "rgba(52, 211, 153, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "#34d399", flexShrink: 0, fontWeight: 800 }}>↑</div>
+                <div>
+                  <div style={{ fontSize: "20px", fontWeight: 800, color: "#ffffff" }}>+18% Revenue Uplift</div>
+                  <p style={{ fontSize: "12px", color: "rgba(255, 255, 255, 0.55)", margin: "4px 0 0 0", lineHeight: 1.4 }}>Seamlessly capturing multi-guest details and upselling premium group listings to increase Average Booking Value (ABV).</p>
                 </div>
               </div>
-              <div className="slide-card">
-                <div className="slide-card-icon">⏱️</div>
-                <div className="slide-card-title">Time-to-Book</div>
-                <div className="slide-card-text">
-                  <strong style={{ color: "#10b981" }}>Target: &lt;8 minutes</strong> from app open to confirmed booking for Anywhere Door users.
+
+              {/* Metric 4 */}
+              <div className="slide-card" style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+                <div style={{ fontSize: "26px", width: "56px", height: "56px", borderRadius: "50%", background: "rgba(99, 102, 241, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "#6366f1", flexShrink: 0 }}>😊</div>
+                <div>
+                  <div style={{ fontSize: "20px", fontWeight: 800, color: "#ffffff" }}>+15 NPS Engagement Growth</div>
+                  <p style={{ fontSize: "12px", color: "rgba(255, 255, 255, 0.55)", margin: "4px 0 0 0", lineHeight: 1.4 }}>Drastic reduction in group coordination stress via shared itineraries and split billing.</p>
                 </div>
               </div>
             </div>
@@ -372,40 +457,45 @@ export default function DeckPage() {
             style={{ width: 450, height: 450, bottom: -200, left: -150, ["--orb-color" as any]: "rgba(139, 92, 246, 0.12)" }}
           />
           <div className="slide-content">
-            <div className="slide-tag">07 / Pitfalls &amp; Mitigations</div>
-            <h2>
-              What could go <span className="highlight">wrong?</span>
-            </h2>
-            <p>
-              Proactive risk management is essential for a production-ready AI feature. We have identified the four critical failure modes and their mitigations.
-            </p>
-            <div className="slide-grid" style={{ marginTop: 28 }}>
-              <div className="slide-card">
-                <div className="slide-card-icon">🌀</div>
-                <div className="slide-card-title">Hallucinated Listings</div>
-                <div className="slide-card-text">
-                  AI invents properties. <strong style={{ color: "var(--airbnb-coral)" }}>Fix:</strong> All listings are returned as structured queries matched against live Airbnb inventory API before display.
+            <div className="slide-tag">07 / Risk Mitigation</div>
+            <h2>Proactive risk mitigation: <span className="highlight">Engineering trust and scalability into the AI layer.</span></h2>
+            
+            <div className="risk-workaround-panel">
+              {/* Column 1: Inherent Risks */}
+              <div className="slide-card" style={{ borderTop: "4px solid #f87171" }}>
+                <div className="risk-col-title" style={{ color: "#f87171" }}>
+                  <span>⚠️ Inherent Risk</span>
+                </div>
+                <div className="risk-col-item">
+                  <strong>Hallucinations:</strong> Risk of the AI recommending non-existent amenities or phantom properties.
+                </div>
+                <div className="risk-col-item">
+                  <strong>Latency:</strong> Risk of users abandoning the app during slow LLM generation times.
+                </div>
+                <div className="risk-col-item">
+                  <strong>User Privacy:</strong> Risk of exposing PII (Personally Identifiable Information) in complex travel prompts.
+                </div>
+                <div className="risk-col-item">
+                  <strong>Scalability &amp; Costs:</strong> Risk of expensive LLM calls bankrupting the feature at scale.
                 </div>
               </div>
-              <div className="slide-card">
-                <div className="slide-card-icon">🔒</div>
-                <div className="slide-card-title">User Privacy</div>
-                <div className="slide-card-text">
-                  Travel prompts contain personal preference data. <strong style={{ color: "var(--airbnb-coral)" }}>Fix:</strong> Server-side API calls only; no prompt data stored or used for training without consent.
+
+              {/* Column 2: Engineered Workarounds */}
+              <div className="slide-card" style={{ borderTop: "4px solid #34d399" }}>
+                <div className="risk-col-title" style={{ color: "#34d399" }}>
+                  <span>✅ Engineered Workaround</span>
                 </div>
-              </div>
-              <div className="slide-card">
-                <div className="slide-card-icon">⚡</div>
-                <div className="slide-card-title">Latency</div>
-                <div className="slide-card-text">
-                  LLM calls can be slow. <strong style={{ color: "var(--airbnb-coral)" }}>Fix:</strong> Streaming responses with animated step-by-step UI; perceived wait time &lt;2s via progressive rendering.
+                <div className="risk-col-item">
+                  The AI outputs <strong>structured JSON constraints</strong> passed directly into live, verified Airbnb inventory matching APIs, ensuring 100% reality grounding.
                 </div>
-              </div>
-              <div className="slide-card">
-                <div className="slide-card-icon">💸</div>
-                <div className="slide-card-title">API Cost at Scale</div>
-                <div className="slide-card-text">
-                  High-volume calls are expensive. <strong style={{ color: "var(--airbnb-coral)" }}>Fix:</strong> Gemini Flash (not Pro) + semantic caching for similar queries + rate limiting per session.
+                <div className="risk-col-item">
+                  Implementing <strong>progressive rendering</strong> and <strong>animated step-by-step progress tracking UI</strong>, keeping perceived wait time under 2 seconds.
+                </div>
+                <div className="risk-col-item">
+                  Server-side API processing and proxy routing; <strong>zero persistent storage</strong> of user prompt details without explicit opt-in consent.
+                </div>
+                <div className="risk-col-item">
+                  Deploying <strong>semantic query caching</strong>, session rate-limiting, and utilizing highly cost-efficient Google Gemini 3.5 Flash models.
                 </div>
               </div>
             </div>

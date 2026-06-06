@@ -1702,6 +1702,14 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
   }
   .slide-card::before { display: none !important; }
+
+  /* Force light text color on print to prevent browser override to black ink styles */
+  .slide p, .slide-card-text, .risk-col-item, .comparison-cell, .funnel-stage-text, .ux-flow-step-preview {
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
+  .slide strong, .slide-card strong, .risk-col-item strong, .comparison-cell strong, .funnel-stage-text strong {
+    color: #ffffff !important;
+  }
   
   /* Remove complex gradient text clips in PDF - replace with flat premium coral color */
   .highlight, .deck-logo {
@@ -2170,4 +2178,133 @@ body {
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+/* ════════════════════════════════════════
+   UPGRADED DECK LAYOUTS
+   ════════════════════════════════════════ */
+.funnel-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 500px;
+  width: 100%;
+}
+.funnel-stage {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all var(--transition-smooth);
+}
+.funnel-stage:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 56, 92, 0.2);
+}
+.funnel-stage-num {
+  font-family: var(--font-outfit), sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--airbnb-coral);
+  background: rgba(255, 56, 92, 0.1);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.funnel-stage-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+}
+
+/* Comparison Table */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 24px;
+}
+.comparison-header {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 12px;
+  text-align: left;
+  font-family: var(--font-outfit), sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+}
+.comparison-row {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.comparison-cell {
+  padding: 14px 16px;
+  font-size: 13px;
+  vertical-align: top;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.5;
+}
+.comparison-cell.anywhere-door-col {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* Solution Overview */
+.solution-overview-banner {
+  background: linear-gradient(135deg, rgba(255, 56, 92, 0.08), rgba(99, 102, 241, 0.08));
+  border: 1px solid rgba(255, 56, 92, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-top: 32px;
+  backdrop-filter: blur(8px);
+}
+.solution-overview-title {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--airbnb-coral);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* UX Flow Column details */
+.ux-flow-step-preview {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  font-size: 11px;
+  margin-top: 8px;
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* Split Column Risks */
+.risk-workaround-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 24px;
+}
+.risk-col-title {
+  font-family: var(--font-outfit), sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.risk-col-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 12px 0;
+  font-size: 12.5px;
+}
+.risk-col-item:last-child {
+  border-bottom: none;
 }
