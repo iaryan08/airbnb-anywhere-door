@@ -272,7 +272,7 @@ body {
    */
 .sticky-header-wrapper {
   position: sticky;
-  top: 68px;
+  top: 0;
   z-index: 10;
   background: var(--explore-subtabs-bg, var(--bg-secondary));
   backdrop-filter: blur(8px);
@@ -1311,12 +1311,6 @@ body {
   max-height: 80px;
   opacity: 1;
   overflow: hidden;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transform: translateZ(0);
 }
 .explore-subtabs.collapsed {
   max-height: 0;
