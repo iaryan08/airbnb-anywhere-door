@@ -282,7 +282,6 @@ body {
   background: var(--explore-subtabs-bg, var(--bg-secondary));
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  transform: translateZ(0);
 }
 
 .search-container {
@@ -2005,7 +2004,6 @@ body {
   border-bottom: 1px solid var(--border-subtle);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  transform: translateZ(0);
 }
 
 /*    DESKTOP RESPONSIVE LAYOUT
@@ -2069,7 +2067,6 @@ body {
     z-index: 1000;
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    transform: translateZ(0);
   }
 
   .location-badge {
