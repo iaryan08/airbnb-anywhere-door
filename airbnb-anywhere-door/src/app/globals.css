@@ -166,6 +166,11 @@ body {
   font-weight: 600;
   color: var(--text-primary);
   flex-shrink: 0;
+  background: var(--explore-subtabs-bg, var(--bg-secondary));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  transform: translateZ(0);
 }
 .status-time { font-weight: 700; letter-spacing: 0.02em; }
 .status-icons { display: flex; gap: 6px; align-items: center; }
