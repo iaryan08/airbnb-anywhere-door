@@ -1266,7 +1266,6 @@ body {
 .dot-btn.active {
   background: var(--airbnb-coral);
   transform: scale(1.4);
-  box-shadow: 0 0 10px var(--airbnb-coral);
 }
 .nav-arrow-btn {
   background: transparent;
