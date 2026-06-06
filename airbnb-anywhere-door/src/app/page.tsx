@@ -777,11 +777,11 @@ export default function Home() {
     currencySymbol: "₹",
   });
   
-  // Start empty — only populated after API resolves (dynamic or mock fallback)
-  const [listingsLoading, setListingsLoading] = useState(true);
-  const [staysListings, setStaysListings] = useState<typeof STAYS_LISTINGS>([]);
-  const [experiencesListings, setExperiencesListings] = useState<typeof EXPERIENCES_LISTINGS>([]);
-  const [servicesListings, setServicesListings] = useState<typeof SERVICES_LISTINGS>([]);
+  // Start with mock listings initially as fallback; while calling API show loader
+  const [listingsLoading, setListingsLoading] = useState(false);
+  const [staysListings, setStaysListings] = useState<typeof STAYS_LISTINGS>(STAYS_LISTINGS);
+  const [experiencesListings, setExperiencesListings] = useState<typeof EXPERIENCES_LISTINGS>(EXPERIENCES_LISTINGS);
+  const [servicesListings, setServicesListings] = useState<typeof SERVICES_LISTINGS>(SERVICES_LISTINGS);
 
   // Auto-reset activeCategory when dynamic listings load and current selection has no matches
   useEffect(() => {
@@ -1299,7 +1299,7 @@ export default function Home() {
             <>
 
               {/* Header Sub-Tabs (Stays, Experiences, Services) */}
-              <div className={`explore-subtabs${headerScrolled ? " collapsed" : ""}`}>
+              <div className="explore-subtabs">
                 <button
                   className={`subtab-btn${activeSubTab === "stays" ? " active" : ""}`}
                   onClick={() => setActiveSubTab("stays")}

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Airbnb Reimagined - One Prompt. Perfect Trip. Zero Filters.",
+  title: "Airbnb Reimagined",
   description: "Strategy presentation: Reimagining Airbnb with Generative AI: the Anywhere Door.",
 };
 

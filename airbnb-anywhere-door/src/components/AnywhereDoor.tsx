@@ -704,7 +704,7 @@ export default function AnywhereDoor({
             </button>
           </div>
           <p className="drawer-footer-text">
-            Powered by {result?.modelUsed ? `Gemini ${result.modelUsed.replace("gemini-", "").toUpperCase()}` : "Gemini 3.5 Flash / Preview"} · Press Enter to generate
+            Powered by {result?.modelUsed ? `Gemini ${result.modelUsed.replace("gemini-", "").replace("-", " ").toUpperCase()}` : "Gemini 2.5 / 3.5 Flash"} · Press Enter to generate
             {useTavily && result && !result.tavilyUsed && (
               <span style={{ background: "rgba(251,191,36,0.12)", color: "#fbbf24", border: "1px solid rgba(251,191,36,0.25)", borderRadius: 4, padding: "1px 6px", fontSize: 9, fontWeight: 700, letterSpacing: "0.04em" }}>Live data off</span>
             )}
