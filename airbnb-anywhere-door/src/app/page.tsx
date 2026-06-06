@@ -74,14 +74,14 @@ const ServicesIconSVG = () => (
 
 /*  Homes Categories  */
 const STAYS_CATEGORIES = [
-  { label: "Beach", icon: Palmtree },
   { label: "Cabins", icon: HomeIcon },
   { label: "Mansions", icon: Castle },
-  { label: "Mountains", icon: Mountain },
-  { label: "Lakefront", icon: Waves },
   { label: "Heritage", icon: Globe },
   { label: "City", icon: Building },
   { label: "Countryside", icon: Trees },
+  { label: "Beach", icon: Palmtree },
+  { label: "Mountains", icon: Mountain },
+  { label: "Lakefront", icon: Waves },
 ];
 
 /*  Stays Database  */

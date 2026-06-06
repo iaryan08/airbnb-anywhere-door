@@ -20,6 +20,8 @@ interface ListingCardProps {
   onWishlistToggle?: () => void;
   priceUnit?: string;
   imageUrl?: string;
+  /** Short AI-generated description — rendered clamped to 2 lines, never in a tag pill */
+  tagline?: string;
 }
 
 export default function ListingCard({
@@ -38,6 +40,7 @@ export default function ListingCard({
   onWishlistToggle,
   priceUnit = "/ night",
   imageUrl: propImageUrl,
+  tagline,
 }: ListingCardProps) {
   const [localWishlisted, setLocalWishlisted] = useState(false);
   const [imgError, setImgError] = useState(false);
@@ -193,6 +196,10 @@ export default function ListingCard({
           <span className="listing-name">{name}</span>
         </div>
         <div className="listing-location">{location}</div>
+
+        {tagline && (
+          <p className="listing-tagline">{tagline}</p>
+        )}
 
         {tags.length > 0 && (
           <div className="listing-tags">
