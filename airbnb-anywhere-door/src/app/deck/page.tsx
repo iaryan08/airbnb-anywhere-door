@@ -509,9 +509,6 @@ export default function DeckPage() {
 
       {/* Floating Presentation Controls */}
       <div className="presentation-dots">
-        <button onClick={handlePrev} className="nav-arrow-btn" aria-label="Previous slide">
-          ←
-        </button>
         {slides.map((slide, idx) => (
           <button
             key={slide.id}
@@ -521,9 +518,6 @@ export default function DeckPage() {
             aria-label={`Go to slide ${idx + 1}`}
           />
         ))}
-        <button onClick={handleNext} className="nav-arrow-btn" aria-label="Next slide">
-          →
-        </button>
       </div>
     </div>
   );
