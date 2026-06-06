@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import ListingCard from "./ListingCard";
 import {
   X,
   Sparkles,
@@ -49,6 +50,9 @@ interface PlanResult {
   title?: string;
   message?: string;
   listings: Listing[];
+  stays?: Listing[];
+  experiences?: Listing[];
+  services?: Listing[];
   itinerary: ItineraryDay[];
   budget: Budget;
   modelUsed?: string;
@@ -521,31 +525,83 @@ export default function AnywhereDoor({
                 </button>
               </div>
 
-              {/* Accommodations */}
-              <div className="results-section-title" style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <Sparkles size={16} style={{ color: "var(--airbnb-coral)" }} />
-                <span>Top Picks for You</span>
-              </div>
-              {result.listings.map((listing, i) => (
-                <div key={listing.name} className="ai-listing-card" style={{ animationDelay: `${i * 0.12}s` }}>
-                  <div className="ai-card-header">
-                    <span className="ai-card-name">{listing.name}</span>
-                    <span className="ai-card-price">{listing.price}</span>
+              {/* Stays */}
+              {((result.stays && result.stays.length > 0) || (result.listings && result.listings.length > 0)) && (
+                <>
+                  <div className="results-section-title" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <Sparkles size={16} style={{ color: "var(--airbnb-coral)" }} />
+                    <span>Top Stays</span>
                   </div>
-                  <div className="ai-card-location" style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                    <MapPin size={12} style={{ color: "var(--text-muted)" }} />
-                    <span>{listing.location}</span>
+                  <div className="listings-grid" style={{ padding: 0, gap: 16, marginBottom: 20 }}>
+                    {(result.stays || result.listings || []).map((listing, i) => (
+                      <ListingCard
+                        key={listing.name}
+                        id={`ai-stay-${i}`}
+                        name={listing.name}
+                        location={listing.location}
+                        price={listing.price}
+                        rating={listing.rating}
+                        tags={listing.highlights ? [listing.highlights] : []}
+                        badge={listing.badge}
+                        index={i}
+                        priceUnit=""
+                      />
+                    ))}
                   </div>
-                  <div className="ai-card-highlights">{listing.highlights}</div>
-                  <div className="ai-card-footer">
-                    <div className="ai-card-rating" style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                      <Star size={12} fill="#ffb100" stroke="#ffb100" />
-                      <span>{listing.rating}</span>
-                    </div>
-                    <div className="ai-card-badge">{listing.badge}</div>
+                </>
+              )}
+
+              {/* Experiences */}
+              {result.experiences && result.experiences.length > 0 && (
+                <>
+                  <div className="results-section-title" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <Sparkles size={16} style={{ color: "var(--airbnb-coral)" }} />
+                    <span>Recommended Experiences</span>
                   </div>
-                </div>
-              ))}
+                  <div className="listings-grid" style={{ padding: 0, gap: 16, marginBottom: 20 }}>
+                    {result.experiences.map((listing, i) => (
+                      <ListingCard
+                        key={listing.name}
+                        id={`ai-exp-${i}`}
+                        name={listing.name}
+                        location={listing.location}
+                        price={listing.price}
+                        rating={listing.rating}
+                        tags={listing.highlights ? [listing.highlights] : []}
+                        badge={listing.badge}
+                        index={i}
+                        priceUnit=""
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {/* Services */}
+              {result.services && result.services.length > 0 && (
+                <>
+                  <div className="results-section-title" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <Sparkles size={16} style={{ color: "var(--airbnb-coral)" }} />
+                    <span>Local Services</span>
+                  </div>
+                  <div className="listings-grid" style={{ padding: 0, gap: 16, marginBottom: 20 }}>
+                    {result.services.map((listing, i) => (
+                      <ListingCard
+                        key={listing.name}
+                        id={`ai-service-${i}`}
+                        name={listing.name}
+                        location={listing.location}
+                        price={listing.price}
+                        rating={listing.rating}
+                        tags={listing.highlights ? [listing.highlights] : []}
+                        badge={listing.badge}
+                        index={i}
+                        priceUnit=""
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
 
               {/* Itinerary */}
               <div className="results-section-title" style={{ display: "flex", alignItems: "center", gap: 8 }}>

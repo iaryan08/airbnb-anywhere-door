@@ -33,7 +33,7 @@ import {
   Star,
 } from "lucide-react";
 
-/* ── Custom illustrative SVGs matching Airbnb icons ── */
+/*  Custom illustrative SVGs matching Airbnb icons  */
 const StaysIconSVG = () => (
   <svg viewBox="0 0 32 32" style={{ width: 22, height: 22, display: "block" }}>
     {/* Cottage body */}
@@ -72,7 +72,7 @@ const ServicesIconSVG = () => (
   </svg>
 );
 
-/* ── Homes Categories ── */
+/*  Homes Categories  */
 const STAYS_CATEGORIES = [
   { label: "Beach", icon: Palmtree },
   { label: "Cabins", icon: HomeIcon },
@@ -84,7 +84,7 @@ const STAYS_CATEGORIES = [
   { label: "Countryside", icon: Trees },
 ];
 
-/* ── Stays Database ── */
+/*  Stays Database  */
 const STAYS_LISTINGS = [
   {
     id: "beach-1",
@@ -97,6 +97,7 @@ const STAYS_LISTINGS = [
     gradient: "linear-gradient(135deg, #1a1200 0%, #2e2000 50%, #4a3300 100%)",
     emoji: "🏝️",
     category: "Beach",
+    country: "India",
   },
   {
     id: "beach-2",
@@ -109,6 +110,7 @@ const STAYS_LISTINGS = [
     gradient: "linear-gradient(135deg, #0a2a1a 0%, #0f3d25 50%, #1a5c35 100%)",
     emoji: "🌊",
     category: "Beach",
+    country: "India",
   },
   {
     id: "cabin-1",
@@ -121,6 +123,7 @@ const STAYS_LISTINGS = [
     gradient: "linear-gradient(135deg, #1e110a 0%, #3a2214 50%, #52311d 100%)",
     emoji: "🌲",
     category: "Cabins",
+    country: "India",
   },
   {
     id: "mansion-1",
@@ -133,6 +136,7 @@ const STAYS_LISTINGS = [
     gradient: "linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 50%, #3d2470 100%)",
     emoji: "🏰",
     category: "Mansions",
+    country: "India",
   },
   {
     id: "mountain-1",
@@ -145,6 +149,7 @@ const STAYS_LISTINGS = [
     gradient: "linear-gradient(135deg, #0d1a2a 0%, #1a2d45 50%, #243d60 100%)",
     emoji: "🏔️",
     category: "Mountains",
+    country: "India",
   },
   {
     id: "lakefront-1",
@@ -157,6 +162,7 @@ const STAYS_LISTINGS = [
     gradient: "linear-gradient(135deg, #051a24 0%, #0d3246 50%, #184c68 100%)",
     emoji: "🚢",
     category: "Lakefront",
+    country: "India",
   },
   {
     id: "heritage-1",
@@ -169,6 +175,7 @@ const STAYS_LISTINGS = [
     gradient: "linear-gradient(135deg, #2b1f15 0%, #423021 50%, #5c442f 100%)",
     emoji: "🏯",
     category: "Heritage",
+    country: "India",
   },
   {
     id: "city-1",
@@ -181,6 +188,7 @@ const STAYS_LISTINGS = [
     gradient: "linear-gradient(135deg, #1c1c1c 0%, #2d2d2d 50%, #3e3e3e 100%)",
     emoji: "🏙️",
     category: "City",
+    country: "India",
   },
   {
     id: "countryside-1",
@@ -193,10 +201,219 @@ const STAYS_LISTINGS = [
     gradient: "linear-gradient(135deg, #1a2a1a 0%, #273e27 50%, #375737 100%)",
     emoji: "🌿",
     category: "Countryside",
+    country: "India",
+  },
+  {
+    id: "beach-swiss",
+    name: "Lake Geneva Sunshore Villa",
+    location: "Lausanne, Switzerland",
+    price: 14500,
+    rating: 4.96,
+    tags: ["Lakeside", "Private Dock", "Heated Pool"],
+    badge: "Guest Favourite",
+    gradient: "linear-gradient(135deg, #0f2a4a 0%, #1d4b7c 50%, #2f6ea8 100%)",
+    emoji: "🏝️",
+    category: "Beach",
+    country: "Switzerland",
+  },
+  {
+    id: "beach-swiss-2",
+    name: "Montreux Riviera Palms Apartment",
+    location: "Montreux, Switzerland",
+    price: 11500,
+    rating: 4.88,
+    tags: ["Lakeside Beach", "Palms View", "Jacuzzi"],
+    badge: "Superhost",
+    gradient: "linear-gradient(135deg, #102a43 0%, #243e56 100%)",
+    emoji: "🏖️",
+    category: "Beach",
+    country: "Switzerland",
+  },
+  {
+    id: "cabin-swiss",
+    name: "Zermatt Alpine A-Frame",
+    location: "Zermatt, Switzerland",
+    price: 8900,
+    rating: 4.98,
+    tags: ["Alps View", "Fireplace", "Ski-in/Ski-out"],
+    badge: "Rare Find",
+    gradient: "linear-gradient(135deg, #1f140e 0%, #3a271d 50%, #5c3e2e 100%)",
+    emoji: "🌲",
+    category: "Cabins",
+    country: "Switzerland",
+  },
+  {
+    id: "cabin-swiss-2",
+    name: "Grindelwald Cosy Log Cabin",
+    location: "Grindelwald, Switzerland",
+    price: 7200,
+    rating: 4.93,
+    tags: ["Wooden Design", "Mountain Views", "Fireplace"],
+    badge: "Top Rated",
+    gradient: "linear-gradient(135deg, #2c1a0c 0%, #4a321a 100%)",
+    emoji: "🏡",
+    category: "Cabins",
+    country: "Switzerland",
+  },
+  {
+    id: "mansion-swiss",
+    name: "Chateau de Lancy Estate",
+    location: "Geneva, Switzerland",
+    price: 28500,
+    rating: 4.99,
+    tags: ["Historic Manor", "Private Park", "Helipad"],
+    badge: "Guest Favourite",
+    gradient: "linear-gradient(135deg, #24113a 0%, #3e1f64 50%, #5b3193 100%)",
+    emoji: "🏰",
+    category: "Mansions",
+    country: "Switzerland",
+  },
+  {
+    id: "mansion-swiss-2",
+    name: "Villa Castagnola Shoreline Manor",
+    location: "Lugano, Switzerland",
+    price: 24500,
+    rating: 4.97,
+    tags: ["Italianate Garden", "Lake Views", "Dock"],
+    badge: "Superhost",
+    gradient: "linear-gradient(135deg, #2b0f4a 0%, #4a2278 100%)",
+    emoji: "🏰",
+    category: "Mansions",
+    country: "Switzerland",
+  },
+  {
+    id: "mountain-swiss",
+    name: "Matterhorn Summit Chalet",
+    location: "Zermatt, Switzerland",
+    price: 12800,
+    rating: 4.97,
+    tags: ["Matterhorn View", "Outdoor Jacuzzi", "Sauna"],
+    badge: "Top Rated",
+    gradient: "linear-gradient(135deg, #091a2e 0%, #153054 50%, #254d7e 100%)",
+    emoji: "🏔️",
+    category: "Mountains",
+    country: "Switzerland",
+  },
+  {
+    id: "mountain-swiss-2",
+    name: "Verbier Luxury Ski Chalet",
+    location: "Verbier, Switzerland",
+    price: 14800,
+    rating: 4.96,
+    tags: ["Ski-in/Ski-out", "Sauna", "Heated Balcony"],
+    badge: "Guest Favourite",
+    gradient: "linear-gradient(135deg, #091a2e 0%, #1c324e 100%)",
+    emoji: "🏔️",
+    category: "Mountains",
+    country: "Switzerland",
+  },
+  {
+    id: "lakefront-swiss",
+    name: "Lake Lucerne Panorama Lodge",
+    location: "Lucerne, Switzerland",
+    price: 11200,
+    rating: 4.94,
+    tags: ["Lake Access", "Mountain Views", "Balcony"],
+    badge: "Superhost",
+    gradient: "linear-gradient(135deg, #062130 0%, #0e3d58 50%, #195f87 100%)",
+    emoji: "🚢",
+    category: "Lakefront",
+    country: "Switzerland",
+  },
+  {
+    id: "lakefront-swiss-2",
+    name: "Interlaken Lake-View Lodge",
+    location: "Interlaken, Switzerland",
+    price: 9800,
+    rating: 4.91,
+    tags: ["Lake Access", "Eiger View", "Terrace"],
+    badge: "New",
+    gradient: "linear-gradient(135deg, #051d2c 0%, #153e5c 100%)",
+    emoji: "🌊",
+    category: "Lakefront",
+    country: "Switzerland",
+  },
+  {
+    id: "heritage-swiss",
+    name: "Bern Old Town Historic Apartment",
+    location: "Bern, Switzerland",
+    price: 7800,
+    rating: 4.92,
+    tags: ["16th Century", "Medieval Arcades", "Renovated"],
+    badge: "Rare Find",
+    gradient: "linear-gradient(135deg, #2e1d11 0%, #462c1b 50%, #633f28 100%)",
+    emoji: "🏯",
+    category: "Heritage",
+    country: "Switzerland",
+  },
+  {
+    id: "heritage-swiss-2",
+    name: "St. Gallen Historic Abbey Loft",
+    location: "St. Gallen, Switzerland",
+    price: 8200,
+    rating: 4.95,
+    tags: ["Historic Center", "Ornate Windows", "Library Walk"],
+    badge: "Rare Find",
+    gradient: "linear-gradient(135deg, #2a1b12 0%, #422d21 100%)",
+    emoji: "🏯",
+    category: "Heritage",
+    country: "Switzerland",
+  },
+  {
+    id: "city-swiss",
+    name: "Zurich Bahnhofstrasse Loft",
+    location: "Zurich, Switzerland",
+    price: 15500,
+    rating: 4.91,
+    tags: ["Downtown", "Rooftop Terrace", "Design Furniture"],
+    badge: "New",
+    gradient: "linear-gradient(135deg, #1f1f1f 0%, #333333 50%, #474747 100%)",
+    emoji: "🏙️",
+    category: "City",
+    country: "Switzerland",
+  },
+  {
+    id: "city-swiss-2",
+    name: "Geneva Rue du Rhone Penthouse",
+    location: "Geneva, Switzerland",
+    price: 17500,
+    rating: 4.92,
+    tags: ["Jet d'Eau View", "Modern Design", "High Speed WiFi"],
+    badge: "Guest Favourite",
+    gradient: "linear-gradient(135deg, #1c1c1c 0%, #3a3a3a 100%)",
+    emoji: "🏙️",
+    category: "City",
+    country: "Switzerland",
+  },
+  {
+    id: "countryside-swiss",
+    name: "Grindelwald Valley Farmhouse",
+    location: "Grindelwald, Switzerland",
+    price: 6800,
+    rating: 4.95,
+    tags: ["Eiger View", "Organic Garden", "Family Friendly"],
+    badge: "Superhost",
+    gradient: "linear-gradient(135deg, #102413 0%, #204125 50%, #32623b 100%)",
+    emoji: "🌿",
+    category: "Countryside",
+    country: "Switzerland",
+  },
+  {
+    id: "countryside-swiss-2",
+    name: "Appenzell Alpine Farm Stay",
+    location: "Appenzell, Switzerland",
+    price: 5800,
+    rating: 4.94,
+    tags: ["Traditional House", "Cheese Dairy Tour", "Pet Friendly"],
+    badge: "Superhost",
+    gradient: "linear-gradient(135deg, #102413 0%, #1e3c23 100%)",
+    emoji: "🌿",
+    category: "Countryside",
+    country: "Switzerland",
   },
 ];
 
-/* ── Airbnb Services Categories (matching screenshot) ── */
+/*  Airbnb Services Categories (matching screenshot)  */
 const SERVICES_CATEGORIES = [
   {
     label: "Photography",
@@ -245,7 +462,7 @@ const SERVICES_CATEGORIES = [
   },
 ];
 
-/* ── Airbnb Services Listings (Photographers in New Delhi) ── */
+/*  Airbnb Services Listings (Photographers in New Delhi)  */
 const SERVICES_LISTINGS = [
   {
     id: "service-1",
@@ -258,6 +475,7 @@ const SERVICES_LISTINGS = [
     gradient: "linear-gradient(135deg, #1f1c2c 0%, #928dab 100%)",
     emoji: "📷",
     category: "Photography",
+    country: "India",
   },
   {
     id: "service-2",
@@ -270,6 +488,7 @@ const SERVICES_LISTINGS = [
     gradient: "linear-gradient(135deg, #2c3e50 0%, #3498db 100%)",
     emoji: "📸",
     category: "Photography",
+    country: "India",
   },
   {
     id: "service-3",
@@ -282,6 +501,7 @@ const SERVICES_LISTINGS = [
     gradient: "linear-gradient(135deg, #e1eec3 0%, #f05053 100%)",
     emoji: "🤵",
     category: "Photography",
+    country: "India",
   },
   {
     id: "service-4",
@@ -294,6 +514,7 @@ const SERVICES_LISTINGS = [
     gradient: "linear-gradient(135deg, #ff9966 0%, #ff5e62 100%)",
     emoji: "⚡",
     category: "Photography",
+    country: "India",
   },
   {
     id: "service-5",
@@ -306,6 +527,7 @@ const SERVICES_LISTINGS = [
     gradient: "linear-gradient(135deg, #4ca1af 0%, #c4e0e5 100%)",
     emoji: "✨",
     category: "Photography",
+    country: "India",
   },
   {
     id: "service-6",
@@ -318,6 +540,7 @@ const SERVICES_LISTINGS = [
     gradient: "linear-gradient(135deg, #00c9ff 0%, #92fe9d 100%)",
     emoji: "🎥",
     category: "Photography",
+    country: "India",
   },
   {
     id: "service-7",
@@ -330,10 +553,50 @@ const SERVICES_LISTINGS = [
     gradient: "linear-gradient(135deg, #f857a6 0%, #ff5858 100%)",
     emoji: "👤",
     category: "Photography",
+    country: "India",
+  },
+  {
+    id: "service-swiss-1",
+    name: "Zurich Old Town Photo Shoot",
+    location: "Zurich, Switzerland",
+    price: 12000,
+    rating: 5.0,
+    tags: ["Outdoor Session", "Solo/Couple friendly", "90 Mins"],
+    badge: "Guest Favourite",
+    gradient: "linear-gradient(135deg, #1b2838 0%, #2a475e 100%)",
+    emoji: "📷",
+    category: "Photography",
+    country: "Switzerland",
+  },
+  {
+    id: "service-swiss-2",
+    name: "Lucerne Lakeside Portraits by Marc",
+    location: "Lucerne, Switzerland",
+    price: 14500,
+    rating: 4.93,
+    tags: ["Lake & Chapel Bridge", "High Res", "Digital Gallery"],
+    badge: "Superhost",
+    gradient: "linear-gradient(135deg, #0f233a 0%, #1f4268 100%)",
+    emoji: "📸",
+    category: "Photography",
+    country: "Switzerland",
+  },
+  {
+    id: "service-swiss-3",
+    name: "Alpine Vibe Captures by Sarah",
+    location: "Zermatt, Switzerland",
+    price: 11000,
+    rating: 4.96,
+    tags: ["Mountain Scenic Shots", "Fast Delivery", "Edited Files"],
+    badge: "Top Rated",
+    gradient: "linear-gradient(135deg, #1c1c1c 0%, #3a3a3a 100%)",
+    emoji: "⚡",
+    category: "Photography",
+    country: "Switzerland",
   },
 ];
 
-/* ── Airbnb Experiences Listings ── */
+/*  Airbnb Experiences Listings  */
 const EXPERIENCES_LISTINGS = [
   {
     id: "exp-1",
@@ -346,6 +609,7 @@ const EXPERIENCES_LISTINGS = [
     gradient: "linear-gradient(135deg, #e65c00 0%, #F9D423 100%)",
     emoji: "🍛",
     category: "Food",
+    country: "India",
   },
   {
     id: "exp-2",
@@ -358,10 +622,37 @@ const EXPERIENCES_LISTINGS = [
     gradient: "linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)",
     emoji: "🕌",
     category: "Sightseeing",
+    country: "India",
+  },
+  {
+    id: "exp-swiss-1",
+    name: "Lake Lucerne Scenic Boat Tour",
+    location: "Lucerne, Switzerland",
+    price: 3500,
+    rating: 4.97,
+    tags: ["Boat Cruise", "Scenic Views", "Chocolate Tasting"],
+    badge: "Guest Favourite",
+    gradient: "linear-gradient(135deg, #0e304d 0%, #1c527f 100%)",
+    emoji: "🚢",
+    category: "Sightseeing",
+    country: "Switzerland",
+  },
+  {
+    id: "exp-swiss-2",
+    name: "Zermatt Chocolate & Cheese Fondue Walk",
+    location: "Zermatt, Switzerland",
+    price: 4200,
+    rating: 4.99,
+    tags: ["Food Walk", "Local Cheese", "Chocolate Workshop"],
+    badge: "Superhost",
+    gradient: "linear-gradient(135deg, #2e1d0f 0%, #52351c 100%)",
+    emoji: "🧀",
+    category: "Food",
+    country: "Switzerland",
   },
 ];
 
-/* ── Bottom nav items definition with Lucide Icons ── */
+/*  Bottom nav items definition with Lucide Icons  */
 const NAV_ITEMS = [
   { id: "nav-explore", label: "Explore", icon: Compass },
   { id: "nav-wishlists", label: "Wishlists", icon: Heart },
@@ -485,6 +776,10 @@ export default function Home() {
     currency: "INR",
     currencySymbol: "₹",
   });
+  
+  const [staysListings, setStaysListings] = useState(STAYS_LISTINGS);
+  const [experiencesListings, setExperiencesListings] = useState(EXPERIENCES_LISTINGS);
+  const [servicesListings, setServicesListings] = useState(SERVICES_LISTINGS);
 
   // Helper to save trip to IndexedDB
   const saveTripToIndexedDB = (trip: any) => {
@@ -572,18 +867,19 @@ export default function Home() {
 
   // Detect location via server-side API proxy to avoid CORS
   useEffect(() => {
-    fetch("/api/geolocation")
+    fetch(`/api/geolocation?t=${Date.now()}`, { cache: "no-store" })
       .then((r) => r.json())
       .then((data) => {
         if (data && data.country) {
           const symbolMap: Record<string, string> = {
             INR: "₹", USD: "$", EUR: "€", GBP: "£",
             AED: "د.إ", SGD: "S$", AUD: "A$", CAD: "C$",
-            JPY: "¥", CNY: "¥", THB: "฿", MYR: "RM",
+            JPY: "¥", CNY: "¥", THB: "฿", MYR: "RM", CHF: "CHF",
           };
           const countryCurrencyMap: Record<string, string> = {
             IN: "INR", US: "USD", GB: "GBP", DE: "EUR", FR: "EUR", IT: "EUR", ES: "EUR", NL: "EUR",
             AE: "AED", SG: "SGD", AU: "AUD", CA: "CAD", JP: "JPY", CN: "CNY", TH: "THB", MY: "MYR",
+            CH: "CHF",
           };
           const currencyCode = countryCurrencyMap[data.countryCode] ?? "INR";
           setGeoInfo({
@@ -600,20 +896,85 @@ export default function Home() {
       });
   }, []);
 
+  // Load dynamic listings for geolocated city
+  useEffect(() => {
+    if (!geoInfo.city) return;
+    
+    const localTavilyKey = typeof window !== 'undefined' ? localStorage.getItem("tavily-api-key") || "" : "";
+    const localUseTavily = typeof window !== 'undefined' ? localStorage.getItem("use-tavily") === "true" : false;
+
+    fetch("/api/listings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        city: geoInfo.city,
+        country: geoInfo.country,
+        currency: geoInfo.currency,
+        useTavily: localUseTavily || true,
+        tavilyApiKey: localTavilyKey,
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch dynamic listings");
+        return res.json();
+      })
+      .then((data) => {
+        if (data.stays && data.stays.length > 0) {
+          setStaysListings(data.stays);
+        }
+        if (data.experiences && data.experiences.length > 0) {
+          setExperiencesListings(data.experiences);
+        }
+        if (data.services && data.services.length > 0) {
+          setServicesListings(data.services);
+        }
+      })
+      .catch((err) => {
+        console.error("Error loading dynamic listings, keeping default mock data fallback:", err);
+      });
+  }, [geoInfo.city, geoInfo.country]);
+
+  // Offline Exchange Rates relative to INR (base rate = 1.0)
+  const EXCHANGE_RATES: Record<string, number> = {
+    INR: 1.0,
+    USD: 85.0,
+    EUR: 92.0,
+    GBP: 108.0,
+    CHF: 95.0,
+    AED: 23.1,
+    SGD: 63.0,
+    AUD: 56.5,
+    CAD: 62.0,
+    JPY: 0.55,
+    CNY: 11.8,
+  };
+
   // Convert static prices based on currency symbol detected
   const getFormattedPrice = (inrPrice: number) => {
-    if (geoInfo.currencySymbol === "$") {
-      return `$${Math.round(inrPrice / 85).toLocaleString("en-US")}`;
-    } else if (geoInfo.currencySymbol === "€") {
-      return `€${Math.round(inrPrice / 92).toLocaleString("en-US")}`;
-    } else if (geoInfo.currencySymbol === "£") {
-      return `£${Math.round(inrPrice / 108).toLocaleString("en-US")}`;
+    const rate = EXCHANGE_RATES[geoInfo.currency] || 1.0;
+    const symbol = geoInfo.currencySymbol;
+    const converted = Math.round(inrPrice / rate);
+    
+    if (symbol === "CHF") {
+      return `CHF ${converted.toLocaleString("en-US")}`;
     }
-    return `₹${inrPrice.toLocaleString("en-IN")}`;
+    if (symbol === "₹") {
+      return `₹${converted.toLocaleString("en-IN")}`;
+    }
+    return `${symbol}${converted.toLocaleString("en-US")}`;
+  };
+
+  // Helper to replace static/hardcoded cities in listings with the geolocated city name
+  const getDynamicLocation = (location: string, country: string) => {
+    return location;
+  };
+
+  const getDynamicName = (name: string, country: string) => {
+    return name;
   };
 
   // Dynamic stays filtering based on interactive filters + category
-  const filteredStays = STAYS_LISTINGS.filter((l) => {
+  const filteredStays = staysListings.filter((l) => {
     if (l.category !== activeCategory) return false;
     if (l.price > maxPriceFilter) return false;
     if (selectedPropertyType !== "Any") {
@@ -639,7 +1000,7 @@ export default function Home() {
   });
 
   // Dynamic experiences filtering based on interactive filters
-  const filteredExperiences = EXPERIENCES_LISTINGS.filter((l) => {
+  const filteredExperiences = experiencesListings.filter((l) => {
     if (l.price > maxPriceFilter) return false;
     if (minRatingFilter > 0 && l.rating < minRatingFilter) return false;
     if (searchQuery.trim() !== "") {
@@ -653,7 +1014,7 @@ export default function Home() {
   });
 
   // Dynamic services filtering based on category + interactive filters
-  const filteredServices = SERVICES_LISTINGS.filter((l) => {
+  const filteredServices = servicesListings.filter((l) => {
     if (l.category !== activeServiceCategory) return false;
     if (l.price > maxPriceFilter) return false;
     if (minRatingFilter > 0 && l.rating < minRatingFilter) return false;
@@ -671,9 +1032,9 @@ export default function Home() {
   // Clean all listings matching stays, services, and experiences for wishlist displays
   const getFullListingDetails = (id: string) => {
     return (
-      STAYS_LISTINGS.find((l) => l.id === id) ||
-      SERVICES_LISTINGS.find((l) => l.id === id) ||
-      EXPERIENCES_LISTINGS.find((l) => l.id === id)
+      staysListings.find((l) => l.id === id) ||
+      servicesListings.find((l) => l.id === id) ||
+      experiencesListings.find((l) => l.id === id)
     );
   };
 
@@ -689,7 +1050,7 @@ export default function Home() {
   return (
     <div className="phone-shell">
       <div className={`phone-frame${isOverlayOpen ? " overlay-open" : ""}`}>
-        {/* ── Status Bar ── */}
+        {/*  Status Bar  */}
         <div className="status-bar">
           <span className="status-time">{timeStr}</span>
           <div className="status-icons">
@@ -710,7 +1071,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ── Scrollable Content ── */}
+        {/*  Scrollable Content  */}
         <div 
           className="app-scroll"
           onScroll={(e) => {
@@ -720,7 +1081,7 @@ export default function Home() {
             }
           }}
         >
-          {/* ── Top Header (Responsive: Mobile & Desktop) ── */}
+          {/*  Top Header (Responsive: Mobile & Desktop)  */}
           <div className={`top-nav${activeNav !== 0 ? " mobile-hide" : ""}`} style={{ borderBottom: "1px solid var(--border-subtle)" }}>
             <div 
               className="logo" 
@@ -808,7 +1169,7 @@ export default function Home() {
                 </button>
               </div>
 
-              {/* ── SUBTAB 1: STAYS/HOMES ── */}
+              {/*  SUBTAB 1: STAYS/HOMES  */}
               {activeSubTab === "stays" && (
                 <>
                   <div className="sticky-header-wrapper">
@@ -874,8 +1235,8 @@ export default function Home() {
                       <ListingCard
                         key={listing.id}
                         id={listing.id}
-                        name={listing.name}
-                        location={listing.location}
+                        name={getDynamicName(listing.name, listing.country || geoInfo.country)}
+                        location={getDynamicLocation(listing.location, listing.country || geoInfo.country)}
                         price={getFormattedPrice(listing.price)}
                         rating={listing.rating}
                         tags={listing.tags}
@@ -891,7 +1252,7 @@ export default function Home() {
                 </>
               )}
 
-              {/* ── SUBTAB 2: EXPERIENCES ── */}
+              {/*  SUBTAB 2: EXPERIENCES  */}
               {activeSubTab === "experiences" && (
                 <>
                   <div className="sticky-header-wrapper">
@@ -930,8 +1291,8 @@ export default function Home() {
                       <ListingCard
                         key={listing.id}
                         id={listing.id}
-                        name={listing.name}
-                        location={listing.location}
+                        name={getDynamicName(listing.name, listing.country || geoInfo.country)}
+                        location={getDynamicLocation(listing.location, listing.country || geoInfo.country)}
                         price={getFormattedPrice(listing.price)}
                         priceUnit="/ guest"
                         rating={listing.rating}
@@ -948,7 +1309,7 @@ export default function Home() {
                 </>
               )}
 
-              {/* ── SUBTAB 3: SERVICES (AIRBNB SERVICES MOCKUP) ── */}
+              {/*  SUBTAB 3: SERVICES (AIRBNB SERVICES MOCKUP)  */}
               {activeSubTab === "services" && (
                 <>
                   <div className="sticky-header-wrapper">
@@ -1009,8 +1370,8 @@ export default function Home() {
                       <ListingCard
                         key={listing.id}
                         id={listing.id}
-                        name={listing.name}
-                        location={listing.location}
+                        name={getDynamicName(listing.name, listing.country || geoInfo.country)}
+                        location={getDynamicLocation(listing.location, listing.country || geoInfo.country)}
                         price={getFormattedPrice(listing.price)}
                         priceUnit={listing.category === "Photography" ? "/ session" : "/ service"}
                         rating={listing.rating}
@@ -1063,8 +1424,8 @@ export default function Home() {
                       <ListingCard
                         key={listing.id}
                         id={listing.id}
-                        name={listing.name}
-                        location={listing.location}
+                        name={getDynamicName(listing.name, listing.country || geoInfo.country)}
+                        location={getDynamicLocation(listing.location, listing.country || geoInfo.country)}
                         price={getFormattedPrice(listing.price)}
                         priceUnit={
                           listing.id.startsWith("exp") 
@@ -1206,31 +1567,83 @@ export default function Home() {
                               </div>
                             )}
 
-                            {/* Curated Accommodations */}
-                            <div className="results-section-title" style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 0 }}>
-                              <Sparkles size={16} style={{ color: "var(--airbnb-coral)" }} />
-                              <span>Picks For You</span>
-                            </div>
-                            {plan.listings.map((listing: any, idx: number) => (
-                              <div key={listing.name} className="ai-listing-card">
-                                <div className="ai-card-header">
-                                  <span className="ai-card-name">{listing.name}</span>
-                                  <span className="ai-card-price">{listing.price}</span>
+                            {/* Stays */}
+                            {((plan.stays && plan.stays.length > 0) || (plan.listings && plan.listings.length > 0)) && (
+                              <>
+                                <div className="results-section-title" style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 0 }}>
+                                  <Sparkles size={16} style={{ color: "var(--airbnb-coral)" }} />
+                                  <span>Top Stays</span>
                                 </div>
-                                <div className="ai-card-location" style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                                  <MapPin size={12} style={{ color: "var(--text-muted)" }} />
-                                  <span>{listing.location}</span>
+                                <div className="listings-grid" style={{ padding: 0, gap: 16, marginBottom: 20 }}>
+                                  {(plan.stays || plan.listings || []).map((listing: any, idx: number) => (
+                                    <ListingCard
+                                      key={listing.name}
+                                      id={`ai-stay-${idx}`}
+                                      name={listing.name}
+                                      location={listing.location}
+                                      price={listing.price}
+                                      rating={listing.rating}
+                                      tags={listing.highlights ? [listing.highlights] : []}
+                                      badge={listing.badge}
+                                      index={idx}
+                                      priceUnit=""
+                                    />
+                                  ))}
                                 </div>
-                                <div className="ai-card-highlights">{listing.highlights}</div>
-                                <div className="ai-card-footer">
-                                  <div className="ai-card-rating" style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                                    <Star size={12} fill="#ffb100" stroke="#ffb100" />
-                                    <span>{listing.rating}</span>
-                                  </div>
-                                  <div className="ai-card-badge">{listing.badge}</div>
+                              </>
+                            )}
+
+                            {/* Experiences */}
+                            {plan.experiences && plan.experiences.length > 0 && (
+                              <>
+                                <div className="results-section-title" style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 0 }}>
+                                  <Sparkles size={16} style={{ color: "var(--airbnb-coral)" }} />
+                                  <span>Recommended Experiences</span>
                                 </div>
-                              </div>
-                            ))}
+                                <div className="listings-grid" style={{ padding: 0, gap: 16, marginBottom: 20 }}>
+                                  {plan.experiences.map((listing: any, idx: number) => (
+                                    <ListingCard
+                                      key={listing.name}
+                                      id={`ai-exp-${idx}`}
+                                      name={listing.name}
+                                      location={listing.location}
+                                      price={listing.price}
+                                      rating={listing.rating}
+                                      tags={listing.highlights ? [listing.highlights] : []}
+                                      badge={listing.badge}
+                                      index={idx}
+                                      priceUnit=""
+                                    />
+                                  ))}
+                                </div>
+                              </>
+                            )}
+
+                            {/* Services */}
+                            {plan.services && plan.services.length > 0 && (
+                              <>
+                                <div className="results-section-title" style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 0 }}>
+                                  <Sparkles size={16} style={{ color: "var(--airbnb-coral)" }} />
+                                  <span>Local Services</span>
+                                </div>
+                                <div className="listings-grid" style={{ padding: 0, gap: 16, marginBottom: 20 }}>
+                                  {plan.services.map((listing: any, idx: number) => (
+                                    <ListingCard
+                                      key={listing.name}
+                                      id={`ai-service-${idx}`}
+                                      name={listing.name}
+                                      location={listing.location}
+                                      price={listing.price}
+                                      rating={listing.rating}
+                                      tags={listing.highlights ? [listing.highlights] : []}
+                                      badge={listing.badge}
+                                      index={idx}
+                                      priceUnit=""
+                                    />
+                                  ))}
+                                </div>
+                              </>
+                            )}
 
                             {/* Daily Itinerary */}
                             <div className="results-section-title" style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -1365,11 +1778,47 @@ export default function Home() {
                   Preferences
                 </div>
 
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 16px", background: "var(--bg-card)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-md)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", background: "var(--bg-card)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-md)" }}>
                   <span style={{ fontSize: 13, fontWeight: 600 }}>Local Currency</span>
-                  <span style={{ fontSize: 13, color: "var(--airbnb-coral)", fontWeight: 700 }}>
-                    {geoInfo.currency} ({geoInfo.currencySymbol})
-                  </span>
+                  <select
+                    value={geoInfo.currency}
+                    onChange={(e) => {
+                      const selectedVal = e.target.value;
+                      const symbolMap: Record<string, string> = {
+                        INR: "₹", USD: "$", EUR: "€", GBP: "£", CHF: "CHF",
+                        AED: "د.إ", SGD: "S$", AUD: "A$", CAD: "C$", JPY: "¥", CNY: "¥"
+                      };
+                      setGeoInfo(prev => ({
+                        ...prev,
+                        currency: selectedVal,
+                        currencySymbol: symbolMap[selectedVal] || selectedVal
+                      }));
+                    }}
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      outline: "none",
+                      fontFamily: "var(--font-display)",
+                      fontSize: "13px",
+                      fontWeight: 700,
+                      color: "var(--airbnb-coral)",
+                      cursor: "pointer",
+                      padding: "4px 8px",
+                      textAlign: "right"
+                    }}
+                  >
+                    <option value="INR" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>INR (₹)</option>
+                    <option value="USD" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>USD ($)</option>
+                    <option value="EUR" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>EUR (€)</option>
+                    <option value="GBP" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>GBP (£)</option>
+                    <option value="CHF" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>CHF (CHF)</option>
+                    <option value="AED" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>AED (د.إ)</option>
+                    <option value="SGD" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>SGD (S$)</option>
+                    <option value="AUD" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>AUD (A$)</option>
+                    <option value="CAD" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>CAD (C$)</option>
+                    <option value="JPY" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>JPY (¥)</option>
+                    <option value="CNY" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>CNY (¥)</option>
+                  </select>
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", background: "var(--bg-card)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-md)" }}>
@@ -1416,7 +1865,7 @@ export default function Home() {
           )}
         </div>
 
-        {/* ── Anywhere Door FAB (Themed matching var(--airbnb-coral) FAB center pill) ── */}
+        {/*  Anywhere Door FAB (Themed matching var(--airbnb-coral) FAB center pill)  */}
         {activeNav === 0 && (
           <button
             className={`anywhere-door-fab${isOverlayOpen ? " hidden" : ""}`}
@@ -1431,7 +1880,7 @@ export default function Home() {
           </button>
         )}
 
-        {/* ── Bottom Navigation ── */}
+        {/*  Bottom Navigation  */}
         <nav className={`bottom-nav${isOverlayOpen ? " hidden" : ""}`} aria-label="Main navigation">
           {NAV_ITEMS.map((item, i) => {
             const IconComponent = item.icon;
@@ -1450,7 +1899,7 @@ export default function Home() {
           })}
         </nav>
 
-        {/* ── Anywhere Door Drawer ── */}
+        {/*  Anywhere Door Drawer  */}
         <AnywhereDoor
           isOpen={drawerOpen}
           onClose={() => setDrawerOpen(false)}
@@ -1501,7 +1950,7 @@ export default function Home() {
           }}
         />
 
-        {/* ── Search Filters Modal ── */}
+        {/*  Search Filters Modal  */}
         <div 
           className={`filter-overlay${filterModalOpen ? " open" : ""}`} 
           onClick={() => setFilterModalOpen(false)} 
@@ -1534,7 +1983,7 @@ export default function Home() {
                     <span>0</span>
                   </div>
                 </div>
-                <div style={{ color: "var(--text-muted)", fontSize: 18 }}>–</div>
+                <div style={{ color: "var(--text-muted)", fontSize: 18 }}>-</div>
                 <div className="price-input-box">
                   <div className="price-input-label">Max price</div>
                   <div className="price-input-value">

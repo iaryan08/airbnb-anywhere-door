@@ -100,7 +100,7 @@ export default function DeckPage() {
       </nav>
 
       <div className="slides-wrapper" id="slides-container">
-        {/* ── SLIDE 1: COVER SLIDE ── */}
+        {/* Slide 1: Cover Slide */}
         <section className="slide" id="slide-cover">
           <div
             className="slide-bg-orb"
@@ -110,7 +110,7 @@ export default function DeckPage() {
             <div className="slide-cover-grid">
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "24px" }}>
-                  <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", background: "linear-gradient(135deg, #ff385c, #6366f1)", padding: "6px 16px", borderRadius: "20px", border: "1px solid rgba(255,255,255,0.1)" }}>
+                  <span className="slide-cover-badge" style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", background: "linear-gradient(135deg, #ff385c, #6366f1)", padding: "6px 16px", borderRadius: "20px", border: "1px solid rgba(255,255,255,0.1)", color: "#ffffff" }}>
                     One Prompt. Perfect Trip. Zero Filters.
                   </span>
                 </div>
@@ -166,7 +166,7 @@ export default function DeckPage() {
           <div className="slide-number">01 / 07</div>
         </section>
 
-        {/* ── SLIDE 2: PROBLEM ── */}
+        {/* Slide 2: Problem */}
         <section className="slide" id="slide-1">
           <div
             className="slide-bg-orb"
@@ -210,7 +210,7 @@ export default function DeckPage() {
             </div>
 
             {/* Bottom Row: Core Problem & Hypothesis */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginTop: "24px" }}>
+            <div className="problem-bottom-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginTop: "24px" }}>
               <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "8px", padding: "16px 20px" }}>
                 <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--airbnb-coral)", fontWeight: 700, marginBottom: "4px" }}>Core Problem Statement</div>
                 <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.7)", margin: 0, lineHeight: 1.5 }}>
@@ -228,7 +228,7 @@ export default function DeckPage() {
           <div className="slide-number">02 / 07</div>
         </section>
 
-        {/* ── SLIDE 3: WHY GENAI ── */}
+        {/* Slide 3: Why GenAI */}
         <section className="slide" id="slide-2">
           <div
             className="slide-bg-orb"
@@ -265,7 +265,7 @@ export default function DeckPage() {
               </tbody>
             </table>
 
-            <div style={{ background: "rgba(99, 102, 241, 0.05)", border: "1px solid rgba(99, 102, 241, 0.15)", borderRadius: "8px", padding: "14px 20px", marginTop: "24px" }}>
+            <div className="why-genai-summary" style={{ background: "rgba(99, 102, 241, 0.05)", border: "1px solid rgba(99, 102, 241, 0.15)", borderRadius: "8px", padding: "14px 20px", marginTop: "24px" }}>
               <p style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.75)", margin: 0, textAlign: "center", lineHeight: 1.5 }}>
                 <strong>Summary:</strong> Traditional ML only optimizes search rankings within rigid filters. Generative AI fundamentally synthesizes and generates the entire end-to-end trip experience in seconds.
               </p>
@@ -274,7 +274,7 @@ export default function DeckPage() {
           <div className="slide-number">03 / 07</div>
         </section>
 
-        {/* ── SLIDE 4: USER SEGMENTS ── */}
+        {/* Slide 4: User Segments */}
         <section className="slide" id="slide-3">
           <div
             className="slide-bg-orb"
@@ -324,7 +324,7 @@ export default function DeckPage() {
           <div className="slide-number">04 / 07</div>
         </section>
 
-        {/* ── SLIDE 5: SOLUTION DEEP DIVE ── */}
+        {/* Slide 5: Solution Deep Dive */}
         <section className="slide" id="slide-4">
           <div
             className="slide-bg-orb"
@@ -334,9 +334,9 @@ export default function DeckPage() {
             <div className="slide-tag">05 / UX Flow</div>
             <h2>Architectural UX flow: <span className="highlight">Synthesizing a perfect trip in under three seconds.</span></h2>
             
-            <div style={{ display: "grid", gridTemplateColumns: "0.85fr 1.15fr", gap: "32px", marginTop: "24px", alignItems: "start" }}>
+            <div className="ux-flow-grid" style={{ display: "grid", gridTemplateColumns: "1.05fr 0.975fr 0.975fr", gap: "20px", marginTop: "24px", alignItems: "stretch" }}>
               {/* Left Column: Speech Bubble Input */}
-              <div style={{ background: "linear-gradient(135deg, rgba(255, 56, 92, 0.08), rgba(99, 102, 241, 0.08))", border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "16px", padding: "24px", position: "relative" }}>
+              <div className="ux-prompt-card" style={{ background: "linear-gradient(135deg, rgba(255, 56, 92, 0.08), rgba(99, 102, 241, 0.08))", border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "16px", padding: "24px", position: "relative", display: "flex", flexDirection: "column", justifyContent: "center" }}>
                 <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--text-muted)", marginBottom: "8px", fontWeight: 700 }}>Conversational Input Prompt</div>
                 <p style={{ fontSize: "15px", fontWeight: 700, color: "#ffffff", margin: 0, lineHeight: 1.5 }}>
                   &quot;A quiet, remote cabin in the mountains for 4 friends under $250/night, must have a hot tub and fast Wi-Fi for remote work&quot;
@@ -345,13 +345,13 @@ export default function DeckPage() {
                 <div style={{ position: "absolute", right: "-10px", top: "50px", width: "20px", height: "20px", background: "#08080c", borderLeft: "1px solid rgba(255, 255, 255, 0.1)", borderBottom: "1px solid rgba(255, 255, 255, 0.1)", transform: "rotate(-135deg)" }} />
               </div>
 
-              {/* Right Column: 4 Steps with Previews */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              {/* Middle Column: Steps 1 & 2 */}
+              <div className="ux-steps-col" style={{ display: "flex", flexDirection: "column", gap: "12px", justifyContent: "space-between" }}>
                 {/* Step 1 */}
-                <div className="slide-card" style={{ padding: "14px 18px" }}>
+                <div className="slide-card" style={{ padding: "14px 18px", flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
                   <div style={{ fontSize: "13px", fontWeight: 700, color: "#ffffff", display: "flex", justifyContent: "space-between" }}>
                     <span>1. AI Property Matchmaker</span>
-                    <span style={{ fontSize: "11px", color: "var(--airbnb-coral)", fontWeight: 600 }}>Gemini 3.5 Flash + Tavily API</span>
+                    <span style={{ fontSize: "11px", color: "#ff385c", fontWeight: 600 }}>Gemini 3.5 Flash + Tavily API</span>
                   </div>
                   <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.55)", margin: "4px 0 8px 0" }}>Parses multi-variable constraints to surface the top 3 exact matches using high-speed structured JSON.</p>
                   <div className="ux-flow-step-preview" style={{ display: "flex", gap: "8px", justifyContent: "space-between", margin: 0 }}>
@@ -361,7 +361,7 @@ export default function DeckPage() {
                 </div>
 
                 {/* Step 2 */}
-                <div className="slide-card" style={{ padding: "14px 18px" }}>
+                <div className="slide-card" style={{ padding: "14px 18px", flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
                   <div style={{ fontSize: "13px", fontWeight: 700, color: "#ffffff" }}>2. Review Synthesizer</div>
                   <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.55)", margin: "4px 0 8px 0" }}>Condenses hundreds of fragmented guest reviews into a scannable Pros &amp; Cons bulleted summary.</p>
                   <div className="ux-flow-step-preview" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", margin: 0 }}>
@@ -369,9 +369,12 @@ export default function DeckPage() {
                     <span style={{ color: "#f87171" }}>🔴 Cons: Steep driveway, cell signal</span>
                   </div>
                 </div>
+              </div>
 
+              {/* Right Column: Steps 3 & 4 */}
+              <div className="ux-steps-col" style={{ display: "flex", flexDirection: "column", gap: "12px", justifyContent: "space-between" }}>
                 {/* Step 3 */}
-                <div className="slide-card" style={{ padding: "14px 18px" }}>
+                <div className="slide-card" style={{ padding: "14px 18px", flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
                   <div style={{ fontSize: "13px", fontWeight: 700, color: "#ffffff" }}>3. Tailored Daily Itineraries</div>
                   <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.55)", margin: "4px 0 8px 0" }}>Automatically drafts a custom day-by-day activity plan pushed directly into the Trips tab.</p>
                   <div className="ux-flow-step-preview" style={{ display: "flex", justifyContent: "space-between", margin: 0 }}>
@@ -381,7 +384,7 @@ export default function DeckPage() {
                 </div>
 
                 {/* Step 4 */}
-                <div className="slide-card" style={{ padding: "14px 18px" }}>
+                <div className="slide-card" style={{ padding: "14px 18px", flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
                   <div style={{ fontSize: "13px", fontWeight: 700, color: "#ffffff" }}>4. Smart Split Billing</div>
                   <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.55)", margin: "4px 0 8px 0" }}>Generates an automated per-person split billing ledger to eliminate group checkout friction.</p>
                   <div className="ux-flow-step-preview" style={{ display: "flex", justifyContent: "space-between", fontWeight: 700, color: "var(--airbnb-coral)", margin: 0 }}>
@@ -392,14 +395,14 @@ export default function DeckPage() {
               </div>
             </div>
 
-            <div style={{ borderTop: "1px solid rgba(255, 255, 255, 0.08)", marginTop: "20px", paddingTop: "12px", fontSize: "11px", color: "var(--text-muted)", textAlign: "center" }}>
+            <div className="ux-flow-footer" style={{ borderTop: "1px solid rgba(255, 255, 255, 0.08)", marginTop: "20px", paddingTop: "12px", fontSize: "11px", color: "var(--text-muted)", textAlign: "center" }}>
               <strong>Technical Infrastructure:</strong> Built with a CORS-Free Geolocation Proxy (<code>/api/geolocation</code>) and dual-mode responsive design to ensure a native-feeling prototype across mobile and desktop.
             </div>
           </div>
           <div className="slide-number">05 / 07</div>
         </section>
 
-        {/* ── SLIDE 6: SUCCESS METRICS ── */}
+        {/* Slide 6: Success Metrics */}
         <section className="slide" id="slide-5">
           <div
             className="slide-bg-orb"
@@ -409,7 +412,7 @@ export default function DeckPage() {
             <div className="slide-tag">06 / Success Metrics</div>
             <h2>Measuring strategic impact: <span className="highlight">Increasing revenue and eliminating operational friction.</span></h2>
             
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", marginTop: "32px" }}>
+            <div className="metrics-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", marginTop: "32px" }}>
               {/* Metric 1 */}
               <div className="slide-card" style={{ display: "flex", gap: "20px", alignItems: "center" }}>
                 <div style={{ fontSize: "32px", width: "56px", height: "56px", borderRadius: "50%", background: "rgba(52, 211, 153, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "#34d399", flexShrink: 0, fontWeight: 800 }}>↑</div>
@@ -450,7 +453,7 @@ export default function DeckPage() {
           <div className="slide-number">06 / 07</div>
         </section>
 
-        {/* ── SLIDE 7: PITFALLS ── */}
+        {/* Slide 7: Pitfalls */}
         <section className="slide" id="slide-6">
           <div
             className="slide-bg-orb"

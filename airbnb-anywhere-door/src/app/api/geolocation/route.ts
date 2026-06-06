@@ -1,7 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
+    const noCacheHeaders = {
+      "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+      "Pragma": "no-cache",
+      "Expires": "0",
+    };
+
     // 1. Try Vercel's direct geolocation headers first (most reliable when deployed on Vercel)
     const vercelCity = request.headers.get("x-vercel-ip-city");
     const vercelCountry = request.headers.get("x-vercel-ip-country");
@@ -12,6 +20,8 @@ export async function GET(request: NextRequest) {
         countryCode: vercelCountry || "US",
         country: vercelCountry === "IN" ? "India" : (vercelCountry || "United States"),
         success: true
+      }, {
+        headers: noCacheHeaders
       });
     }
 
@@ -26,14 +36,16 @@ export async function GET(request: NextRequest) {
       : "http://ip-api.com/json/";
 
     const res = await fetch(url, {
-      next: { revalidate: 3600 }, // Cache for 1 hour
+      cache: "no-store"
     });
     
     if (!res.ok) {
       throw new Error("Failed to fetch geolocation");
     }
     const data = await res.json();
-    return NextResponse.json(data);
+    return NextResponse.json(data, {
+      headers: noCacheHeaders
+    });
   } catch (error) {
     // Return standard fallback rather than erroring out
     return NextResponse.json({
@@ -41,6 +53,12 @@ export async function GET(request: NextRequest) {
       countryCode: "IN",
       country: "India",
       success: false
+    }, {
+      headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0",
+      }
     });
   }
 }

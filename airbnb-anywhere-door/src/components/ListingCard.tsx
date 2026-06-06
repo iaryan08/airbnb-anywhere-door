@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { usePropertyImage } from "@/hooks/usePropertyImage";
 import { Heart, Star } from "lucide-react";
 
@@ -19,6 +19,7 @@ interface ListingCardProps {
   wishlisted?: boolean;
   onWishlistToggle?: () => void;
   priceUnit?: string;
+  imageUrl?: string;
 }
 
 export default function ListingCard({
@@ -36,15 +37,36 @@ export default function ListingCard({
   wishlisted,
   onWishlistToggle,
   priceUnit = "/ night",
+  imageUrl: propImageUrl,
 }: ListingCardProps) {
   const [localWishlisted, setLocalWishlisted] = useState(false);
   const [imgError, setImgError] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
 
-  // Fetch real Pexels image — query = "location + name keywords"
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "150px" }
+    );
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
+  // Fetch real Pexels image (query: location + name keywords) - only when card is visible in viewport and no imageUrl is passed
   const imageQuery = `${location} ${name.split(" ").slice(0, 3).join(" ")}`;
-  const { url: imageUrl, alt: imageAlt, photographer, loading: imgLoading } = usePropertyImage(imageQuery);
+  const { url: pexelsUrl, alt: imageAlt, photographer, loading: imgLoading } = usePropertyImage(imageQuery, isVisible && !propImageUrl);
 
-  const showRealImage = imageUrl && !imgError;
+  const resolvedImageUrl = propImageUrl || pexelsUrl;
+  const showRealImage = resolvedImageUrl && !imgError;
   const isWishlisted = wishlisted !== undefined ? wishlisted : localWishlisted;
 
   const handleWishlistClick = (e: React.MouseEvent) => {
@@ -58,21 +80,22 @@ export default function ListingCard({
 
   return (
     <div
+      ref={cardRef}
       className="listing-card"
       onClick={onClick}
       style={{ animationDelay: `${index * 0.08}s` }}
       role="article"
     >
-      {/* ── Image Area ── */}
+      {/* Image Area */}
       <div
         className="listing-image-placeholder"
         style={{ background: showRealImage ? "#111" : gradient, position: "relative" }}
       >
-        {/* Real Pexels Image */}
+        {/* Real Pexels / SerpApi Image */}
         {showRealImage && (
           <img
-            src={imageUrl}
-            alt={imageAlt}
+            src={resolvedImageUrl}
+            alt={imageAlt || name}
             onError={() => setImgError(true)}
             style={{
               position: "absolute",
@@ -164,7 +187,7 @@ export default function ListingCard({
         )}
       </div>
 
-      {/* ── Info ── */}
+      {/* Info */}
       <div className="listing-info">
         <div className="listing-row-1">
           <span className="listing-name">{name}</span>

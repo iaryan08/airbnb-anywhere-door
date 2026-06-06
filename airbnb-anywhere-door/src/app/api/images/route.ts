@@ -18,7 +18,7 @@ interface CacheEntry {
   cachedAt: number;
 }
 
-// ── Server-side in-memory cache (persists for the lifetime of the Node.js process) ──
+// Server-side in-memory cache (persists for the lifetime of the Node.js process)
 const imageCache = new Map<string, CacheEntry>();
 const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
 
@@ -79,7 +79,7 @@ export async function GET(req: NextRequest) {
 
   const cacheKey = getCacheKey(rawQuery);
 
-  // ── Check in-memory server cache ──
+  // Check in-memory server cache
   const cached = imageCache.get(cacheKey);
   if (cached && isCacheValid(cached)) {
     return NextResponse.json(
@@ -99,7 +99,7 @@ export async function GET(req: NextRequest) {
       `https://api.pexels.com/v1/search?query=${encodeURIComponent(searchQuery)}&per_page=5&orientation=landscape`,
       {
         headers: { Authorization: apiKey },
-        // Next.js fetch cache — deduplicate identical requests within a request cycle
+        // Next.js fetch cache: deduplicate identical requests within a request cycle
         next: { revalidate: 3600 },
       }
     );
@@ -121,7 +121,7 @@ export async function GET(req: NextRequest) {
 
     const imageUrl = size === "medium" ? photo.src.medium : photo.src.large;
 
-    // ── Store in server cache ──
+    // Store in server cache
     const entry: CacheEntry = {
       url: imageUrl,
       alt: photo.alt || rawQuery,

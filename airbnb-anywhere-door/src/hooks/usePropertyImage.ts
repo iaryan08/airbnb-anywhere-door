@@ -19,7 +19,7 @@ interface SessionEntry {
   cachedAt: number;
 }
 
-// ── Client-side module-level in-memory cache for synchronous instant resolution ──
+// Client-side module-level in-memory cache for synchronous instant resolution
 const clientImageMemoryCache = new Map<string, { url: string; alt: string; photographer: string }>();
 
 function getSessionCache(key: string): SessionEntry | null {
@@ -41,7 +41,7 @@ function setSessionCache(key: string, entry: SessionEntry) {
   try {
     sessionStorage.setItem(SESSION_CACHE_PREFIX + key, JSON.stringify(entry));
   } catch {
-    // sessionStorage full or unavailable — silently ignore
+    // sessionStorage full or unavailable, silently ignore
   }
 }
 
@@ -104,7 +104,7 @@ export function usePropertyImage(query: string, enabled: boolean = true): ImageR
     let cancelled = false;
     setResult((prev) => ({ ...prev, loading: true }));
 
-    fetch(`/api/images?q=${encodeURIComponent(query)}&size=large`)
+    fetch(`/api/images?q=${encodeURIComponent(query)}&size=medium`)
       .then((r) => r.json())
       .then((data) => {
         if (cancelled) return;

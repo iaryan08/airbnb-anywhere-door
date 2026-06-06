@@ -16,15 +16,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Airbnb — Reimagined with AI | Anywhere Door",
+  title: "Airbnb - Reimagined with AI | Anywhere Door",
   description:
-    "Experience the future of travel planning. Our AI companion eliminates all search friction — one prompt generates curated listings, itineraries, and cost splits instantly.",
+    "Experience the future of travel planning. Our AI companion eliminates all search friction: one prompt generates curated listings, itineraries, and cost splits instantly.",
   keywords: "Airbnb, AI travel, GenAI, anywhere door, travel planner, itinerary, India",
   icons: {
     icon: "/favicon.ico",
   },
   openGraph: {
-    title: "Airbnb Reimagined — Anywhere Door AI",
+    title: "Airbnb Reimagined - Anywhere Door AI",
     description: "One prompt. Perfect trip. No filters needed.",
     type: "website",
   },
@@ -57,7 +57,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${outfit.variable} ${inter.variable}`} suppressHydrationWarning>
       <head>
-        {/* FOUC prevention — runs synchronously before paint */}
+        {/* FOUC prevention: runs synchronously before paint */}
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body suppressHydrationWarning>
