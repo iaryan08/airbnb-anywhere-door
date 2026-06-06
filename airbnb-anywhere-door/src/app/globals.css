@@ -272,9 +272,12 @@ body {
    */
 .sticky-header-wrapper {
   position: sticky;
-  top: 0;
+  top: 68px;
   z-index: 10;
-  background: var(--bg-secondary);
+  background: var(--explore-subtabs-bg, var(--bg-secondary));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transform: translateZ(0);
 }
 
 .search-container {
