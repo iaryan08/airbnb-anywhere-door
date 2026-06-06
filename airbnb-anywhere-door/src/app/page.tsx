@@ -911,10 +911,31 @@ export default function Home() {
             CH: "CHF",
           };
           const currencyCode = countryCurrencyMap[data.countryCode] ?? "INR";
+          const countryNames: Record<string, string> = {
+            IN: "India",
+            CH: "Switzerland",
+            US: "United States",
+            GB: "United Kingdom",
+            DE: "Germany",
+            FR: "France",
+            IT: "Italy",
+            ES: "Spain",
+            NL: "Netherlands",
+            AE: "United Arab Emirates",
+            SG: "Singapore",
+            AU: "Australia",
+            CA: "Canada",
+            JP: "Japan",
+            CN: "China",
+            TH: "Thailand",
+            MY: "Malaysia",
+          };
+          const rawCountry = data.country || "India";
+          const resolvedCountry = countryNames[rawCountry] ?? countryNames[data.countryCode] ?? rawCountry;
           setGeoInfo({
             city: data.city ?? "Delhi",
             regionName: data.regionName ?? "",
-            country: data.country ?? "India",
+            country: resolvedCountry,
             currency: currencyCode,
             currencySymbol: symbolMap[currencyCode] ?? currencyCode ?? "₹",
           });
@@ -1122,7 +1143,7 @@ export default function Home() {
   // Dynamic stays filtering based on interactive filters + category
   const filteredStays = staysListings.filter((l) => {
     // Avoid mixing country listings when using mock data fallbacks
-    const targetCountry = geoInfo.country === "Switzerland" ? "Switzerland" : "India";
+    const targetCountry = (geoInfo.country === "Switzerland" || geoInfo.country === "CH") ? "Switzerland" : "India";
     if (l.country && l.country !== targetCountry) return false;
 
     if (l.category !== activeCategory) return false;
@@ -1152,7 +1173,7 @@ export default function Home() {
   // Dynamic experiences filtering based on interactive filters
   const filteredExperiences = experiencesListings.filter((l) => {
     // Avoid mixing country listings when using mock data fallbacks
-    const targetCountry = geoInfo.country === "Switzerland" ? "Switzerland" : "India";
+    const targetCountry = (geoInfo.country === "Switzerland" || geoInfo.country === "CH") ? "Switzerland" : "India";
     if (l.country && l.country !== targetCountry) return false;
 
     if (l.price > maxPriceFilter) return false;
@@ -1170,7 +1191,7 @@ export default function Home() {
   // Dynamic services filtering based on category + interactive filters
   const filteredServices = servicesListings.filter((l) => {
     // Avoid mixing country listings when using mock data fallbacks
-    const targetCountry = geoInfo.country === "Switzerland" ? "Switzerland" : "India";
+    const targetCountry = (geoInfo.country === "Switzerland" || geoInfo.country === "CH") ? "Switzerland" : "India";
     if (l.country && l.country !== targetCountry) return false;
 
     if (l.category !== activeServiceCategory) return false;

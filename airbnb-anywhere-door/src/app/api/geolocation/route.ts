@@ -15,10 +15,30 @@ export async function GET(request: NextRequest) {
     const vercelCountry = request.headers.get("x-vercel-ip-country");
     
     if (vercelCity) {
+      const countryNames: Record<string, string> = {
+        IN: "India",
+        CH: "Switzerland",
+        US: "United States",
+        GB: "United Kingdom",
+        DE: "Germany",
+        FR: "France",
+        IT: "Italy",
+        ES: "Spain",
+        NL: "Netherlands",
+        AE: "United Arab Emirates",
+        SG: "Singapore",
+        AU: "Australia",
+        CA: "Canada",
+        JP: "Japan",
+        CN: "China",
+        TH: "Thailand",
+        MY: "Malaysia",
+      };
+      const countryCode = vercelCountry || "US";
       return NextResponse.json({
         city: decodeURIComponent(vercelCity),
-        countryCode: vercelCountry || "US",
-        country: vercelCountry === "IN" ? "India" : (vercelCountry || "United States"),
+        countryCode: countryCode,
+        country: countryNames[countryCode] ?? countryCode,
         success: true
       }, {
         headers: noCacheHeaders
