@@ -776,6 +776,7 @@ export default function Home() {
     currency: "INR",
     currencySymbol: "₹",
   });
+  const [isGeoLoaded, setIsGeoLoaded] = useState(false);
   
   // Start with mock listings initially as fallback; while calling API show loader
   const [listingsLoading, setListingsLoading] = useState(false);
@@ -918,15 +919,17 @@ export default function Home() {
             currencySymbol: symbolMap[currencyCode] ?? currencyCode ?? "₹",
           });
         }
+        setIsGeoLoaded(true);
       })
       .catch(() => {
         // Keep Indian defaults
+        setIsGeoLoaded(true);
       });
   }, []);
 
   // Load dynamic listings for geolocated city
   useEffect(() => {
-    if (!geoInfo.city) return;
+    if (!isGeoLoaded || !geoInfo.city) return;
 
     const CACHE_KEY = "airbnb-listings-cache-v3";
     const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
@@ -1009,7 +1012,7 @@ export default function Home() {
       .finally(() => {
         setListingsLoading(false);
       });
-  }, [geoInfo.city, geoInfo.country]);
+  }, [geoInfo.city, geoInfo.country, isGeoLoaded]);
 
   // Offline Exchange Rates relative to INR (base rate = 1.0)
   const EXCHANGE_RATES: Record<string, number> = {
